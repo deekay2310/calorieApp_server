@@ -55,10 +55,11 @@ def login():
         if form.validate_on_submit():
             temp = mongo.db.user.find_one({'email': form.email.data}, {
                 'email', 'pwd'})
+            print("temp value is here", temp)
             if temp is not None and temp['email'] == form.email.data and (
                 bcrypt.checkpw(
                     form.password.data.encode("utf-8"),
-                    temp['pwd']) or temp['temp'] == form.password.data):
+                    temp['pwd']) ):
                 flash('You have been logged in!', 'success')
                 session['email'] = temp['email']
                 #session['login_type'] = form.type.data
@@ -102,7 +103,7 @@ def register():
                 username = request.form.get('username')
                 email = request.form.get('email')
                 password = request.form.get('password')
-                mongo.db.user.insert({'name': username, 'email': email, 'pwd': bcrypt.hashpw(
+                mongo.db.user.insert_one({'name': username, 'email': email, 'pwd': bcrypt.hashpw(
                     password.encode("utf-8"), bcrypt.gensalt())})
             flash(f'Account created for {form.username.data}!', 'success')
             return redirect(url_for('home'))
@@ -127,6 +128,8 @@ def calories():
     if get_session is not None:
         form = CalorieForm()
         if form.validate_on_submit():
+            print(form,"this is the form")
+            print(request,"this is the request ")
             if request.method == 'POST':
                 email = session.get('email')
                 food = request.form.get('food')

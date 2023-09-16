@@ -39,7 +39,8 @@ class LoginForm(FlaskForm):
 class CalorieForm(FlaskForm):
     app = App()
     mongo = app.mongo
-
+    print(mongo.db.command('ping'))
+    print(mongo.db, "mongoo db session")
     cursor = mongo.db.food.find()
     get_docs = []
     for record in cursor:
