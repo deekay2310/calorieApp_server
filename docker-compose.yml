@@ -1,0 +1,18 @@
+version: '3'
+services:
+  burnout-flask-app:
+    build:
+      context: ./  # Path to the directory containing your Python app code
+    container_name: my-python-app-container
+    ports:
+      - "5000:5000"  # Map host port to container port for your Python app
+    depends_on:
+      - mongodb  # Ensure that MongoDB container is started before your Python app
+
+  mongodb:
+    image: mongo:latest
+    container_name: my-mongodb-container
+    ports:
+      - "27017:27017"  # Map host port to container port for MongoDB
+    volumes:
+      - ./data/db:/data/db  # Mount a data volume for MongoDB data persistence
