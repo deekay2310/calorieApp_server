@@ -5,7 +5,6 @@ import {
   CardContent,
   CardHeader,
   Container,
-  Typography,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -22,9 +21,25 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import StarIcon from "@mui/icons-material/Star";
 import TimelineIcon from "@mui/icons-material/Timeline";
-import Header from "./Header";
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
-function UserCaloriesPage() {
+function UserCaloriesPage(props) {
+  const data01 = [
+    {
+      name: "Consumed",
+      value: 400,
+    },
+  ];
+  const data02 = [
+    {
+      name: "Burned",
+      value: 250,
+    },
+    {
+      name: "Remaining to Goal",
+      value: 150,
+    },
+  ];
   const [foodItems, setFoodItems] = useState({});
 
   useEffect(() => {
@@ -46,6 +61,65 @@ function UserCaloriesPage() {
   const [burntoutCalories, setBurntoutCalories] = useState("");
   const [burnoutDate, setBurnoutDate] = useState(dayjs());
 
+  const handleAddCalorieIntake = (e) => {
+    console.log("Intake", intakeItem, intakeCalories, intakeDate);
+    // TO DO: UPDATE THE API CALL
+    // axios({
+    //   method: "POST",
+    //   url: "/UPDATE_THIS",
+    //   headers: {
+    //     Authorization: "Bearer " + props.token,
+    //   },
+    //   data: {
+    //     intakeFoodItem: intakeItem,
+    //     intakeCalories: intakeCalories,
+    //     intakeDate: intakeDate,
+    //   },
+    // })
+    //   .then((response) => {
+    //     const res = response.data;
+    //     res.access_token && props.setToken(res.access_token);
+    //     // We should be getting the updated total calories consumed for today here as a response, so we can update the graph
+    //     // Set the updated value and possibly update the graph
+    //   })
+    //   .catch((error) => {
+    //     if (error.response) {
+    //       console.log(error.response);
+    //       console.log(error.response.status);
+    //       console.log(error.response.headers);
+    //     }
+    //   });
+  };
+
+  const handleAddCalorieBurnout = () => {
+    console.log("Burnout", burntoutCalories, burnoutDate);
+    // TO DO: UPDATE THE API CALL
+    // axios({
+    //   method: "POST",
+    //   url: "/UPDATE_THIS",
+    //   headers: {
+    //     Authorization: "Bearer " + props.token,
+    //   },
+    //   data: {
+    //     burntouCalories: burntoutCalories,
+    //     burnoutDate: burnoutDate,
+    //   },
+    // })
+    //   .then((response) => {
+    //     const res = response.data;
+    //     res.access_token && props.setToken(res.access_token);
+    //     // We should be getting the updated total calories burned out for today here as a response, so we can update the graph
+    //     // Set the updated value and possibly update the graph. Or directly update your value, since you know te previous value and submitted value
+    //   })
+    //   .catch((error) => {
+    //     if (error.response) {
+    //       console.log(error.response);
+    //       console.log(error.response.status);
+    //       console.log(error.response.headers);
+    //     }
+    //   });
+  };
+
   return (
     <>
       <Container maxWidth>
@@ -66,6 +140,31 @@ function UserCaloriesPage() {
               subheader={"Today's calorie intake and burnout"}
               avatar={<StarIcon />}
             />
+            <CardContent>
+              <PieChart width={350} height={160}>
+                <Pie
+                  data={data02}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={50}
+                  innerRadius={30}
+                  fill="#8884d8"
+                />
+                <Pie
+                  data={data01}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={80}
+                  fill="#82ca9d"
+                  label
+                />
+              </PieChart>
+            </CardContent>
           </Card>
           <Card sx={{ gridArea: "exercise" }} elevation={5}>
             <CardHeader
@@ -87,42 +186,62 @@ function UserCaloriesPage() {
               avatar={<FastfoodIcon />}
             />
             <CardContent>
-              <Box sx={{ paddingBottom: "1rem" }}>
-                <FormControl fullWidth>
-                  <InputLabel id="intakeFoodName">Food Item Name</InputLabel>
-                  <Select
-                    labelId="intakeFoodName"
-                    id="demo-simple-select"
-                    value={intakeItem}
-                    label="Food Item Name"
-                    onChange={handleIntakeItemChange}
-                  >
-                    {Object.keys(foodItems).map((item) => {
-                      return <MenuItem value={item}>{item}</MenuItem>;
-                    })}
-                  </Select>
-                </FormControl>
-              </Box>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <TextField
-                  label="Calories"
-                  id="intakeCalorieCount"
-                  value={intakeCalories}
-                  onChange={(event) => {
-                    setIntakeCalories(event.target.value);
+              <form onSubmit={handleAddCalorieIntake}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
                   }}
-                  type="number"
-                />
-                <DatePicker
-                  label="Date"
-                  value={intakeDate}
-                  onChange={(newValue) => setIntakeDate(newValue)}
-                  maxDate={dayjs()}
-                />
-                <Button variant="contained" size="large">
-                  Add
-                </Button>
-              </Box>
+                >
+                  <Box sx={{ paddingBottom: "1rem" }}>
+                    <FormControl fullWidth>
+                      <InputLabel id="intakeFoodName">
+                        Food Item Name
+                      </InputLabel>
+                      <Select
+                        labelId="intakeFoodName"
+                        id="demo-simple-select"
+                        value={intakeItem}
+                        label="Food Item Name"
+                        onChange={handleIntakeItemChange}
+                        required
+                      >
+                        {Object.keys(foodItems).map((item) => {
+                          return (
+                            <MenuItem key={item} value={item}>
+                              {item}
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  <Box
+                    sx={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <TextField
+                      label="Calories"
+                      id="intakeCalorieCount"
+                      value={intakeCalories}
+                      onChange={(event) => {
+                        setIntakeCalories(event.target.value);
+                      }}
+                      type="number"
+                      required
+                    />
+                    <DatePicker
+                      label="Date"
+                      value={intakeDate}
+                      onChange={(newValue) => setIntakeDate(newValue)}
+                      maxDate={dayjs()}
+                      required
+                    />
+                    <Button type="submit" variant="contained" size="large">
+                      Add
+                    </Button>
+                  </Box>
+                </Box>
+              </form>
             </CardContent>
           </Card>
           <Card sx={{ gridArea: "week" }} elevation={5}>
@@ -139,26 +258,30 @@ function UserCaloriesPage() {
               avatar={<WhatshotIcon />}
             />
             <CardContent>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <TextField
-                  label="Calories"
-                  id="burntoutCalorieCount"
-                  value={burntoutCalories}
-                  onChange={(event) => {
-                    setBurntoutCalories(event.target.value);
-                  }}
-                  type="number"
-                />
-                <DatePicker
-                  label="Date"
-                  value={burnoutDate}
-                  onChange={(newValue) => setBurnoutDate(newValue)}
-                  maxDate={dayjs()}
-                />
-                <Button variant="contained" size="large">
-                  Add
-                </Button>
-              </Box>
+              <form onSubmit={handleAddCalorieBurnout}>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <TextField
+                    label="Calories"
+                    id="burntoutCalorieCount"
+                    value={burntoutCalories}
+                    onChange={(event) => {
+                      setBurntoutCalories(event.target.value);
+                    }}
+                    type="number"
+                    required
+                  />
+                  <DatePicker
+                    label="Date"
+                    value={burnoutDate}
+                    onChange={(newValue) => setBurnoutDate(newValue)}
+                    maxDate={dayjs()}
+                    required
+                  />
+                  <Button type="submit" variant="contained" size="large">
+                    Add
+                  </Button>
+                </Box>
+              </form>
             </CardContent>
           </Card>
         </Box>
