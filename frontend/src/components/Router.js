@@ -30,6 +30,9 @@ function Router() {
       <Route path="/profile" >
         {!!token ? <Profile token={removeToken}/> : <SignIn setToken={setToken} />}
       </Route>
+      <Route path="/home">
+        <UserCaloriesPage />
+      </Route>
       <Route path="/contactus">
         <ContactUs token={removeToken} ></ContactUs>
       </Route>

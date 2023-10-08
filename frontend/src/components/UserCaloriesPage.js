@@ -84,7 +84,7 @@ function UserCaloriesPage() {
             <CardHeader
               title={"Calorie Intake"}
               subheader={"Enter the food and calories consumed to track it"}
-              avatar={<FastfoodIcon />}
+              avatar = {<FastfoodIcon/>}
             />
             <CardContent>
               <Box sx={{ paddingBottom: "1rem" }}>
