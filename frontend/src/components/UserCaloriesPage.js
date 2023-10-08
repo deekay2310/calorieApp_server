@@ -16,7 +16,12 @@ import Select from "@mui/material/Select";
 import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import WhatshotIcon from "@material-ui/icons/Whatshot";
-import FastfoodIcon from '@mui/icons-material/Fastfood';
+import FastfoodIcon from "@mui/icons-material/Fastfood";
+import SportsMartialArtsIcon from "@mui/icons-material/SportsMartialArts";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
+import StarIcon from "@mui/icons-material/Star";
+import TimelineIcon from "@mui/icons-material/Timeline";
 import Header from "./Header";
 
 function UserCaloriesPage() {
@@ -43,7 +48,6 @@ function UserCaloriesPage() {
 
   return (
     <>
-      <Header></Header>
       <Container maxWidth>
         <Box
           sx={{
@@ -53,20 +57,34 @@ function UserCaloriesPage() {
             gridTemplateRows: "auto",
             gridTemplateAreas: `"today today exercise exercise intake intake intake"
                               "week week week week burntout burntout burntout"`,
-            paddingTop: "2rem"
+            paddingTop: "2rem",
           }}
         >
           <Card sx={{ gridArea: "today" }} elevation={5}>
-            <CardHeader title={"Todays Stats"} />
+            <CardHeader
+              title={"Todays Stats"}
+              subheader={"Today's calorie intake and burnout"}
+              avatar={<StarIcon />}
+            />
           </Card>
           <Card sx={{ gridArea: "exercise" }} elevation={5}>
-            <CardHeader title={"Exercise of the Day"} />
+            <CardHeader
+              title={"Exercise of the Day"}
+              subheader={"Today's pick to help you get you fit"}
+              avatar={
+                <>
+                  <SportsMartialArtsIcon />
+                  <DirectionsRunIcon />
+                  <FitnessCenterIcon />
+                </>
+              }
+            />
           </Card>
           <Card sx={{ gridArea: "intake" }} elevation={5}>
             <CardHeader
               title={"Calorie Intake"}
               subheader={"Enter the food and calories consumed to track it"}
-              avatar = {<FastfoodIcon/>}
+              avatar={<FastfoodIcon />}
             />
             <CardContent>
               <Box sx={{ paddingBottom: "1rem" }}>
@@ -86,68 +104,60 @@ function UserCaloriesPage() {
                 </FormControl>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Box>
-                  <TextField
-                    label="Calories"
-                    id="intakeCalorieCount"
-                    value={intakeCalories}
-                    onChange={(event) => {
-                      setIntakeCalories(event.target.value);
-                    }}
-                    type="number"
-                  />
-                </Box>
-                <Box>
-                  <DatePicker
-                    label="Date"
-                    value={intakeDate}
-                    onChange={(newValue) => setIntakeDate(newValue)}
-                    maxDate={dayjs()}
-                  />
-                </Box>
-                <Box>
-                  <Button variant="contained" size="large">
-                    Add
-                  </Button>
-                </Box>
+                <TextField
+                  label="Calories"
+                  id="intakeCalorieCount"
+                  value={intakeCalories}
+                  onChange={(event) => {
+                    setIntakeCalories(event.target.value);
+                  }}
+                  type="number"
+                />
+                <DatePicker
+                  label="Date"
+                  value={intakeDate}
+                  onChange={(newValue) => setIntakeDate(newValue)}
+                  maxDate={dayjs()}
+                />
+                <Button variant="contained" size="large">
+                  Add
+                </Button>
               </Box>
             </CardContent>
           </Card>
           <Card sx={{ gridArea: "week" }} elevation={5}>
-            <CardHeader title={"Weekly Stats"} />
+            <CardHeader
+              title={"Weekly Stats"}
+              subheader={"Track your performance over the last week"}
+              avatar={<TimelineIcon />}
+            />
           </Card>
           <Card sx={{ gridArea: "burntout" }} elevation={5}>
             <CardHeader
               title={"Calorie Burn Out"}
               subheader={"Enter the calories burnt out"}
-              avatar = {<WhatshotIcon/>}
+              avatar={<WhatshotIcon />}
             />
             <CardContent>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Box>
-                  <TextField
-                    label="Calories"
-                    id="burntoutCalorieCount"
-                    value={burntoutCalories}
-                    onChange={(event) => {
-                      setBurntoutCalories(event.target.value);
-                    }}
-                    type="number"
-                  />
-                </Box>
-                <Box>
-                  <DatePicker
-                    label="Date"
-                    value={burnoutDate}
-                    onChange={(newValue) => setBurnoutDate(newValue)}
-                    maxDate={dayjs()}
-                  />
-                </Box>
-                <Box>
-                  <Button variant="contained" size="large">
-                    Add
-                  </Button>
-                </Box>
+                <TextField
+                  label="Calories"
+                  id="burntoutCalorieCount"
+                  value={burntoutCalories}
+                  onChange={(event) => {
+                    setBurntoutCalories(event.target.value);
+                  }}
+                  type="number"
+                />
+                <DatePicker
+                  label="Date"
+                  value={burnoutDate}
+                  onChange={(newValue) => setBurnoutDate(newValue)}
+                  maxDate={dayjs()}
+                />
+                <Button variant="contained" size="large">
+                  Add
+                </Button>
               </Box>
             </CardContent>
           </Card>
