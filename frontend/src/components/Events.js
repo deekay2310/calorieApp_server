@@ -17,6 +17,7 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import Modal from '@mui/material/Modal'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Header from './Header';
 
 function Copyright() {
     return (
@@ -80,7 +81,7 @@ const cards = [{
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Events() {
+export default function Events(props) {
 
     // Step 2: Create state for modal visibility
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -96,15 +97,7 @@ export default function Events() {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <CssBaseline />
-            <AppBar position="relative">
-                <Toolbar>
-                    <CameraIcon sx={{ mr: 2 }} />
-                    <Typography variant="h6" color="inherit" noWrap>
-                        Album layout
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+            <Header {...props}/>
             <main>
                 {/* Hero unit */}
                 <Box
