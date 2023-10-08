@@ -183,7 +183,7 @@ function UserCaloriesPage(props) {
             <CardHeader
               title={"Calorie Intake"}
               subheader={"Enter the food and calories consumed to track it"}
-              avatar={<FastfoodIcon />}
+              avatar = {<FastfoodIcon/>}
             />
             <CardContent>
               <form onSubmit={handleAddCalorieIntake}>
