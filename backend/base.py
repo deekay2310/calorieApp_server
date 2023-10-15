@@ -47,7 +47,6 @@ def register():
     query = {
         "email": email,
     }
-    print(last_name)
     try:
         inserted = mongo.db.user.update_one(query, {"$set": new_document}, upsert=True)
         if (inserted.upserted_id):
@@ -96,12 +95,12 @@ def get_events():
     return jsonify(events)
 
 @api.route('/is-enrolled', methods=['POST'])
+@jwt_required()
 def is_enrolled():
     data = request.json
-    userEmail = data['email']
     eventTitle = data['eventTitle']
-
-    enrollment = mongo.db.user.find_one({"email": userEmail, "eventTitle": eventTitle})
+    current_user = get_jwt_identity()
+    enrollment = mongo.db.user.find_one({"email": current_user, "eventTitle": eventTitle})
 
     if enrollment:
         return jsonify({"isEnrolled": True})
@@ -110,12 +109,14 @@ def is_enrolled():
 
 
 @api.route('/enroll', methods=['POST'])
+@jwt_required()
 def enroll_event():
     data = request.get_json()  # get data from POST request
+    current_user = get_jwt_identity()
     try:
         # Insert data into MongoDB
         mongo.db.user.insert_one({
-            "email": data['email'],
+            "email": current_user,
             "eventTitle": data['eventTitle']
         })
         response = {"status": "Data saved successfully"}
@@ -137,11 +138,8 @@ def my_profile():
 @api.route('/caloriesConsumed',methods=["POST"])
 @jwt_required()
 def addUserConsumedCalories():
-    print("Hello")
     data = request.get_json()  # get data from POST request
     current_user = get_jwt_identity()
-    print(data)
-    print(current_user)
     try:
         # Insert data into MongoDB
         mongo.db.user.update_one({'email': current_user, "consumedDate": data['intakeDate']}, {"$push": {"foodConsumed": {"item":data["intakeFoodItem"],"calories":data["intakeCalories"]}}}, upsert=True)
@@ -155,11 +153,8 @@ def addUserConsumedCalories():
 @api.route('/caloriesBurned',methods=["POST"])
 @jwt_required()
 def addUserBurnedCalories():
-    print("Hello")
     data = request.get_json()  # get data from POST request
     current_user = get_jwt_identity()
-    print(data)
-    print(current_user)
     try:
         # Insert data into MongoDB
         mongo.db.user.update_one({'email': current_user, "consumedDate": data['burnoutDate']}, {"$inc": {"burntCalories": int(data["burntoutCalories"])}}, upsert=True)
@@ -174,12 +169,9 @@ def addUserBurnedCalories():
 @jwt_required()
 def getWeekHistory():
     data = request.get_json()  # get data from POST request
-    print(data)
     current_user = get_jwt_identity()
     todayDate = datetime.strptime(data["todayDate"],"%m/%d/%Y")
     dates = [(todayDate-timedelta(days=x)).strftime("%m/%d/%Y") for x in range(7)]
-    print(dates)
-    print(current_user)
     calorieLimit = 1000
     result = []
     try:
@@ -212,7 +204,6 @@ def getWeekHistory():
             # }
             res = {}
             data = mongo.db.user.find_one({'email': current_user, "consumedDate": dateToFind})
-            print(data)
             res["dayIndex"] = index
             res["date"] = dateToFind
             if data:
@@ -246,6 +237,26 @@ def getFoodCalorieMapping():
         # Response should be in this format {foodItem: calories, foodItem: calories....} 
         # For Example { Potato: 50, Acai: 20, Cheeseburger: 80 }
         response = {item["food"]:item["calories"] for item in data}
+        statusCode = 200
+    except Exception as e:
+        response = {"status": "Error", "message": str(e)}
+        statusCode = 500
+    return jsonify(response),statusCode
+
+@api.route('/usersEvents',methods=["GET"])
+@jwt_required()
+def getUserRegisteredEvents():
+    try:
+        # current_user = get_jwt_identity()
+        current_user = get_jwt_identity()
+        data = mongo.db.user.find({"email": current_user, "eventTitle":{"$exists": True}})
+        response = []
+        date="10/23/2023"
+        for item in data:
+            res = {"eventName": item["eventTitle"], "date": date}
+            response.append(res)
+        # Response should be in this format [{eventName: Yoga, date: "12/11/2023"},{eventName: Swimming, date: "11/10/2023"}]
+        # For Example { Potato: 50, Acai: 20, Cheeseburger: 80 }
         statusCode = 200
     except Exception as e:
         response = {"status": "Error", "message": str(e)}

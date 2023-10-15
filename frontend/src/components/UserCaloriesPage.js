@@ -107,38 +107,25 @@ function UserCaloriesPage(props) {
       });
     
     // Make API call to backend to get events user registered for from DB.
-    // Either ensure API sends in the below format, or format in theis method on receiving it, to ensure it is in the below format
-    let eventsData = [
-      {
-        eventName: "Yoga",
-        date: "10/19/2023",
+    axios({
+      method: "GET",
+      url: "/usersEvents",
+      headers: {
+        Authorization: "Bearer " + props.state.token,
       },
-      {
-        eventName: "Swimming",
-        date: "10/20/2023",
-      },
-    ];
-    // set the foodItems variable with the key-value data
-    setEvents(eventsData);
-    // TO DO: UPDATE THIS API CALL TO PERFORM THE ABOVE FUNCTIONALITY AND REMOVE THE ABOVE LINES
-    // axios({
-    //   method: "GET",
-    //   url: "/GET_USERS_EVENTS",
-    //   headers: {
-    //     Authorization: "Bearer " + props.token,
-    //   },
-    // })
-    //   .then((response) => {
-    //     const res = response.data;
-    //     setEvents(res);
-    //   })
-    //   .catch((error) => {
-    //     if (error.response) {
-    //       console.log(error.response);
-    //       console.log(error.response.status);
-    //       console.log(error.response.headers);
-    //     }
-    //   });
+    })
+      .then((response) => {
+        const res = response.data;
+        console.log(res)
+        setEvents(res);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
   }, [reloadTodayData]);
   const [intakeItem, setIntakeItem] = useState("");
   const [intakeCalories, setIntakeCalories] = useState("");
