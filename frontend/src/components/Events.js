@@ -126,7 +126,6 @@ export default function Events(props) {
             <CssBaseline />
             <Header {...props} />
             <main>
-                {/* Hero unit */}
                 <Box
                     sx={{
                         bgcolor: 'background.paper',
@@ -145,7 +144,7 @@ export default function Events(props) {
                             Events
                         </Typography>
                         <Typography variant="h5" align="center" color="text.secondary" paragraph>
-                            Start your wellness journey with us today! Discover yoga, swimming, gym, and more. Click "More Information" for event details, or add your own to our vibrant community.
+                            Start your wellness journey with us today! Discover yoga, swimming, gym, and more. Click "More Information" for event details, and enroll into events that motivate you.
                         </Typography>
                         <Stack
                             sx={{ pt: 4 }}
@@ -160,7 +159,6 @@ export default function Events(props) {
                 </Box>
 
                 <Container sx={{ py: 8 }} maxWidth="md">
-                    {/* End hero unit */}
                     <Grid container spacing={4}>
                         {eventsFiltered.map((event) => (
                             <Grid item key={event} xs={12} sm={6} md={4}>
