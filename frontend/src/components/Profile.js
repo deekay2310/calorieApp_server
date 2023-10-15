@@ -32,7 +32,6 @@ function Profile(props) {
 
   return (
     <div className="Profile">
-      <Header {...props}/>
         <p>To get your profile details: </p><button onClick={getData}>Click me</button>
         {profileData && <div>
               <p>Profile name: {profileData.profile_name}</p>

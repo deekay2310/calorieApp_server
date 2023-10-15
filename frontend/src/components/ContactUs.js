@@ -5,7 +5,6 @@ import Header from './Header';
 const ContactUs = (props) => {
   return (
     <div>
-      <Header {...props}/>
       <Container maxWidth="sm" style={{ textAlign: 'center', marginTop: '50px' }}>
         <Divider style={{ marginBottom: '20px' }} />
         <Typography variant="h4" component="div" style={{ textTransform: 'uppercase' }}>

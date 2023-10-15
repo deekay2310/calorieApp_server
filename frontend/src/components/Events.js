@@ -97,7 +97,6 @@ export default function Events(props) {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Header {...props}/>
             <main>
                 {/* Hero unit */}
                 <Box
