@@ -13,14 +13,15 @@ from pymongo import MongoClient
 
 api = Flask(__name__)
 api.secret_key = 'secret'
-api.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/test'
-api.config['MONGO_CONNECT'] = False
 if api.config['TESTING']:
     # Use mongomock for testing
     api.mongo_client = mongomock.MongoClient()
 else:
     # Use a real MongoDB connection for production
     api.mongo_client = MongoClient('localhost', 27017)
+    api.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/test'
+    api.config['MONGO_CONNECT'] = False
+
 api.config["JWT_SECRET_KEY"] = "softwareEngineering"
 api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(api)
