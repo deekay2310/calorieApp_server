@@ -21,8 +21,8 @@ class APITestCase(unittest.TestCase):
         mock_find = Mock()
         collection.find = mock_find
         mock_find.return_value = [
-            {"name": "Event 1"},
-            {"name": "Event 2"},
+            {"_id": "Event 1"},
+            {"_id": "Event 2"},
         ]
 
         response = self.client.get('/events')
