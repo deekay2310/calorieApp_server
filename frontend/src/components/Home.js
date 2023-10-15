@@ -7,7 +7,6 @@ function Home(props) {
 
   return (
     <div className="Home">
-      <Header {...props}/>
         <UserCaloriesPage {...props}/>
     </div>
   );
