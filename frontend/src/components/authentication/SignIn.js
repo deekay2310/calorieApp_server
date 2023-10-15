@@ -41,17 +41,13 @@ function SignIn(props) {
       },
     })
       .then((response) => {
-        console.log(response.data.access_token);
+        console.log(response.data.message);
         let logInState = {
           loggedIn: true,
           token: response.data.access_token,
         };
-        console.log("Hello1");
-        console.log("Hello2");
-        console.log(props)
         props.dispatch(updateState(logInState));
         saveToken(response.data.access_token);
-        console.log("Get Token"+getToken())
         history.push("/");
       })
       .catch((error) => {
