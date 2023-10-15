@@ -1,15 +1,15 @@
 import unittest
-import mongomock
-from base import api
-from unittest.mock import patch, Mock
+from base import api, setup_mongo_client
+from unittest.mock import Mock
 
 class APITestCase(unittest.TestCase):
     
     def setUp(self):
         self.app = api
         self.app.config['TESTING'] = True
-        self.app.mongo_client = mongomock.MongoClient()  # Use mongomock for testing
+        setup_mongo_client(self.app)  # Set up the mongo client after changing the TESTING flag
         self.client = self.app.test_client()
+        print("Using MongoDB client:", type(self.app.mongo_client)) 
 
     
     def test_get_events(self):

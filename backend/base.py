@@ -13,21 +13,25 @@ from pymongo import MongoClient
 
 api = Flask(__name__)
 api.secret_key = 'secret'
-if api.config['TESTING']:
-    # Use mongomock for testing
-    api.mongo_client = mongomock.MongoClient()
-else:
-    # Use a real MongoDB connection for production
-    api.mongo_client = MongoClient('localhost', 27017)
-    mongo=api.mongo_client["test"]
-    # api.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/test'
-    # api.config['MONGO_CONNECT'] = False
-
 api.config["JWT_SECRET_KEY"] = "softwareEngineering"
 api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(api)
+mongo = None
 
-    
+def setup_mongo_client(app):
+    global mongo
+    if app.config['TESTING']:
+        # Use mongomock for testing
+        app.mongo_client = mongomock.MongoClient()
+        mongo = app.mongo_client["test"]
+    else:
+        # Use a real MongoDB connection for production
+        app.mongo_client = MongoClient('localhost', 27017)
+        mongo = app.mongo_client["test"]
+
+# Call setup_mongo_client during normal (non-test) app initialization
+setup_mongo_client(api)
+
 @api.route('/token', methods=["POST"])
 def create_token():
     email = request.json.get("email", None)
@@ -123,7 +127,7 @@ def enroll_event():
     data = request.get_json()  # get data from POST request
     try:
         # Insert data into MongoDB
-        mongo.insert_one({
+        mongo.user.insert_one({
             "email": data['email'],
             "eventTitle": data['eventTitle']
         })
