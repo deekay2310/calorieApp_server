@@ -130,23 +130,28 @@ def calories():
         form = CalorieForm()
         if form.validate_on_submit():
             if request.method == 'POST':
-                email = session.get('email')
-                food = request.form.get('food')
-                cals = food.split(" ")
-                cals = int(cals[-1][1:(len(cals[1]) - 1)])
-                print(cals)
-                burn = request.form.get('burnout')
+                selected_date = request.form.get('date')
+                if selected_date <= now:
+                    email = session.get('email')
+                    food = request.form.get('food')
 
-                temp = mongo.db.calories.find_one({'email': email, 'date': now}, {
-                    'email', 'calories', 'burnout'})
-                if temp is not None:
-                    mongo.db.calories.update({'email': email}, {'$set': {
-                                             'calories': temp['calories'] + cals, 'burnout': temp['burnout'] + int(burn)}})
+                    cals = food.split(" ")
+                    cals = int(cals[-1][1:(len(cals[1]) - 1)])
+                    print(cals)
+                    burn = request.form.get('burnout')
+
+                    temp = mongo.db.calories.find_one({'email': email, 'date': selected_date}, {
+                        'email', 'calories', 'burnout'})
+                    if temp is not None:
+                        mongo.db.calories.update({'email': email}, {'$set': {
+                                                'calories': temp['calories'] + cals, 'burnout': temp['burnout'] + int(burn)}})
+                    else:
+                        mongo.db.calories.insert_one(
+                            {'date': selected_date, 'email': email, 'calories': cals, 'burnout': int(burn)})
+                    flash(f'Successfully updated the data', 'success')
+                    return redirect(url_for('calories'))
                 else:
-                    mongo.db.calories.insert_one(
-                        {'date': now, 'email': email, 'calories': cals, 'burnout': int(burn)})
-                flash(f'Successfully updated the data', 'success')
-                return redirect(url_for('calories'))
+                    flash(f'Select a current date or date in the past', 'warning')
     else:
         return redirect(url_for('home'))
     return render_template('calories.html', form=form, time=now)
