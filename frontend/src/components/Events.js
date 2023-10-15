@@ -1,125 +1,144 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Modal from '@mui/material/Modal';
+import * as React from "react";
+import { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Header from './Header';
-import axios from 'axios';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Header from "./Header";
+import axios from "axios";
 
 const SearchBar = ({ setSearchQuery }) => (
-    <form>
-        <TextField
-            id="search-bar"
-            className="text"
-            onInput={(e) => {
-                setSearchQuery(e.target.value);
-            }}
-            label="Enter an event"
-            variant="outlined"
-            placeholder="Search..."
-            size="small"
-        />
-    </form>
+  <form>
+    <TextField
+      id="search-bar"
+      className="text"
+      onInput={(e) => {
+        setSearchQuery(e.target.value);
+      }}
+      label="Enter an event"
+      variant="outlined"
+      placeholder="Search..."
+      size="small"
+    />
+  </form>
 );
 
 const filterData = (query, cards) => {
-    if (!query) {
-        return cards;
-    } else {
-        return cards.filter((e) => e.title.toLowerCase().includes(query.toLowerCase()));
-    }
+  if (!query) {
+    return cards;
+  } else {
+    return cards.filter((e) =>
+      e.title.toLowerCase().includes(query.toLowerCase())
+    );
+  }
 };
 
 const defaultTheme = createTheme();
 
 export default function Events(props) {
+  const [events, setEvents] = useState([]);
 
-    const [events, setEvents] = useState([]);
+  const [enrollmentStatus, setEnrollmentStatus] = useState({});
 
-    const [enrollmentStatus, setEnrollmentStatus] = useState({});
+  // Create state for modal visibility
+  const [eventModals, setEventModals] = useState({});
 
-    // Create state for modal visibility
-    const [eventModals, setEventModals] = useState({});
+  // Function to open and close the modal
+  const handleOpenModal = (eventTitle) => {
+    const userEmail = "user@example.com"; // Get user email here
 
-    // Function to open and close the modal
-    const handleOpenModal = (eventTitle) => {
-        const userEmail = "user@example.com"; // Get user email here
+    axios
+      .post(
+        "/is-enrolled",
+        {
+          eventTitle: eventTitle,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + props.state.token,
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data.isEnrolled) {
+          setEnrollmentStatus((prevStatus) => ({
+            ...prevStatus,
+            [eventTitle]: true,
+          }));
+        } else {
+          setEnrollmentStatus((prevStatus) => ({
+            ...prevStatus,
+            [eventTitle]: false,
+          }));
+        }
+        setEventModals({ ...eventModals, [eventTitle]: true });
+      })
+      .catch((error) => {
+        console.error(
+          "An error occurred while checking enrollment status: ",
+          error
+        );
+      });
+  };
 
-    axios.post('/is-enrolled', {
-        email: userEmail,
-        eventTitle: eventTitle
-    })
-        .then(response => {
-            if (response.data.isEnrolled) {
-                setEnrollmentStatus(prevStatus => ({
-                    ...prevStatus,
-                    [eventTitle]: true
-                }));
-            } else {
-                setEnrollmentStatus(prevStatus => ({
-                    ...prevStatus,
-                    [eventTitle]: false
-                }));
-            }
-            setEventModals({ ...eventModals, [eventTitle]: true });
-        })
-        .catch(error => {
-            console.error("An error occurred while checking enrollment status: ", error);
-        });
-    };
+  const handleCloseModal = (eventTitle) => {
+    setEventModals({ ...eventModals, [eventTitle]: false });
+  };
 
-    const handleCloseModal = (eventTitle) => {
-        setEventModals({ ...eventModals, [eventTitle]: false });
-    };
+  const [searchQuery, setSearchQuery] = useState("");
 
-    const [searchQuery, setSearchQuery] = useState("");
+  const eventsFiltered = filterData(searchQuery, events);
 
-    const eventsFiltered = filterData(searchQuery, events);
+  useEffect(() => {
+    fetch("/events")
+      .then((response) => response.json())
+      .then((data) => setEvents(data))
+      .catch((error) => console.error("Error fetching events:", error));
+  }, []);
 
-    useEffect(() => {
-        fetch('/events')
-        .then(response => response.json())
-        .then(data => setEvents(data))
-        .catch(error => console.error('Error fetching events:', error));
-    }, []);
+  const handleEnroll = (eventTitle) => {
+    const userEmail = "user@example.com"; // Get user email here
 
-    const handleEnroll = (eventTitle) => {
-        const userEmail = "user@example.com"; // Get user email here
-    
-        axios.post('/enroll', {
-            email: userEmail,
-            eventTitle: eventTitle
-        })
-            .then(response => {
-                console.log(response.data);
-                if (response.data.status === "Data saved successfully") {
-                    setEnrollmentStatus(prevStatus => ({
-                        ...prevStatus,
-                        [eventTitle]: true
-                    }));
-                }
-            })
-            .catch(error => {
-                console.error("An error occurred while sending the data: ", error);
-                setEnrollmentStatus(prevStatus => ({
-                    ...prevStatus,
-                    [eventTitle]: false
-                }));
-            });
-    };
-
-    
+    axios
+      .post(
+        "/enroll",
+        {
+          email: userEmail,
+          eventTitle: eventTitle,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + props.state.token,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.status === "Data saved successfully") {
+          setEnrollmentStatus((prevStatus) => ({
+            ...prevStatus,
+            [eventTitle]: true,
+          }));
+        }
+      })
+      .catch((error) => {
+        console.error("An error occurred while sending the data: ", error);
+        setEnrollmentStatus((prevStatus) => ({
+          ...prevStatus,
+          [eventTitle]: false,
+        }));
+      });
+  };
 
     return (
         <ThemeProvider theme={defaultTheme}>
