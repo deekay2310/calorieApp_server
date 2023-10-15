@@ -9,7 +9,8 @@ import Profile from "./Profile";
 import Home from "./Home";
 import burnoutReducer, { updateState } from "../burnoutReducer";
 import PrivateRoute from "./PrivateRoute";
-import useToken from './authentication/useToken';
+import useToken from "./authentication/useToken";
+import { useHistory } from "react-router-dom";
 
 const initialState = {
   loggedIn: false,
@@ -23,18 +24,18 @@ const initialState = {
 
 function Router() {
   const { saveToken, getToken, token, removeToken } = useToken();
-
+  const history = useHistory();
   const [state, dispatch] = useReducer(burnoutReducer, initialState);
-  useEffect(() => {
+  if (!state.loggedIn) {
     let loggedInUserJWTtoken = getToken();
-    if(loggedInUserJWTtoken){
+    if (loggedInUserJWTtoken) {
       let logInState = {
         loggedIn: true,
-        token: token
+        token: token,
       };
       dispatch(updateState(logInState));
     }
-  }, []);
+  }
   // const { setupToken, token, removeToken  } = useToken();
 
   // const userHasToken = checkUserToken(false);
@@ -47,11 +48,8 @@ function Router() {
         <SignUp />
       </Route>
       <Route path="/signin">
-        <SignIn dispatch={dispatch}/>
+        <SignIn dispatch={dispatch} />
       </Route>
-      <PrivateRoute state={state} dispatch={dispatch} path="/">
-        <Home state={state} dispatch={dispatch} />
-      </PrivateRoute>
       <PrivateRoute state={state} dispatch={dispatch} path="/profile">
         <Profile state={state} dispatch={dispatch} />
       </PrivateRoute>
@@ -60,6 +58,9 @@ function Router() {
       </PrivateRoute>
       <PrivateRoute state={state} dispatch={dispatch} path="/events">
         <Events state={state} dispatch={dispatch} />
+      </PrivateRoute>
+      <PrivateRoute state={state} dispatch={dispatch} path="/">
+        <Home state={state} dispatch={dispatch} />
       </PrivateRoute>
     </Switch>
   );
