@@ -3,6 +3,8 @@ import bcrypt
 from flask_pymongo import PyMongo
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
+from pymongo import MongoClient
+import mongomock
 from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
                                unset_jwt_cookies, jwt_required, JWTManager
@@ -13,17 +15,22 @@ api = Flask(__name__)
 api.secret_key = 'secret'
 api.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/test'
 api.config['MONGO_CONNECT'] = False
-mongo = PyMongo(api)
+if api.config['TESTING']:
+    # Use mongomock for testing
+    api.mongo_client = mongomock.MongoClient()
+else:
+    # Use a real MongoDB connection for production
+    api.mongo_client = MongoClient('localhost', 27017)
 api.config["JWT_SECRET_KEY"] = "softwareEngineering"
 api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(api)
-mongo = PyMongo(api)
+
     
 @api.route('/token', methods=["POST"])
 def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    user = mongo.db.user.find_one({"email": email})
+    user = api.mongo_client.db.user.find_one({"email": email})
     if (user is not None and (user["password"] == password)):
         access_token = create_access_token(identity=email)
         return jsonify({"message": "Login successful", "access_token":access_token})
@@ -48,7 +55,7 @@ def register():
     }
     print(last_name)
     try:
-        inserted = mongo.db.user.update_one(query, {"$set": new_document}, upsert=True)
+        inserted = api.mongo_client.db.user.update_one(query, {"$set": new_document}, upsert=True)
         if (inserted.upserted_id):
             response = jsonify({"msg": "register successful"})
         else:   
@@ -88,7 +95,7 @@ def logout():
 
 @api.route('/events', methods=['GET'])
 def get_events():
-    events_collection = mongo.db.events
+    events_collection = api.mongo_client.db.events
     events = list(events_collection.find({}))
     for event in events:
         event["_id"] = str(event["_id"]) # Convert ObjectId to string
@@ -100,7 +107,7 @@ def is_enrolled():
     userEmail = data['email']
     eventTitle = data['eventTitle']
 
-    enrollment = mongo.db.user.find_one({"email": userEmail, "eventTitle": eventTitle})
+    enrollment = api.mongo_client.db.user.find_one({"email": userEmail, "eventTitle": eventTitle})
 
     if enrollment:
         return jsonify({"isEnrolled": True})
@@ -113,7 +120,7 @@ def enroll_event():
     data = request.get_json()  # get data from POST request
     try:
         # Insert data into MongoDB
-        mongo.db.user.insert_one({
+        api.mongo_client.db.user.insert_one({
             "email": data['email'],
             "eventTitle": data['eventTitle']
         })
