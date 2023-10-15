@@ -50,11 +50,11 @@ class CalorieForm(FlaskForm):
     for i in get_docs:
         temp = i['food'] + ' (' + i['calories'] + ')'
         result.append((temp, temp))
-
+    date = DateField('Date', validators=[DataRequired()])
     food = SelectField(
-        'Select Food', choices=result)
+        'Calories Consumed - Select Food', choices=result)
 
-    burnout = StringField('Burn Out', validators=[DataRequired()])
+    burnout = StringField('Calories Burnt', validators=[DataRequired()])
     submit = SubmitField('Save')
 
 
