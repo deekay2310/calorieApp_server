@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "./Header";
 import {
@@ -30,52 +30,35 @@ const weightCardStyles = {
   },
 };
 
-function Profile(initialName, initialAge, initialWeight, initialHeight, props) {
-  const [currentWeight, setCurrentWeight] = useState("150");
-  const [currentHeight, setCurrentHeight] = useState("180");
-  const [currentGoal, setCurrentGoal] = useState("Bulk");
-  const [editableWeight, setEditableWeight] = useState(currentWeight);
-  const [editableHeight, setEditableHeight] = useState(currentHeight);
+function Profile(props) {
+  const [targetWeight, settargetWeight] = useState("");
+  const [currentTargetCalories, setTargetCalories] = useState("");
+  const [currentGoal, setCurrentGoal] = useState("");
+  const [editableWeight, setEditableTargetWeight] = useState(targetWeight);
+  const [editableTargetCalories, setEditableTargetCalories] = useState(currentTargetCalories);
   const [editableGoal, setEditableGoal] = useState(currentGoal);
 
-  const handleSaveInput = () => {
-    setCurrentWeight(editableWeight);
-    setCurrentHeight(editableHeight);
+  const handleSaveInput = (e) => {
+    console.log(editableWeight, editableTargetCalories, editableGoal)
+    settargetWeight(editableWeight);
+    setTargetCalories(editableTargetCalories);
     setCurrentGoal(editableGoal);
-  };
-
-  initialName = "John Doe";
-  initialAge = 30;
-  initialWeight = 160;
-  initialHeight = 6.0;
-
-  const [name, setName] = useState(initialName);
-  const [age, setAge] = useState(initialAge);
-  const [weight, setWeight] = useState(initialWeight);
-  const [height, setHeight] = useState(initialHeight);
-
-  const [profileData, setProfileData] = useState(null);
-
-  const handleSave = () => {
-    // You can implement the logic here to save the values
-    console.log("Saving values:", name, age, weight, height);
-  };
-  function getData() {
-    console.log(props.token);
+    console.log(targetWeight,currentTargetCalories, currentGoal)
     axios({
-      method: "GET",
-      url: "/profile",
+      method: "POST",
+      url: "/goalsUpdate",
       headers: {
-        Authorization: "Bearer " + props.token,
+        Authorization: "Bearer " + props.state.token,
+      },
+      data: {
+        targetWeight: editableWeight,
+        targetCalories: editableTargetCalories,
+        targetGoal: editableGoal,
       },
     })
       .then((response) => {
         const res = response.data;
-        res.access_token && props.setToken(res.access_token);
-        setProfileData({
-          profile_name: res.name,
-          about_me: res.about,
-        });
+        console.log(res)
       })
       .catch((error) => {
         if (error.response) {
@@ -86,6 +69,89 @@ function Profile(initialName, initialAge, initialWeight, initialHeight, props) {
       });
   }
 
+
+  const initialFirstName = "";
+  const initialLastName = "";
+  const initialAge = 30;
+  const initialWeight = 160;
+  const initialHeight = 6.0;
+
+  const [firstName, setFirstName] = useState(initialFirstName);
+  const [lastName, setLastName] = useState(initialLastName);
+  const [age, setAge] = useState(initialAge);
+  const [weight, setWeight] = useState(initialWeight);
+  const [height, setHeight] = useState(initialHeight);
+
+  const [profileData, setProfileData] = useState(null);
+
+  const handleProfileSave = () => {
+    // You can implement the logic here to save the values
+    console.log("Saving values:",firstName, lastName, age, weight, height);
+  };
+
+
+  useEffect(() => {
+    // Make API call to backend to get food items and their calories from DB.
+    axios({
+      method: "GET",
+      url: "/profile",
+      headers: {
+        Authorization: "Bearer " + props.state.token,
+      },
+    })
+      .then((response) => {
+        const res = JSON.parse(response['data']);
+        console.log(res)
+        setFirstName(res.first_name)
+        setLastName(res.last_name)
+        setAge(res.age)
+        setWeight(res.weight)
+        setHeight(res.height)
+        setCurrentGoal(res.target_goal)
+        setTargetCalories(res.target_calories)
+        settargetWeight(res.target_weight)
+        setEditableGoal(res.target_goal)
+        setEditableTargetCalories(res.target_calories)
+        setEditableTargetWeight(res.target_weight)
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+
+    }, []);
+
+
+    const handleProfileSubmit = (e) => {
+      console.log('height=' + height + 'weight:'+ weight)
+      axios({
+        method: "POST",
+        url: "/profileUpdate",
+        headers: {
+          Authorization: "Bearer " + props.state.token,
+        },
+        data: {
+          firstName: firstName,
+          lastName: lastName,
+          age: age,
+          height: height,
+          weight: weight
+        },
+      })
+        .then((response) => {
+          const res = response.data;
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          }
+        });
+    };
   return (
     <>
       <Container maxWidth>
@@ -127,9 +193,17 @@ function Profile(initialName, initialAge, initialWeight, initialHeight, props) {
               </Box>
               <Box mb={2}>
                 <TextField
-                  label="Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  label="LastName"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  fullWidth
+                />
+              </Box>
+              <Box mb={2}>
+                <TextField
+                  label="FirstName"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   fullWidth
                 />
               </Box>
@@ -157,7 +231,7 @@ function Profile(initialName, initialAge, initialWeight, initialHeight, props) {
                   fullWidth
                 />
               </Box>
-              <Button variant="contained" color="primary" onClick={handleSave}>
+              <Button variant="contained" color="primary" onClick={handleProfileSubmit}>
                 Update  
               </Button>
             </CardContent>
@@ -198,7 +272,7 @@ function Profile(initialName, initialAge, initialWeight, initialHeight, props) {
                         <FitnessCenterIcon fontSize="large" />
                       </IconButton>
                       <Typography style={weightCardStyles.weightText}>
-                        {currentWeight}
+                        {targetWeight}
                       </Typography>
                     </div>
                   </CardContent>
@@ -207,7 +281,7 @@ function Profile(initialName, initialAge, initialWeight, initialHeight, props) {
                     variant="outlined"
                     fullWidth
                     value={editableWeight}
-                    onChange={(e) => setEditableWeight(e.target.value)}
+                    onChange={(e) => setEditableTargetWeight(e.target.value)}
                   />
                 </Card>
                 <Card
@@ -223,7 +297,7 @@ function Profile(initialName, initialAge, initialWeight, initialHeight, props) {
                         <WhatshotIcon fontSize="large" />
                       </IconButton>
                       <Typography style={weightCardStyles.weightText}>
-                        {currentHeight}
+                        {currentTargetCalories}
                       </Typography>
                     </div>
                   </CardContent>
@@ -231,8 +305,8 @@ function Profile(initialName, initialAge, initialWeight, initialHeight, props) {
                     label="Daily Calories Burn Goal"
                     variant="outlined"
                     fullWidth
-                    value={editableHeight}
-                    onChange={(e) => setEditableHeight(e.target.value)}
+                    value={editableTargetCalories}
+                    onChange={(e) => setEditableTargetCalories(e.target.value)}
                   />
                 </Card>
                 <Card

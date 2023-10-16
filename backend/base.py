@@ -10,6 +10,7 @@ from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
                                unset_jwt_cookies, jwt_required, JWTManager
 from datetime import datetime, timedelta
 from functools import reduce
+from bson import json_util 
 from pymongo import MongoClient
 
 
@@ -72,27 +73,6 @@ def register():
         response = jsonify({"msg": "register failed"})
 
     return response
-    # """
-    # register() function displays the Registration portal (register.html) template
-    # route "/register" will redirect to register() function.
-    # RegistrationForm() called and if the form is submitted then various values are fetched and updated into database
-    # Input: Username, Email, Password, Confirm Password
-    # Output: Value update in database and redirected to home login page
-    # """
-    # if not session.get('email'):
-    #     form = RegistrationForm()
-    #     if form.validate_on_submit():
-    #         if request.method == 'POST':
-    #             username = request.form.get('username')
-    #             email = request.form.get('email')
-    #             password = request.form.get('password')
-    #             mongo.db.user.insert({'name': username, 'email': email, 'pwd': bcrypt.hashpw(
-    #                 password.encode("utf-8"), bcrypt.gensalt())})
-    #         flash(f'Account created for {form.username.data}!', 'success')
-    #         return redirect(url_for('home'))
-    # else:
-    #     return redirect(url_for('home'))
-    # return render_template('register.html', title='Register', form=form)
 
 @api.route("/logout", methods=["POST"])
 def logout():
@@ -143,12 +123,9 @@ def enroll_event():
 @api.route('/profile')
 @jwt_required()
 def my_profile():
-    response_body = {
-        "name": "Nagato",
-        "about" :"Hello! I'm a full stack developer that loves python and javascript"
-    }
-
-    return response_body
+    current_user = get_jwt_identity()
+    profile = mongo.db.user.find_one({"email": current_user})
+    return jsonify(json_util.dumps(profile))
 
 @api.route('/caloriesConsumed',methods=["POST"])
 @jwt_required()
@@ -164,6 +141,59 @@ def addUserConsumedCalories():
         response = {"status": "Error", "message": str(e)}
         statusCode = 500
     return jsonify(response),statusCode
+
+@api.route('/profileUpdate',methods=["POST"])
+@jwt_required()
+def profileUpdate():
+    current_user = get_jwt_identity()
+    first_name = request.json.get('firstName', None)
+    last_name = request.json.get('lastName', None)
+    age = request.json.get('age', None)
+    weight = request.json.get('weight', None)
+    height = request.json.get('height', None)
+    new_document = {
+    "first_name": first_name,
+    "last_name": last_name,
+    "age": age,
+    "weight": weight,
+    "height": height,
+    }
+    query = {
+        "email": current_user,
+    }
+    try:
+        mongo.db.user.update_one(query, {"$set": new_document}, upsert=True)
+        response = jsonify({"msg": "update successful"})
+    except Exception as e:
+        response = jsonify({"msg": "update failed"})
+
+    return response
+
+@api.route('/goalsUpdate',methods=["POST"])
+@jwt_required()
+def goalsUpdate():
+    current_user = get_jwt_identity()
+    current_user = get_jwt_identity()
+    targetWeight = request.json.get('targetWeight', None)
+    targetCalories = request.json.get('targetCalories', None)
+    targetGoal = request.json.get('targetGoal', None)
+
+    new_document = {
+        "target_weight": targetWeight,
+        "target_calories": targetCalories,
+        "target_goal": targetGoal
+    }
+    query = {
+        "email": current_user,
+    }
+    try:
+        mongo.db.user.update_one(query, {"$set": new_document}, upsert=True)
+        response = jsonify({"msg": "update successful"})
+    except Exception as e:
+        response = jsonify({"msg": "update failed"})
+
+    return response
+
 
 @api.route('/caloriesBurned',methods=["POST"])
 @jwt_required()
