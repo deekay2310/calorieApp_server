@@ -6,7 +6,7 @@ app = App().app
 mongo = App().mongo
 
 # Process and insert food data
-with open("food_data/calories.csv", "r", encoding="ISO-8859-1") as f:
+with open("datasets/calories.csv", "r", encoding="ISO-8859-1") as f:
     lines = f.readlines()
 
     for line in lines[1:]:
@@ -15,7 +15,7 @@ with open("food_data/calories.csv", "r", encoding="ISO-8859-1") as f:
         mongo.db.food.insert_one({"food": food, "calories": calories})
 
 # Process and insert exercise data
-with open("food_data/exercise_dataset.csv", "r", encoding="utf-8") as exercise_data:
+with open("datasets/exercise_dataset.csv", "r", encoding="utf-8") as exercise_data:
     reader = csv.reader(exercise_data, delimiter=",", quotechar='"')
     next(reader, None)  # Skip the header
 
