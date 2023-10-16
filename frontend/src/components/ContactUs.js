@@ -19,7 +19,7 @@ const ContactUs = (props) => {
           Use the email below to contact the BurnOut development team. It's a group mailbox that is accessed by the core team. Feel free to reach out to us for any questions, feedback, or inquiries related to our application.
         </Typography>
         <Typography variant="h6" style={{ marginTop: '20px' }}>
-          Email: <Link href="mailto:test@gmail.edu">test@gmail.edu</Link>
+          Email: <Link href="mailto:calorie.app.server@gmail.com">contactus_burnout@​yahoo.com</Link>
         </Typography>
         <Typography variant="h6" color="text.secondary" style={{ marginTop: '20px' }}>
           We will respond to you as soon as we can!

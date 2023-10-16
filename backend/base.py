@@ -3,28 +3,42 @@ import bcrypt
 from flask_pymongo import PyMongo
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
+from pymongo import MongoClient
+import mongomock
 from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
                                unset_jwt_cookies, jwt_required, JWTManager
 from datetime import datetime, timedelta
 from functools import reduce
+from pymongo import MongoClient
 
 
 api = Flask(__name__)
 api.secret_key = 'secret'
-api.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/test'
-api.config['MONGO_CONNECT'] = False
-mongo = PyMongo(api)
 api.config["JWT_SECRET_KEY"] = "softwareEngineering"
 api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(api)
-mongo = PyMongo(api)
-    
+mongo = None
+
+def setup_mongo_client(app):
+    global mongo
+    if app.config['TESTING']:
+        # Use mongomock for testing
+        app.mongo_client = mongomock.MongoClient()
+        mongo = app.mongo_client["test"]
+    else:
+        # Use a real MongoDB connection for production
+        app.mongo_client = MongoClient('localhost', 27017)
+        mongo = app.mongo_client["test"]
+
+# Call setup_mongo_client during normal (non-test) app initialization
+setup_mongo_client(api)
+
 @api.route('/token', methods=["POST"])
 def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    user = mongo.db.user.find_one({"email": email})
+    user = mongo.user.find_one({"email": email})
     if (user is not None and (user["password"] == password)):
         access_token = create_access_token(identity=email)
         return jsonify({"message": "Login successful", "access_token":access_token})
@@ -48,7 +62,7 @@ def register():
         "email": email,
     }
     try:
-        inserted = mongo.db.user.update_one(query, {"$set": new_document}, upsert=True)
+        inserted = mongo.user.update_one(query, {"$set": new_document}, upsert=True)
         if (inserted.upserted_id):
             response = jsonify({"msg": "register successful"})
         else:   
@@ -88,8 +102,9 @@ def logout():
 
 @api.route('/events', methods=['GET'])
 def get_events():
-    events_collection = mongo.db.events
+    events_collection = mongo.events
     events = list(events_collection.find({}))
+    print(events)
     for event in events:
         event["_id"] = str(event["_id"]) # Convert ObjectId to string
     return jsonify(events)
