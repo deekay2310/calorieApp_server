@@ -52,7 +52,7 @@ https://drive.google.com/drive/folders/1M5vdCwH11C-MqK8X-Dkf5bPR0SaWA5Yc?usp=sha
 
 ![WhatsApp Image 2021-09-28 at 2 48 00 PM](https://user-images.githubusercontent.com/25662536/135546154-cfae1d2e-439a-4edc-b0bb-57f693ef5a83.jpeg)
 
-BurnOut is an easy to use application that keeps track of a user's daily calories gained and burnt. It can help the user to set goals such as weight loss/gain. Users can edit their profile by entering their height, weight, goal and target-weight. Users can enroll into numerous programs involving fitness such as yoga classes and workout sessions. Users can now connect with their friends by sending a friend-request and share their progress. This document provides a major perspective for the users to understand and take up the project as an Open source software and add on multiple features before releasing to the market. Also, the document aids the developers in understanding the code and acts as a reference point for continuing the project. 
+BurnOut is an easy to use application that keeps track of a user's daily calories gained and burnt. It can help the user to set goals such as weight loss/gain. Users can edit their profile by entering their height and weight. Goals can also be updated by editing Target Weight, Daily Calories Burn Goal and Target Goal. Users can enroll into numerous programs involving fitness such as yoga classes and workout sessions. This document provides a major perspective for the users to understand and take up the project as an Open source software and add on multiple features before releasing to the market. Also, the document aids the developers in understanding the code and acts as a reference point for continuing the project. 
 
 # Table of Contents  
 
@@ -65,7 +65,6 @@ BurnOut is an easy to use application that keeps track of a user's daily calorie
   - [Set User Profile](#set-user-profile)
   - [Enter Calories in and burnt](#enter-calories-in-and-burnt)
   - [Check History](#check-history)
-  - [Adding Friends](#adding-friends)
   - [Enrolling into several programs](#enrolling-into-several-programs)
 - [Steps for Execution:](#steps-for-execution)
 - [Source Code](#source-code)
@@ -78,9 +77,8 @@ BurnOut is an easy to use application that keeps track of a user's daily calorie
 # Why use BurnOut?
  - User can keep a track of their calorie intake.
  - User just needs to input the food they've had, calories get calculated automatically.
- - Displays a record of calories in and calories burnt out day wise in History tab.
+ - Displays a record of calories in and calories burnt out day wise in Weekly Stats section of homepage.
  - Helps user to figure out how much to eat/exercise according to their desired goal(weight loss/gain).
- - Users can connect with their friends and keep track of each other's progress
  - Enrollment into numerous yoga and workout sessions.
  - Accessible to everyone and easy to use.
 
@@ -115,9 +113,6 @@ Link to the implementation video of the BurnOut application:
  ## Enter Calories in and burnt
 <img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/calories.png>
 
- ## Chatbot
-
-<img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/Screen%20Shot%202021-12-04%20at%206.31.54%20PM.png>
 
 
 
@@ -138,9 +133,6 @@ Link to the implementation video of the BurnOut application:
  
 <img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/Screen%20Shot%202021-12-04%20at%206.30.48%20PM.png>
 
- ## Adding Friends
-
-<img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/friends.png>
 
  ## Enrolling into several programs
  
@@ -150,6 +142,18 @@ Link to the implementation video of the BurnOut application:
  # Steps for execution
  
  Step 1:
+ Install Python from the following link:
+
+ https://www.python.org/downloads/
+
+ Step 2:
+ Install Node
+
+ Install Node from the following link:
+
+ https://nodejs.org/en/download
+
+ Step 1:
  Install MongoDB using the following link:
  
  https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows
@@ -157,11 +161,11 @@ Link to the implementation video of the BurnOut application:
  Step 2: 
   Git Clone the Repository 
   
-    git clone https://github.com/deekay2310/calorieApp_server.git
+    git clone https://github.com/adi-kiran/burnout-healthgoalsapp.git
     
   (OR) Download the .zip file on your local machine
   
-    https://github.com/deekay2310/calorieApp_server.git
+    https://github.com/adi-kiran/burnout-healthgoalsapp
   
  Step 3:
    Install the required packages by running the following command in the terminal 
@@ -169,19 +173,25 @@ Link to the implementation video of the BurnOut application:
     pip install -r requirements.txt
     
  Step 4:
-    Run the following command in the terminal
-    
-    python application.py
+    Navigate to backend folder:
+    cd backend
+    Run the following command in the terminal to run backend inside backend folder:
+    Command: flask run
+
+    Navigate to frontend folder:
+    cd frontend
+    Run the following command in the terminal to run frontend inside frontend folder:
+    npm start
     
  Step 5:
     Open the URL in your browser:  
-      http://127.0.0.1:5000/
+      http://127.0.0.1:3000
       
       
   # Source Code
   
   Link to the repository:
-  https://github.com/deekay2310/calorieApp_server
+  https://github.com/adi-kiran/burnout-healthgoalsapp
   
   # Enhancements
 
@@ -196,18 +206,17 @@ Link to the implementation video of the BurnOut application:
 <center>
   <table>
     <tr>
-        <td align="center"><a href="https://github.com/deekay2310"><img src="https://avatars.githubusercontent.com/u/29257773?v=4" width="100px;" alt=""/><br /><sub><b>Dev Kumar</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/PrakruthiSomashekar"><img src="https://avatars.githubusercontent.com/u/62984587?v=4" width="100px;" alt=""/><br /><sub><b>Prakruthi Somashekar</b></sub></a></td>
-    <td align="center"><a href="https://github.com/radhikaraman20"><img src="https://avatars.githubusercontent.com/u/89432698?s=400&v=4" width="100px;" alt=""/><br /><sub><b>Radhika Raman</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/RohanSinha96"><img src="https://avatars.githubusercontent.com/u/15325746?v=4" width="100px;" alt=""/><br /><sub><b>Rohan Sinha</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/SunidhiHegde"><img src="https://avatars.githubusercontent.com/u/62884191?v=4" width="100px;" alt=""/><br /><sub><b>Sunidhi Hegde</b></sub></a><br /></td>
+        <td align="center"><a href="https://github.com/deekay2310"><img src="https://avatars.githubusercontent.com/u/29257773?v=4" width="100px;" alt=""/><br /><sub><b>Nimal Sharon Joji</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/PrakruthiSomashekar"><img src="https://avatars.githubusercontent.com/u/62984587?v=4" width="100px;" alt=""/><br /><sub><b>Aditya Kiran</b></sub></a></td>
+    <td align="center"><a href="https://github.com/radhikaraman20"><img src="https://avatars.githubusercontent.com/u/89432698?s=400&v=4" width="100px;" alt=""/><br /><sub><b>Amrita Visalam</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/RohanSinha96"><img src="https://avatars.githubusercontent.com/u/15325746?v=4" width="100px;" alt=""/><br /><sub><b>Diksha Maurya</b></sub></a><br /></td>
     </tr>
   </table>
 </center>
 
   # Contribution
   
-  Please refer the [CONTRIBUTING.md](https://github.com/deekay2310/calorieApp_server/blob/main/CONTRIBUTING.md) file for instructions on how to contribute to our repository.
+  Please refer the [CONTRIBUTING.md](https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/CONTRIBUTING.md) file for instructions on how to contribute to our repository.
 
   <p align="center">
     <a href="https://github.com/deekay2310/calorieApp_server/issues/new/choose">Report Bug</a>
