@@ -4,7 +4,7 @@ https://drive.google.com/drive/folders/1M5vdCwH11C-MqK8X-Dkf5bPR0SaWA5Yc?usp=sha
 
 
 [![GitHub license](https://img.shields.io/github/license/1360119047/calorieApp_server)](https://github.com/1360119047/calorieApp_server/blob/main/LICENSE)
-[![DOI](https://www.zenodo.org/badge/419132821.svg)](https://www.zenodo.org/badge/latestdoi/419132821)
+[![DOI](https://zenodo.org/badge/689011713.svg)](https://zenodo.org/badge/latestdoi/689011713)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 [![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
 [![codecov](https://codecov.io/gh/deekay2310/calorieApp_server/branch/main/graph/badge.svg?token=IQW5PLLE22)](https://codecov.io/gh/deekay2310/calorieApp_server)
@@ -18,35 +18,35 @@ https://drive.google.com/drive/folders/1M5vdCwH11C-MqK8X-Dkf5bPR0SaWA5Yc?usp=sha
 
 
 <!--Badges-->
-<a href="https://github.com/deekay2310/calorieApp_server/fork" target="blank">
+<a href="https://github.com/1360119047/calorieApp_server/fork" target="blank">
 <img src="https://img.shields.io/github/forks/deekay2310/calorieApp_server?style=flat-square" alt="calorieApp_server forks"/>
 </a>
-<a href="https://github.com/deekay2310/calorieApp_server/stargazers" target="blank">
+<a href="https://github.com/1360119047/calorieApp_server/stargazers" target="blank">
 <img src="https://img.shields.io/github/stars/deekay2310/calorieApp_server?style=flat-square" alt="calorieApp_server stars"/>
 </a>
-<a href="https://github.com/deekay2310/calorieApp_server/issues" target="blank">
+<a href="https://github.com/1360119047/calorieApp_server/issues" target="blank" alt="Github Issues">
 <img src="https://img.shields.io/github/issues/deekay2310/calorieApp_server?style=flat-square" alt="calorieApp_server issues"/>
 </a>
-<a href="https://github.com/deekay2310/calorieApp_server/issues" target="blank">
+<a href="https://github.com/1360119047/calorieApp_server/issues" target="blank">
 <img src="https://img.shields.io/github/issues-closed/deekay2310/calorieApp_server" alt="calorieApp_server issues closed"/>
 </a>
-<a href="https://github.com/deekay2310/calorieApp_server/pulls" target="blank">
+<a href="https://github.com/1360119047/calorieApp_server/pulls" target="blank">
 <img src="https://img.shields.io/github/issues-pr/deekay2310/calorieApp_server?style=flat-square" alt="cheapBuy pull-requests"/>
 </a>
-<a href="https://github.com/deekay2310/calorieApp_server/graphs/contributors" alt="Contributors">
+<a href="https://github.com/1360119047/calorieApp_server/graphs/contributors" alt="Contributors">
 <img src="https://img.shields.io/github/contributors/deekay2310/calorieApp_server" /></a>
 
-<a href="https://github.com/deekay2310/calorieApp_server/milestones" alt="milestones">
+<a href="https://github.com/1360119047/calorieApp_server/milestones" alt="milestones">
 <img src="https://img.shields.io/github/milestones/all/deekay2310/calorieApp_server" /></a> 
 
-<a href="https://github.com/deekay2310/calorieApp_server/graphs/commit-activity" alt="commit activity">
+<a href="https://github.com/1360119047/calorieApp_server/graphs/commit-activity" alt="commit activity">
 <img src="https://img.shields.io/github/commit-activity/w/deekay2310/calorieApp_server" /></a> 
 
-<a href="https://github.com/deekay2310/calorieApp_server/discussions" alt="discussion">
+<a href="https://github.com/1360119047/calorieApp_server/discussions" alt="discussion">
 <img src="https://img.shields.io/github/discussions/deekay2310/calorieApp_server" /></a> 
 
-<a href="https://img.shields.io/github/repo-size/deekay2310/calorieApp_server" alt="repo size">
-<img src="https://img.shields.io/github/repo-size/deekay2310/calorieApp_server" /></a>
+<a href="https://img.shields.io/github/repo-size/1360119047/calorieApp_server" alt="repo size">
+<img src="https://img.shields.io/github/repo-size/1360119047/calorieApp_server" /></a>
 
 
 <img src="https://user-images.githubusercontent.com/25662536/135546154-cfae1d2e-439a-4edc-b0bb-57f693ef5a83.jpeg" width="500px">
@@ -79,6 +79,7 @@ and more:
 - [Demo](#demo)
 - [Tech Stack](#tech-stack)
 - [Setup](#environment-setup)
+- [Testing](#Testing)
 - [Core Functionalities:](#core-functionalities)
   - [Register](#register)
   - [Login](#login)
@@ -99,10 +100,10 @@ Link to the implementation video of the BurnOut application:
 
 # Tech Stack
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="python" width="20" height="20"/> Python </br>
-<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg" alt="mongo" width="20" height="20"/> MongoDB </br>
-<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-plain.svg" alt="html" width="20" height="20"> CSS3 </br>
-<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-plain.svg" alt="css" width="20" height="20">  HTML 5 </br>
+<img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="python" width="20" height="20" style="vertical-align:middle" /> Python </br>
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg" alt="mongo" width="20" height="20" style="vertical-align:middle" /> MongoDB </br>
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-plain.svg" alt="html" width="20" height="20" style="vertical-align:middle" /> CSS3 </br>
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-plain.svg" alt="css" width="20" height="20" style="vertical-align:middle" />  HTML 5 </br>
 
 # Environment Setup
 Prerequisites:
@@ -124,8 +125,9 @@ Then, make sure that MongoDB is running:
 Clone the repository: `git clone https://github.com/1360119047/calorieApp_server.git`
 
 **Step 3**:  
-Note: it is best practice to use a virtual environment. We have been using venv, which comes bundled with Python.
-To activate the venv virtual environment, navigate to the root of the project directory and run: `source ./venv/Scripts/activate` on macOS. To deactivate, run `deactivate`.
+> [!NOTE]
+> It is best practice to use a virtual environment. We have been using venv, which comes bundled with Python.
+> To activate the venv virtual environment, navigate to the root of the project directory and run: `source ./venv/Scripts/activate` on macOS. To deactivate, run `deactivate`.
 
 Install the required packages by running the following command in the terminal: `pip install -r requirements.txt`.
 There is a separate `requirements-dev.txt` for installing dev dependencies: `pip install -r requirements-dev.txt`.
@@ -137,7 +139,20 @@ Run the following command in the terminal: `python application.py`
 Open the URL in your browser: `http://127.0.0.1:5000/`
 
 **Step 6**:
-Run `python insert_food_data.py` to create a food collection in the test database. This food data is used for the Calories form.
+Run `python insert_data.py` to create a food collection and exercise collection in the test database. This food data is used for the Calories form.
+
+# Testing
+We primarily test the `application.py` module, the Flask API interface for which the client side interacts. If HTTP requests to application.py endpoints 
+return expected values, then we can reasonably assume that other backend code that is customer-facing is working. That is what we most care about.
+
+Unit tests are located in `tests/test_application.py`. To run tests and generate a code coverage report:
+
+```pytest --cov=application --cov-report=html```
+
+Note that coverage HTML is written to directory htmlcov in the same location the command is run. Navigate to htmlcov and open index.html in a browser.
+
+[Code Coverage Report](https://github.com/1360119047/calorieApp_server/suites/16763004722/artifacts/957298956)
+
 
 # Core Functionalities
  
@@ -189,17 +204,9 @@ Run `python insert_food_data.py` to create a food collection in the test databas
 <center>
   <table>
     <tr>
-      <td align="center">
-        <a href="https://github.com/deekay2310">
-          <img src="https://avatars.githubusercontent.com/u/29257773?v=4" width="100px;" alt=""/>
-          <br /><sub><b>Dev Kumar</b></sub>
-        </a>
-        <br />
-      </td>
-      <td align="center"><a href="https://github.com/PrakruthiSomashekar"><img src="https://avatars.githubusercontent.com/u/62984587?v=4" width="100px;" alt=""/><br /><sub><b>Prakruthi Somashekar</b></sub></a></td>
-    <td align="center"><a href="https://github.com/radhikaraman20"><img src="https://avatars.githubusercontent.com/u/89432698?s=400&v=4" width="100px;" alt=""/><br /><sub><b>Radhika Raman</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/RohanSinha96"><img src="https://avatars.githubusercontent.com/u/15325746?v=4" width="100px;" alt=""/><br /><sub><b>Rohan Sinha</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/SunidhiHegde"><img src="https://avatars.githubusercontent.com/u/62884191?v=4" width="100px;" alt=""/><br /><sub><b>Sunidhi Hegde</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/lrwilli7"><img src="https://avatars.githubusercontent.com/u/64102141?v=4" width="100px;" alt=""/><br /><sub><b>Logan Williams</b></sub></a></td>
+    <td align="center"><a href="https://github.com/MichaelDacanay"><img src="https://avatars.githubusercontent.com/u/18317412?s=400&v=4" width="100px;" alt=""/><br /><sub><b>MichaelDacanay</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/1360119047"><img src="https://avatars.githubusercontent.com/u/62859405?v=4" width="100px;" alt=""/><br /><sub><b>Xiaochun Liang</b></sub></a><br /></td>
     </tr>
   </table>
 </center>

@@ -24,6 +24,7 @@ from forms import (
     CalorieForm,
     UserProfileForm,
     EnrollForm,
+    ActivityForm,
 )
 
 app = Flask(__name__)
@@ -206,10 +207,10 @@ def calories():
     """
     Display and update calorie data.
 
-    This route handles the display (calories.html) and submission of 
-    calorie data using a form. If the form is submitted successfully, the data 
+    This route handles the display (calories.html) and submission of
+    calorie data using a form. If the form is submitted successfully, the data
     is fetched and updated in the database.
-    
+
     Input:
     - POST request with form data including email, date, food, and burnout.
 
@@ -222,63 +223,94 @@ def calories():
     now = datetime.now()
     now = now.strftime("%Y-%m-%d")
 
-    signed_in = session.get("email")
-    if signed_in:
-        form = CalorieForm()
+    email = session.get("email")
+    if email:
+        food_form = CalorieForm()
+        activity_form = ActivityForm()
 
-        print("AT THE CALORIES FORM")
-        if form.validate_on_submit():
-            print("VALID FORM")
-            email = session.get("email")
-            food = request.form.get("food")
-            cals = food.split(" ")[-1]
-            print("calories: ", cals)
-            cals = int(cals[1:-1])
-            print("calories w/o parenthesis:", cals)
-            burn = int(request.form.get("burnout"))
+        if request.method == "POST":
+            flash_updated = False
+            if food_form.validate_on_submit():
+                food_data = food_form.food.data
+                print(food_data)
+                food_split = food_data.split(" (")
+                print(food_split)
+                food_name = food_split[0].strip()
+                print(food_name)
+                cal_split = food_split[1].split(" ")
+                food_cals = int(cal_split[0].strip())
+                print(food_cals)
 
-            activity = mongo.db.calories.find_one(
-                {"email": email}, {"email", "calories", "burnout"}
-            )
-            if activity:
-                print("PRE-EXISTING ENTRY")
-                print(activity)
-                mongo.db.calories.update_one(
-                    # filter criteria
-                    {"email": email},
-                    {
-                        # set new values
-                        "$set": {
-                            "calories": activity["calories"] + cals,
-                            "burnout": activity["burnout"] + burn,
-                        }
-                    },
+                food_entry = (food_name, food_cals)
+
+                calories_entry_exists = mongo.db.calories.find_one(
+                    {"email": email, "date": now}
                 )
-            else:
-                print("NEW ENTRY")
-                mongo.db.calories.insert_one(
-                    {
-                        "date": now,
-                        "email": email,
-                        "calories": cals,
-                        "burnout": burn,
-                    }
+                if calories_entry_exists:
+                    mongo.db.calories.update_one(
+                        {"email": email, "date": now},
+                        {"$push": {"food_data": food_entry}},
+                    )
+                else:
+                    mongo.db.calories.insert_one(
+                        {"email": email, "date": now, "food_data": [food_entry]}
+                    )
+
+                flash_updated = True
+
+            if activity_form.validate_on_submit():
+                user_activity = activity_form.activity.data
+                # extract it from the string
+                user_activity = user_activity.split(" (")[0]
+                print(user_activity)
+                user_duration = activity_form.duration.data
+
+                activity_data = mongo.db.activities.find_one(
+                    {"activity": user_activity}
                 )
-            flash("Successfully updated the data", "success")
-            return render_template("calories.html", form=form, time=now)
-        else:
-            print("INVALID FORM SUBMISSION")
-            return render_template("calories.html", form=form, time=now)
-            # can we also return a message?
-        #     return error?
+                activity_rate = activity_data.get("burn_rate", 0)
+
+                user_prof = mongo.db.profile.find_one({"email": email})
+                user_weight = 170
+                if user_prof:
+                    user_weight = int(user_prof.get("weight"))
+                calories_burned = activity_rate * user_weight * user_duration / 60
+
+                burn_entry = (user_activity, calories_burned)
+
+                burned_entry_exists = mongo.db.burned.find_one(
+                    {"email": email, "date": now}
+                )
+                if burned_entry_exists:
+                    mongo.db.burned.update_one(
+                        {"email": email, "date": now},
+                        {"$push": {"burn_data": burn_entry}},
+                    )
+                else:
+                    mongo.db.burned.insert_one(
+                        {"email": email, "date": now, "burn_data": [burn_entry]}
+                    )
+                flash_updated = True
+
+            if flash_updated:
+                flash("Successfully updated the data", "success")
+                return redirect(url_for("calories"))
+
+        return render_template(
+            "calories.html",
+            food_form=food_form,
+            activity_form=activity_form,
+            time=now,
+        )
+
     else:
         print("NOT SIGNED IN")
         return redirect(url_for("home"))
     # return render_template("calories.html", form=form, time=now)
 
 
-@app.route("/user_profile", methods=["GET", "POST"])
-def user_profile():
+@app.route("/update_profile", methods=["GET", "POST"])
+def update_profile():
     """
     user_profile() function displays the UserProfileForm (user_profile.html) template
     route "/user_profile" will redirect to user_profile() function.
@@ -287,46 +319,60 @@ def user_profile():
     Input: Email, height, weight, goal, Target weight
     Output: Value update in database and redirected to home login page
     """
-    if session.get("email"):
+    signed_in = email = session.get("email")
+    if not signed_in:
+        return redirect(url_for("login"))
+    else:
         form = UserProfileForm()
+
         if form.validate_on_submit():
-            if request.method == "POST":
-                email = session.get("email")
-                weight = request.form.get("weight")
-                height = request.form.get("height")
-                goal = request.form.get("goal")
-                target_weight = request.form.get("target_weight")
-                temp = mongo.db.profile.find_one(
-                    {"email": email}, {"height", "weight", "goal", "target_weight"}
-                )
-                if temp is not None:
-                    mongo.db.profile.update_one(
-                        {"email": email},
-                        {
-                            "$set": {
-                                "weight": temp["weight"],
-                                "height": temp["height"],
-                                "goal": temp["goal"],
-                                "target_weight": temp["target_weight"],
-                            }
-                        },
-                    )
-                else:
-                    mongo.db.profile.insert_one(
-                        {
-                            "email": email,
-                            "height": height,
+            weight = request.form.get("weight")
+            height = request.form.get("height")
+            goal = request.form.get("goal")
+            target_weight = request.form.get("target_weight")
+
+            user = mongo.db.profile.find_one(
+                {"email": email}, {"height", "weight", "goal", "target_weight"}
+            )
+            if user:
+                mongo.db.profile.update_one(
+                    {"email": email},
+                    {
+                        "$set": {
                             "weight": weight,
+                            "height": height,
                             "goal": goal,
                             "target_weight": target_weight,
                         }
-                    )
+                    },
+                )
+            else:
+                mongo.db.profile.insert_one(
+                    {
+                        "email": email,
+                        "height": height,
+                        "weight": weight,
+                        "goal": goal,
+                        "target_weight": target_weight,
+                    }
+                )
 
             flash("User Profile Updated", "success")
-            return render_template("display_profile.html", status=True, form=form)
+            return redirect(url_for("user_profile"))
+
+        return render_template("user_profile.html", status=True, form=form)
+
+
+@app.route("/user_profile", methods=["GET", "POST"])
+def user_profile():
+    if session.get("email"):
+        prof = mongo.db.profile.find_one(
+            {"email": session.get("email")},
+            {"height": 1, "weight": 1, "goal": 1, "target_weight": 1},
+        )
+        return render_template("display_profile.html", prof=prof)
     else:
         return redirect(url_for("login"))
-    return render_template("user_profile.html", status=True, form=form)
 
 
 @app.route("/history", methods=["GET"])
@@ -371,35 +417,54 @@ def ajaxhistory():
 
     if signed_in and request.method == "POST":
         date = request.form.get("date")
-        res = mongo.db.calories.find_one(
-            {"email": email, "date": date},
-            {"date": 1, "email": 1, "calories": 1, "burnout": 1},
+
+        foods, cals_in, cals_in_num = (
+            "No data for this date",
+            "No data for this date",
+            0,
+        )
+        activities, cals_out, cals_out_num = (
+            "No data for this date",
+            "No data for this date",
+            0,
         )
 
-        if res:
-            return (
-                jsonify(
-                    {
-                        "date": res["date"],
-                        "email": res["email"],
-                        "burnout": res["burnout"],
-                        "calories": res["calories"],
-                    }
-                ),
-                200,
-            )
-        else:
-            return (
-                jsonify(
-                    {
-                        "date": "",
-                        "email": "",
-                        "burnout": "",
-                        "calories": "",
-                    }
-                ),
-                200,
-            )
+        cals_in_data = mongo.db.calories.find_one({"email": email, "date": date})
+        cals_out_data = mongo.db.burned.find_one({"email": email, "date": date})
+
+        if cals_in_data:
+            cals_in_list = cals_in_data["food_data"]
+            foods = []
+            for entry in cals_in_list:
+                foods.append(entry[0] + "(" + str(entry[1]) + ")" + ", ")
+                cals_in_num += int(entry[1])
+            foods[-1] = foods[-1][:-2]
+            cals_in = cals_in_num
+
+        if cals_out_data:
+            cals_out_list = cals_out_data["burn_data"]
+            activities = []
+            for entry in cals_out_list:
+                activities.append(entry[0] + "(" + str(int(entry[1])) + ")" + ", ")
+                cals_out_num += int(entry[1])
+            activities[-1] = activities[-1][:-2]
+            cals_out = cals_out_num
+
+        net = cals_in_num - cals_out_num
+
+        return (
+            jsonify(
+                {
+                    "date": date,
+                    "foods": foods,
+                    "cals_in": cals_in,
+                    "activities": activities,
+                    "cals_out": cals_out,
+                    "net": net,
+                }
+            ),
+            200,
+        )
 
     else:
         # User is not signed in, return a 401 Unauthorized response
@@ -476,7 +541,10 @@ def send_email():
     # Input: Email
     # Output: Calorie History Received on specified email
     # ##########################
-    email = session.get("email")
+    signed_in = email = session.get("email")
+    if not signed_in:
+        return redirect(url_for("home"))
+
     data = list(
         mongo.db.calories.find(
             {"email": email}, {"date", "email", "calories", "burnout"}

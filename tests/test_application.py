@@ -34,7 +34,7 @@ def login_user(client, user):
 
 
 def logout_user(client):
-    response = client.get("logout")
+    response = client.get("/logout")
     return response
 
 
@@ -219,9 +219,20 @@ def test_calories(client, test_user):
 
 
 # Add more test cases for other routes and functions as needed
-def test_user_profile(client):
+def test_user_profile(client, test_user):
     response = client.get("/user_profile")
     assert response.status_code == 302
+
+    mongo.db.profile.delete_one({"email": "test_user@burnout.com"})
+    assert login_user(client, test_user).status_code == 302
+    assert user_signed_in(client, test_user)
+
+    # signed in
+    response = client.post(
+        "/user_profile",
+        data={"weight": 150, "height": 6, "goal": "gain muscle", "target_weight": 160},
+    )
+    assert response.status_code == 200
 
 
 def test_history(client):
@@ -253,9 +264,9 @@ def test_friends(client):
     assert response.status_code == 200
 
 
-# def test_send_email(client):
-#     response = client.get("/send_email")
-#     assert response.status_code == 302
+def test_send_email(client):
+    response = client.get("/send_email")
+    assert response.status_code == 302
 
 
 def test_ajaxsendrequest(client):
@@ -284,8 +295,8 @@ def test_yoga(client):
 
 
 def test_swim(client):
-    response = client.get("/dashboard")
-    assert response.status_code == 200
+    response = client.get("/swim")
+    assert response.status_code == 302
 
 
 def test_abbs(client):
@@ -294,7 +305,12 @@ def test_abbs(client):
 
 
 def test_belly(client):
-    response = client.get("/abbs")
+    response = client.get("/belly")
+    assert response.status_code == 302
+
+
+def test_core(client):
+    response = client.get("/core")
     assert response.status_code == 302
 
 
@@ -303,4 +319,16 @@ def test_gym(client):
     assert response.status_code == 302
 
 
-# def test
+def test_walk(client):
+    response = client.get("/walk")
+    assert response.status_code == 302
+
+
+def test_dance(client):
+    response = client.get("/dance")
+    assert response.status_code == 302
+
+
+def test_hrx(client):
+    response = client.get("/dance")
+    assert response.status_code == 302

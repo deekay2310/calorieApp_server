@@ -32,8 +32,10 @@ jobs:
       run: |
         python application.py &
         sleep 5
+        python insert_data.py
         cd tests
         coverage run -m pytest test_application.py
+        pytest --cov=application .
         pytest --cov=application --cov-report=html
     - name: Archive code coverage html report
       uses: actions/upload-artifact@v2

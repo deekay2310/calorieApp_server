@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField
 from wtforms import DateField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from apps import App
@@ -45,13 +45,32 @@ class CalorieForm(FlaskForm):
     result = []
     temp = ""
     for i in get_docs:
-        temp = i["food"] + " (" + i["calories"] + ")"
+        temp = i["food"] + " (" + i["calories"] + " cal)"
         result.append((temp, temp))
 
     food = SelectField("Select Food", choices=result)
-
-    burnout = StringField("Burn Out", validators=[DataRequired()])
     submit = SubmitField("Save")
+
+
+class ActivityForm(FlaskForm):
+    app = App()
+    mongo = app.mongo
+
+    activities = mongo.db.activities.find()
+    choices = [
+        (
+            entry["activity"]
+            + " ("
+            + "{:.2f}".format(entry["burn_rate"])
+            + ".../kg/hr"
+            + ")"
+        )
+        for entry in activities
+    ]
+
+    activity = SelectField("Activity", choices=choices)
+    duration = IntegerField("Minutes")
+    submit = SubmitField("Burn")
 
 
 class UserProfileForm(FlaskForm):
