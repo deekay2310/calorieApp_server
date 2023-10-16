@@ -50,288 +50,83 @@ function UserCaloriesPage(props) {
   const [foodItems, setFoodItems] = useState({});
   const [dietHistory, setDietHistory] = useState([]);
   const [weekHistory, setWeekHistory] = useState([]);
-
+  const [reloadTodayData, setReloadTodayData] = useState(false);
+  const toggleTodayUpdate = () => {
+    setReloadTodayData(!reloadTodayData);
+  }
   useEffect(() => {
     // Make API call to backend to get food items and their calories from DB.
-    // Either ensure API sends in the below format, or format in theis method on receiving it, to ensure it is in the below format
-    let data = { Potato: 50, Acai: 20, Cheeseburger: 80 };
-    // set the foodItems variable with the key-value data
-    setFoodItems(data);
-    // TO DO: UPDATE THIS API CALL TO PERFORM THE ABOVE FUNCTIONALITY AND REMOVE THE ABOVE LINES
-    // axios({
-    //   method: "GET",
-    //   url: "/GET_FOOD_ITEMS",
-    //   headers: {
-    //     Authorization: "Bearer " + props.token,
-    //   },
-    // })
-    //   .then((response) => {
-    //     const res = response.data;
-    //     setFoodItems(res);
-    //   })
-    //   .catch((error) => {
-    //     if (error.response) {
-    //       console.log(error.response);
-    //       console.log(error.response.status);
-    //       console.log(error.response.headers);
-    //     }
-    //   });
+    axios({
+      method: "GET",
+      url: "/foodCalorieMapping",
+      headers: {
+        Authorization: "Bearer " + props.state.token,
+      },
+    })
+      .then((response) => {
+        const res = response.data;
+        setFoodItems(res);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
 
     // Make API call to backend to get last 7 days history from DB.
-    // Either ensure API sends in the below format, or format in theis method on receiving it, to ensure it is in the below format
-    let dietHistoryAPIResp = [
-      {
-        dayIndex: 0,
-        date: "10/13/2023",
-        foodConsumed: [
-          {
-            item: "Chicken Salad",
-            calories: 500,
-          },
-          {
-            item: "Onion Soup",
-            calories: 300,
-          },
-          {
-            item: "Potato Salad",
-            calories: 500,
-          },
-          {
-            item: "Cheese Burger",
-            calories: 500,
-          },
-        ],
-        caloriesConsumed: 1800,
-        exceededDailyLimit: false,
-        burntCalories: 1200,
+    axios({
+      method: "POST",
+      url: "/weekHistory",
+      headers: {
+        Authorization: "Bearer " + props.state.token,
       },
-      {
-        dayIndex: 1,
-        date: "10/12/2023",
-        foodConsumed: [
-          {
-            item: "Chicken Salad",
-            calories: 500,
-          },
-          {
-            item: "Onion Soup",
-            calories: 300,
-          },
-          {
-            item: "Potato Salad",
-            calories: 500,
-          },
-          {
-            item: "Cheese Burger",
-            calories: 500,
-          },
-        ],
-        caloriesConsumed: 1800,
-        exceededDailyLimit: true,
-        burntCalories: 1000,
+      data: {
+        todayDate: dayjs().format('MM/DD/YYYY')
+      }
+    })
+      .then((response) => {
+        const res = response.data;
+        setDietHistory(res.sort((a,b) => b.dayIndex - a.dayIndex));
+        let weekHistoryData = res.map((dayObj) => {
+          return {
+            date: dayObj.date,
+            consumedCalories: dayObj.caloriesConsumed,
+            burntCalories: dayObj.burntCalories,
+          };
+        });
+        setWeekHistory(weekHistoryData);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+    
+    // Make API call to backend to get events user registered for from DB.
+    axios({
+      method: "GET",
+      url: "/usersEvents",
+      headers: {
+        Authorization: "Bearer " + props.state.token,
       },
-      {
-        dayIndex: 2,
-        date: "10/11/2023",
-        foodConsumed: [
-          {
-            item: "Chicken Salad",
-            calories: 500,
-          },
-          {
-            item: "Onion Soup",
-            calories: 300,
-          },
-          {
-            item: "Potato Salad",
-            calories: 500,
-          },
-          {
-            item: "Cheese Burger",
-            calories: 500,
-          },
-        ],
-        caloriesConsumed: 1800,
-        exceededDailyLimit: false,
-        burntCalories: 900,
-      },
-      {
-        dayIndex: 3,
-        date: "10/10/2023",
-        foodConsumed: [
-          {
-            item: "Chicken Salad",
-            calories: 500,
-          },
-          {
-            item: "Onion Soup",
-            calories: 300,
-          },
-          {
-            item: "Potato Salad",
-            calories: 500,
-          },
-          {
-            item: "Cheese Burger",
-            calories: 500,
-          },
-        ],
-        caloriesConsumed: 1800,
-        exceededDailyLimit: true,
-        burntCalories: 400,
-      },
-      {
-        dayIndex: 4,
-        date: "10/9/2023",
-        foodConsumed: [
-          {
-            item: "Chicken Salad",
-            calories: 500,
-          },
-          {
-            item: "Onion Soup",
-            calories: 300,
-          },
-          {
-            item: "Potato Salad",
-            calories: 500,
-          },
-          {
-            item: "Cheese Burger",
-            calories: 500,
-          },
-        ],
-        caloriesConsumed: 1800,
-        exceededDailyLimit: false,
-        burntCalories: 500,
-      },
-      {
-        dayIndex: 5,
-        date: "10/8/2023",
-        foodConsumed: [
-          {
-            item: "Chicken Salad",
-            calories: 500,
-          },
-          {
-            item: "Onion Soup",
-            calories: 300,
-          },
-          {
-            item: "Potato Salad",
-            calories: 500,
-          },
-          {
-            item: "Cheese Burger",
-            calories: 500,
-          },
-        ],
-        caloriesConsumed: 1800,
-        exceededDailyLimit: false,
-        burntCalories: 500,
-      },
-      {
-        dayIndex: 6,
-        date: "10/7/2023",
-        foodConsumed: [
-          {
-            item: "Chicken Salad",
-            calories: 500,
-          },
-          {
-            item: "Onion Soup",
-            calories: 300,
-          },
-          {
-            item: "Potato Salad",
-            calories: 500,
-          },
-          {
-            item: "Cheese Burger",
-            calories: 500,
-          },
-        ],
-        caloriesConsumed: 1800,
-        exceededDailyLimit: true,
-        burntCalories: 700,
-      },
-    ];
-    // set the dietHistory variable with the key-value data
-    setDietHistory(dietHistoryAPIResp);
-    // Generate weekHistoryData from the received dietHistoryAPIResp using the below code
-    let weekHistoryData = dietHistoryAPIResp.map((dayObj) => {
-      return {
-        date: dayObj.date,
-        consumedCalories: dayObj.caloriesConsumed,
-        burntCalories: dayObj.burntCalories,
-      };
-    });
-    // set the weekHistory variable with the generated data
-    setWeekHistory(weekHistoryData);
-
-    // TO DO: UPDATE THIS API CALL TO PERFORM THE ABOVE FUNCTIONALITY AND REMOVE THE ABOVE LINES
-    // axios({
-    //   method: "GET",
-    //   url: "/GET_DIET_HISTORY",
-    //   headers: {
-    //     Authorization: "Bearer " + props.token,
-    //   },
-    // })
-    //   .then((response) => {
-    //     const res = response.data;
-    //     setDietHistory(res);
-    //     let weekHistoryData = dietHistoryAPIResp.map((dayObj) => {
-    //       return {
-    //         date: dayObj.date,
-    //         consumedCalories: dayObj.caloriesConsumed,
-    //         burntCalories: dayObj.burntCalories,
-    //       };
-    //     });
-    //     setWeekHistory(weekHistoryData);
-    //   })
-    //   .catch((error) => {
-    //     if (error.response) {
-    //       console.log(error.response);
-    //       console.log(error.response.status);
-    //       console.log(error.response.headers);
-    //     }
-    //   });
-    // Make API call to backend to get food items and their calories from DB.
-    // Either ensure API sends in the below format, or format in theis method on receiving it, to ensure it is in the below format
-
-    let eventsData = [
-      {
-        eventName: "Yoga",
-        date: "10/19/2023",
-      },
-      {
-        eventName: "Swimming",
-        date: "10/20/2023",
-      },
-    ];
-    // set the foodItems variable with the key-value data
-    setEvents(eventsData);
-    // TO DO: UPDATE THIS API CALL TO PERFORM THE ABOVE FUNCTIONALITY AND REMOVE THE ABOVE LINES
-    // axios({
-    //   method: "GET",
-    //   url: "/GET_USERS_EVENTS",
-    //   headers: {
-    //     Authorization: "Bearer " + props.token,
-    //   },
-    // })
-    //   .then((response) => {
-    //     const res = response.data;
-    //     setEvents(res);
-    //   })
-    //   .catch((error) => {
-    //     if (error.response) {
-    //       console.log(error.response);
-    //       console.log(error.response.status);
-    //       console.log(error.response.headers);
-    //     }
-    //   });
-  }, []);
-
+    })
+      .then((response) => {
+        const res = response.data;
+        console.log(res)
+        setEvents(res);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
+  }, [reloadTodayData]);
   const [intakeItem, setIntakeItem] = useState("");
   const [intakeCalories, setIntakeCalories] = useState("");
   const handleIntakeItemChange = (event) => {
@@ -340,10 +135,7 @@ function UserCaloriesPage(props) {
   };
   const [intakeDate, setIntakeDate] = useState(dayjs());
   const handleAddCalorieIntake = (e) => {
-    console.log("Intake", intakeItem, intakeCalories, intakeDate);
     e.preventDefault()
-    console.log(props.state.token)
-    // TO DO: UPDATE THE API CALL
     axios({
       method: "POST",
       url: "/caloriesConsumed",
@@ -353,12 +145,16 @@ function UserCaloriesPage(props) {
       data: {
         intakeFoodItem: intakeItem,
         intakeCalories: intakeCalories,
-        intakeDate: intakeDate,
+        intakeDate: intakeDate.format('MM/DD/YYYY'),
       },
     })
       .then((response) => {
         const res = response.data;
         console.log(res)
+        toggleTodayUpdate();
+        setIntakeItem("");
+        setIntakeCalories("");
+        setIntakeDate(dayjs());
       })
       .catch((error) => {
         if (error.response) {
@@ -371,33 +167,33 @@ function UserCaloriesPage(props) {
 
   const [burntoutCalories, setBurntoutCalories] = useState("");
   const [burnoutDate, setBurnoutDate] = useState(dayjs());
-  const handleAddCalorieBurnout = () => {
-    console.log("Burnout", burntoutCalories, burnoutDate);
-    // TO DO: UPDATE THE API CALL
-    // axios({
-    //   method: "POST",
-    //   url: "/UPDATE_THIS",
-    //   headers: {
-    //     Authorization: "Bearer " + props.token,
-    //   },
-    //   data: {
-    //     burntouCalories: burntoutCalories,
-    //     burnoutDate: burnoutDate,
-    //   },
-    // })
-    //   .then((response) => {
-    //     const res = response.data;
-    //     res.access_token && props.setToken(res.access_token);
-    //     // We should be getting the updated total calories burned out for today here as a response, so we can update the graph
-    //     // Set the updated value and possibly update the graph. Or directly update your value, since you know te previous value and submitted value
-    //   })
-    //   .catch((error) => {
-    //     if (error.response) {
-    //       console.log(error.response);
-    //       console.log(error.response.status);
-    //       console.log(error.response.headers);
-    //     }
-    //   });
+  const handleAddCalorieBurnout = (e) => {
+    e.preventDefault();
+    axios({
+      method: "POST",
+      url: "/caloriesBurned",
+      headers: {
+        Authorization: "Bearer " + props.state.token,
+      },
+      data: {
+        burntoutCalories: burntoutCalories,
+        burnoutDate: burnoutDate.format('MM/DD/YYYY'),
+      },
+    })
+      .then((response) => {
+        const res = response.data;
+        console.log(res)
+        toggleTodayUpdate();
+        setBurntoutCalories("");
+        setBurnoutDate(dayjs());
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        }
+      });
   };
 
   return (
@@ -656,7 +452,6 @@ function UserCaloriesPage(props) {
                 gap: 2,
                 gridTemplateRows: "auto",
                 gridTemplateAreas: `"day-0 day-1 day-2 day-3 day-4 day-5 day-6"`,
-                paddingTop: "2rem",
               }}
             >
               {dietHistory.map((day, index) => {
