@@ -16,6 +16,7 @@ import TextField from "@mui/material/TextField";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Header from "./Header";
 import axios from "axios";
+import Footer from "./Footer";
 
 const SearchBar = ({ setSearchQuery }) => (
   <form>
@@ -238,6 +239,7 @@ export default function Events(props) {
                         ))}
                     </Grid>
                 </Container>
+                <Footer/>
             </main>
         </ThemeProvider>
     );

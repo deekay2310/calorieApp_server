@@ -40,6 +40,7 @@ import {
   Legend,
 } from "recharts";
 import axios from "axios";
+import Footer from "./Footer";
 
 function UserCaloriesPage(props) {
   const [todayCaloriesConsumed, setTodayCaloriesConsumed] = useState(500);
@@ -496,6 +497,7 @@ function UserCaloriesPage(props) {
           </Card>
         </Box>
       </Container>
+      <Footer/>
     </>
   );
 }
