@@ -12,6 +12,8 @@ from datetime import datetime, timedelta
 from functools import reduce
 from bson import json_util 
 from pymongo import MongoClient
+from flasgger import Swagger
+
 
 
 api = Flask(__name__)
@@ -20,6 +22,9 @@ api.config["JWT_SECRET_KEY"] = "softwareEngineering"
 api.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(api)
 mongo = None
+
+Swagger(api)  
+
 
 def setup_mongo_client(app):
     global mongo
@@ -37,6 +42,29 @@ setup_mongo_client(api)
 
 @api.route('/token', methods=["POST"])
 def create_token():
+    """
+    Create a new access token
+
+    ---
+    tags:
+      - Authentication
+    parameters:
+      - name: email
+        in: formData
+        type: string
+        required: true
+        description: User email
+      - name: password
+        in: formData
+        type: string
+        required: true
+        description: User password
+    responses:
+      200:
+        description: Login successful
+      401:
+        description: Invalid email or password
+    """
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     user = mongo.user.find_one({"email": email})
@@ -46,9 +74,46 @@ def create_token():
     else:
         print("Invalid email or password")
         return jsonify({"message": "Invalid email or password"}),401
+    
 
-@api.route("/register", methods=['POST'])
+@api.route("/register", methods=["POST"])
 def register():
+    """
+    Register a new user
+
+    ---
+    tags:
+      - User Registration
+    parameters:
+      - name: email
+        in: formData
+        type: string
+        required: true
+        description: User email
+      - name: password
+        in: formData
+        type: string
+        required: true
+        description: User password
+      - name: firstName
+        in: formData
+        type: string
+        required: true
+        description: User's first name
+      - name: lastName
+        in: formData
+        type: string
+        required: true
+        description: User's last name
+    responses:
+      200:
+        description: Registration successful
+      409:
+        description: User already exists
+      500:
+        description: Registration failed
+    """
+
     email = request.json.get('email', None)
     password = request.json.get('password', None)
     first_name = request.json.get('firstName', None)
@@ -76,12 +141,44 @@ def register():
 
 @api.route("/logout", methods=["POST"])
 def logout():
+    """
+    Logout the user and clear their session
+
+    ---
+    tags:
+      - User Logout
+    responses:
+      200:
+        description: Logout successful
+    """
     response = jsonify({"msg": "logout successful"})
     unset_jwt_cookies(response)
     return response
 
 @api.route('/events', methods=['GET'])
 def get_events():
+    """
+    Retrieve a list of events
+
+    This endpoint retrieves a list of events from the database.
+
+    ---
+    tags:
+      - Events
+    responses:
+      200:
+        description: A list of events
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: string
+              # Add more properties as needed
+      404:
+        description: No events found
+    """
     events_collection = mongo.events
     events = list(events_collection.find({}))
     print(events)
@@ -92,6 +189,40 @@ def get_events():
 @api.route('/is-enrolled', methods=['POST'])
 @jwt_required()
 def is_enrolled():
+    """
+    Check if the user is enrolled in an event
+
+    This endpoint checks if the authenticated user is enrolled in a specific event.
+
+    ---
+    tags:
+      - Events
+    parameters:
+      - in: body
+        name: data
+        description: Data containing the eventTitle
+        required: true
+        schema:
+          type: object
+          properties:
+            eventTitle:
+              type: string
+        example:
+          eventTitle: "Event Name"
+    security:
+      - JWT: []
+    responses:
+      200:
+        description: Indicates whether the user is enrolled
+        schema:
+          type: object
+          properties:
+            isEnrolled:
+              type: boolean
+      401:
+        description: Unauthorized access
+    """
+
     data = request.json
     eventTitle = data['eventTitle']
     current_user = get_jwt_identity()
@@ -106,6 +237,40 @@ def is_enrolled():
 @api.route('/enroll', methods=['POST'])
 @jwt_required()
 def enroll_event():
+    """
+    Enroll the user in an event
+
+    This endpoint allows an authenticated user to enroll in an event.
+
+    ---
+    tags:
+      - Events
+    parameters:
+      - in: body
+        name: data
+        description: Data containing the eventTitle
+        required: true
+        schema:
+          type: object
+          properties:
+            eventTitle:
+              type: string
+        example:
+          eventTitle: "Event Name"
+    security:
+      - JWT: []
+    responses:
+      200:
+        description: User successfully enrolled in the event
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+              example: "Data saved successfully"
+      500:
+        description: An error occurred while enrolling the user
+    """
     data = request.get_json()  # get data from POST request
     current_user = get_jwt_identity()
     try:
@@ -123,6 +288,38 @@ def enroll_event():
 @api.route('/profile')
 @jwt_required()
 def my_profile():
+    """
+    Retrieve user profile information
+
+    This endpoint allows an authenticated user to retrieve their profile information.
+
+    ---
+    tags:
+      - User
+    security:
+      - JWT: []
+    responses:
+      200:
+        description: User profile information retrieved successfully
+        schema:
+          type: object
+        example:
+          {
+            "_id": "12345",
+            "email": "user@example.com",
+            "first_name": "John",
+            "last_name": "Doe",
+            "age": 30,
+            "weight": 70,
+            "height": 175
+          }
+      401:
+        description: Unauthorized. User must be logged in to access their profile.
+      404:
+        description: User profile not found.
+      500:
+        description: An error occurred while retrieving the user profile.
+    """
     current_user = get_jwt_identity()
     profile = mongo.db.user.find_one({"email": current_user})
     return jsonify(json_util.dumps(profile))
@@ -130,6 +327,47 @@ def my_profile():
 @api.route('/caloriesConsumed',methods=["POST"])
 @jwt_required()
 def addUserConsumedCalories():
+    """
+    Add consumed calories for a user
+
+    This endpoint allows an authenticated user to add consumed calories for a specific date.
+
+    ---
+    tags:
+      - User
+    security:
+      - JWT: []
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            intakeDate:
+              type: string
+              format: date
+              description: The date for which calories are being recorded (e.g., "2023-10-17").
+            intakeFoodItem:
+              type: string
+              description: The name of the food item.
+            intakeCalories:
+              type: integer
+              description: The number of calories consumed for the food item.
+    responses:
+      200:
+        description: Calories consumed data saved successfully.
+        schema:
+          type: object
+        example:
+          {
+            "status": "Data saved successfully"
+          }
+      401:
+        description: Unauthorized. User must be logged in to add consumed calories.
+      500:
+        description: An error occurred while saving consumed calories data.
+    """
     data = request.get_json()  # get data from POST request
     current_user = get_jwt_identity()
     try:
@@ -145,6 +383,52 @@ def addUserConsumedCalories():
 @api.route('/profileUpdate',methods=["POST"])
 @jwt_required()
 def profileUpdate():
+    """
+    Update user profile
+
+    This endpoint allows an authenticated user to update their profile information.
+
+    ---
+    tags:
+      - User
+    security:
+      - JWT: []
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            firstName:
+              type: string
+              description: The user's first name.
+            lastName:
+              type: string
+              description: The user's last name.
+            age:
+              type: integer
+              description: The user's age.
+            weight:
+              type: number
+              description: The user's weight.
+            height:
+              type: number
+              description: The user's height.
+    responses:
+      200:
+        description: User profile updated successfully.
+        schema:
+          type: object
+        example:
+          {
+            "msg": "Update successful"
+          }
+      401:
+        description: Unauthorized. User must be logged in to update their profile.
+      500:
+        description: An error occurred while updating the user's profile.
+    """
     current_user = get_jwt_identity()
     first_name = request.json.get('firstName', None)
     last_name = request.json.get('lastName', None)
@@ -172,6 +456,46 @@ def profileUpdate():
 @api.route('/goalsUpdate',methods=["POST"])
 @jwt_required()
 def goalsUpdate():
+    """
+    Update user goals
+
+    This endpoint allows an authenticated user to update their fitness goals, such as target weight, target calories, and target goal.
+
+    ---
+    tags:
+      - User
+    security:
+      - JWT: []
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            targetWeight:
+              type: number
+              description: The user's target weight goal.
+            targetCalories:
+              type: number
+              description: The user's target daily calorie intake goal.
+            targetGoal:
+              type: string
+              description: The user's fitness goal.
+    responses:
+      200:
+        description: User goals updated successfully.
+        schema:
+          type: object
+        example:
+          {
+            "msg": "Update successful"
+          }
+      401:
+        description: Unauthorized. User must be logged in to update their goals.
+      500:
+        description: An error occurred while updating the user's goals.
+    """
     current_user = get_jwt_identity()
     current_user = get_jwt_identity()
     targetWeight = request.json.get('targetWeight', None)
@@ -198,6 +522,44 @@ def goalsUpdate():
 @api.route('/caloriesBurned',methods=["POST"])
 @jwt_required()
 def addUserBurnedCalories():
+    """
+    Add user's burned calories
+
+    This endpoint allows an authenticated user to add information about calories burned on a specific date.
+
+    ---
+    tags:
+      - User
+    security:
+      - JWT: []
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            burnoutDate:
+              type: string
+              format: date
+              description: The date on which calories were burned.
+            burntoutCalories:
+              type: number
+              description: The number of calories burned on the specified date.
+    responses:
+      200:
+        description: Calories burned data saved successfully.
+        schema:
+          type: object
+        example:
+          {
+            "status": "Data saved successfully"
+          }
+      401:
+        description: Unauthorized. User must be logged in to add burned calories data.
+      500:
+        description: An error occurred while saving the burned calories data.
+    """
     data = request.get_json()  # get data from POST request
     current_user = get_jwt_identity()
     try:
@@ -213,6 +575,105 @@ def addUserBurnedCalories():
 @api.route('/weekHistory',methods=["POST"])
 @jwt_required()
 def getWeekHistory():
+    """
+    Get user's weekly history
+
+    This endpoint allows an authenticated user to retrieve their food consumption and calories burned history for the past week.
+
+    ---
+    tags:
+      - User
+    security:
+      - JWT: []
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            todayDate:
+              type: string
+              format: date
+              description: The date for the end of the week (today's date).
+    responses:
+      200:
+        description: Successfully retrieved the user's weekly history.
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              dayIndex:
+                type: integer
+                description: Integer from 0 to 6 representing the day index.
+              date:
+                type: string
+                format: date
+                description: The date for each day in the week.
+              foodConsumed:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    item:
+                      type: string
+                      description: Food item name.
+                    calories:
+                      type: number
+                      description: Calories consumed from the food item.
+                description: A list of dictionaries containing food items and their consumed calories.
+              caloriesConsumed:
+                type: number
+                description: The sum of all calories consumed for that day.
+              exceededDailyLimit:
+                type: boolean
+                description: Indicates whether the calories consumed exceeded the daily limit.
+              burntCalories:
+                type: number
+                description: Calories burned on that day.
+        example:
+          [
+            {
+              "dayIndex": 0,
+              "date": "10/13/2023",
+              "foodConsumed": [
+                {
+                  "item": "Chicken Salad",
+                  "calories": 500
+                },
+                {
+                  "item": "Onion Soup",
+                  "calories": 300
+                },
+                {
+                  "item": "Potato Salad",
+                  "calories": 500
+                },
+                {
+                  "item": "Cheese Burger",
+                  "calories": 500
+                }
+              ],
+              "caloriesConsumed": 1800,
+              "exceededDailyLimit": false,
+              "burntCalories": 1200
+            },
+            {
+              "dayIndex": 1,
+              "date": "10/12/2023",
+              "foodConsumed": [...],
+              "caloriesConsumed": ...,
+              "exceededDailyLimit": ...,
+              "burntCalories": ...
+            },
+            ...
+          ]
+      401:
+        description: Unauthorized. User must be logged in to retrieve weekly history.
+      500:
+        description: An error occurred while retrieving the user's weekly history.
+    """
     data = request.get_json()  # get data from POST request
     current_user = get_jwt_identity()
     todayDate = datetime.strptime(data["todayDate"],"%m/%d/%Y")
@@ -277,6 +738,40 @@ def getWeekHistory():
 @api.route('/foodCalorieMapping',methods=["GET"])
 @jwt_required()
 def getFoodCalorieMapping():
+    """
+    Get food calorie mapping
+
+    This endpoint allows an authenticated user to retrieve a mapping of food items to their respective calorie values.
+
+    ---
+    tags:
+      - Food
+    security:
+      - JWT: []
+    responses:
+      200:
+        description: Successfully retrieved the food calorie mapping.
+        schema:
+          type: object
+          properties:
+            foodItem:
+              type: integer
+              description: Food item name.
+            calories:
+              type: number
+              description: Calories associated with the food item.
+        example:
+          {
+            "Potato": 50,
+            "Acai": 20,
+            "Cheeseburger": 80,
+            ...
+          }
+      401:
+        description: Unauthorized. User must be logged in to retrieve the food calorie mapping.
+      500:
+        description: An error occurred while retrieving the food calorie mapping.
+    """
     try:
         data = mongo.db.food.find()
         # Response should be in this format {foodItem: calories, foodItem: calories....} 
@@ -291,6 +786,48 @@ def getFoodCalorieMapping():
 @api.route('/usersEvents',methods=["GET"])
 @jwt_required()
 def getUserRegisteredEvents():
+    """
+    Get user's registered events
+
+    This endpoint allows an authenticated user to retrieve the events they are registered for.
+
+    ---
+    tags:
+      - Events
+    security:
+      - JWT: []
+    responses:
+      200:
+        description: Successfully retrieved the user's registered events.
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              eventName:
+                type: string
+                description: Name of the event.
+              date:
+                type: string
+                format: date
+                description: Date of the event.
+            example:
+              [
+                {
+                  "eventName": "Yoga",
+                  "date": "2023-12-11"
+                },
+                {
+                  "eventName": "Swimming",
+                  "date": "2023-11-10"
+                },
+                ...
+              ]
+      401:
+        description: Unauthorized. User must be logged in to retrieve their registered events.
+      500:
+        description: An error occurred while retrieving the user's registered events.
+    """
     try:
         # current_user = get_jwt_identity()
         current_user = get_jwt_identity()
