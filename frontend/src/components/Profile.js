@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "./Header";
+import Footer from "./Footer";
 import {
   Button,
   Card,
@@ -348,6 +349,7 @@ function Profile(props) {
           </Card>
         </Box>
       </Container>
+      <Footer/>
     </>
   );
 }

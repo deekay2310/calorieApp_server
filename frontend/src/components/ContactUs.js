@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Typography, Link } from '@mui/material';
 import Header from './Header';
+import Footer from './Footer';
 
 const ContactUs = (props) => {
   return (
@@ -25,6 +26,7 @@ const ContactUs = (props) => {
           We will respond to you as soon as we can!
         </Typography>
       </Container>
+      <Footer/>
     </div>
   );
 };
