@@ -210,6 +210,8 @@ def history():
     email = get_session = session.get('email')
     if get_session is not None:
         form = HistoryForm()
+    else:
+        return redirect(url_for('login'))
     return render_template('history.html', form=form)
 
 
@@ -249,29 +251,32 @@ def friends():
     # ##########################
     email = session.get('email')
 
-    myFriends = list(mongo.db.friends.find(
-        {'sender': email, 'accept': True}, {'sender', 'receiver', 'accept'}))
-    myFriendsList = list()
+    if email is not None:
+        myFriends = list(mongo.db.friends.find(
+            {'sender': email, 'accept': True}, {'sender', 'receiver', 'accept'}))
+        myFriendsList = list()
 
-    for f in myFriends:
-        myFriendsList.append(f['receiver'])
+        for f in myFriends:
+            myFriendsList.append(f['receiver'])
 
-    print(myFriends)
-    allUsers = list(mongo.db.user.find({}, {'name', 'email'}))
+        print(myFriends)
+        allUsers = list(mongo.db.user.find({}, {'name', 'email'}))
 
-    pendingRequests = list(mongo.db.friends.find(
-        {'sender': email, 'accept': False}, {'sender', 'receiver', 'accept'}))
-    pendingReceivers = list()
-    for p in pendingRequests:
-        pendingReceivers.append(p['receiver'])
+        pendingRequests = list(mongo.db.friends.find(
+            {'sender': email, 'accept': False}, {'sender', 'receiver', 'accept'}))
+        pendingReceivers = list()
+        for p in pendingRequests:
+            pendingReceivers.append(p['receiver'])
 
-    pendingApproves = list()
-    pendingApprovals = list(mongo.db.friends.find(
-        {'receiver': email, 'accept': False}, {'sender', 'receiver', 'accept'}))
-    for p in pendingApprovals:
-        pendingApproves.append(p['sender'])
+        pendingApproves = list()
+        pendingApprovals = list(mongo.db.friends.find(
+            {'receiver': email, 'accept': False}, {'sender', 'receiver', 'accept'}))
+        for p in pendingApprovals:
+            pendingApproves.append(p['sender'])
 
-    print(pendingApproves)
+        print(pendingApproves)
+    else:
+        return redirect(url_for('login'))
 
     # print(pendingRequests)
     return render_template('friends.html', allUsers=allUsers, pendingRequests=pendingRequests, active=email,
