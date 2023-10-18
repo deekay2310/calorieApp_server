@@ -301,8 +301,8 @@ def send_email():
     friend_email = str(friend_email).split(',')
     server = smtplib.SMTP_SSL("smtp.gmail.com",465)
     #Storing sender's email address and password
-    sender_email = "calorie.app.server@gmail.com"
-    sender_password = "Temp@1234"
+    sender_email = "burnoutapp74@gmail.com"
+    sender_password = "fhjt vqpq slqr wdtr"
     
     #Logging in with sender details
     server.login(sender_email,sender_password)
