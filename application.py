@@ -156,13 +156,20 @@ def calories():
         return redirect(url_for('home'))
     return render_template('calories.html', form=form, time=now)
 
+@a.app.route("/my_enrolled_workouts", methods=['GET', 'POST'])
+def my_enrolled_workouts():
+    return render_template('display_profile.html')
 
-@a.app.route("/user_profile", methods=['GET', 'POST'])
-def user_profile():
+@a.app.route("/profile", methods=['GET', 'POST'])
+def profile():
+    return render_template('display_profile.html')
+
+@a.app.route("/edit_profile", methods=['GET', 'POST'])
+def edit_profile():
     """
-    user_profile() function displays the UserProfileForm (user_profile.html) template
-    route "/user_profile" will redirect to user_profile() function.
-    user_profile() called and if the form is submitted then various values are fetched and updated into the database entries
+    edit_profile() function displays the UserProfileForm (user_profile.html) template
+    route "/edit_profile" will redirect to edit_profile() function.
+    edit_profile() called and if the form is submitted then various values are fetched and updated into the database entries
     Input: Email, height, weight, goal, Target weight
     Output: Value update in database and redirected to home login page
     """
@@ -175,8 +182,7 @@ def user_profile():
                 height = request.form.get('height')
                 goal = request.form.get('goal')
                 target_weight = request.form.get('target_weight')
-                temp = mongo.db.profile.find_one({'email': email}, {
-                    'height', 'weight', 'goal', 'target_weight'})
+                temp = mongo.db.profile.find_one({'email': email})
                 if temp is not None:
                     mongo.db.profile.update({'email': email},
                                             {'$set': {'weight': temp['weight'],
