@@ -50,11 +50,11 @@ class CalorieForm(FlaskForm):
     for i in get_docs:
         temp = i['food'] + ' (' + i['calories'] + ')'
         result.append((temp, temp))
-
+    date = DateField('Date', validators=[DataRequired()])
     food = SelectField(
-        'Select Food', choices=result)
+        'Calories Consumed - Select Food', choices=result)
 
-    burnout = StringField('Burn Out', validators=[DataRequired()])
+    burnout = StringField('Calories Burnt', validators=[DataRequired()])
     submit = SubmitField('Save')
 
 
@@ -91,8 +91,16 @@ class EnrollForm(FlaskForm):
     submit = SubmitField('Enroll')
 
 class ResetPasswordForm(FlaskForm):
-    password = PasswordField('Password', validators=[DataRequired()])
+    new_password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField(
         'Confirm Password', validators=[
-            DataRequired(), EqualTo('password')])
+            DataRequired(), EqualTo('new_password')])
     submit = SubmitField('Reset')
+
+class ForgotForm(FlaskForm):
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+
+
+
+

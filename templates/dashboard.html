@@ -1,15 +1,7 @@
-<body onload="WeightAlert()">
+<body>
 {% extends "layout.html" %}
 {% block content %}
-<script>
-  
-  function WeightAlert() {
-    
-    setTimeout(function(){ alert ("Tracking progress is vital. Don't forget to log your weight today!");}, 3000)
-   
-    
-  }
- </script>
+
 <div></div>
 
     <div class="carousel slide" data-bs-ride="carousel" id="carousel-1">
@@ -26,6 +18,7 @@
         </ol>
     </div>
     <div class="container site-section" id="introduction">
+        <h4>Tracking progress is vital. Don't forget to log your weight today!</h4>
         <h3 class="card-title">For the love of fit!</h3>
         <center>
             <video width="700" height="400" controls>
@@ -42,8 +35,9 @@
                     <div class="card-body">
                         <h4 class="card-title">Yoga for Beginners</h4>
                         <p class="card-text"><br>&nbsp;New to Yoga? You are at the right place! Learn easy yoga poses to build strength, flexibility and mental clarity.<br><br></p>
+                        <a class="btn btn-secondary btn-sm" href="{{ url_for('easy_enroll', enroll='yes', workout='yoga') }}" role="button">Enroll</a>
                         <a class="btn btn-secondary btn-sm" href="{{ url_for('yoga') }}" role="button">More info</a>
-                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=c8hjhRqIwHE" role="button">Tutorial</a>
+                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=c8hjhRqIwHE" role="button" target="_blank">Tutorial</a>
                     </div>
                 </div>
             </div>
@@ -52,8 +46,9 @@
                     <div class="card-body">
                         <h4 class="card-title">Swimming</h4>
                         <p class="card-text"><br>&nbsp;Swimming is an activity that burns lots of calories, is easy on the joints, supports your weight, builds muscular strength and endurance.<br><br></p>
+                        <a class="btn btn-secondary btn-sm" href="{{ url_for('easy_enroll', enroll='yes', workout='swim') }}" role="button">Enroll</a>
                         <a class="btn btn-secondary btn-sm" href="{{ url_for('swim') }}" role="button">More info</a>
-                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=oM4sHl1hTEE" role="button">Tutorial</a>
+                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=oM4sHl1hTEE" role="button" target="_blank">Tutorial</a>
                     </div>
                 </div>
             </div>
@@ -62,8 +57,9 @@
                     <div class="card-body">
                         <h4 class="card-title">Abs Smash</h4>
                         <p class="card-text"><br> Whether your goal is a six-pack or just a little more definition around your midsection, we will help get you there!<br><br></p>
+                        <a class="btn btn-secondary btn-sm" href="{{ url_for('easy_enroll', enroll='yes', workout='abbs') }}" role="button">Enroll</a>
                         <a class="btn btn-secondary btn-sm" href="{{ url_for('abbs') }}" role="button">More info</a>
-                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=z6GxFSsx84E" role="button">Tutorial</a>
+                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=z6GxFSsx84E" role="button" target="_blank">Tutorial</a>
                     </div>
                 </div>
             </div>
@@ -72,8 +68,9 @@
                     <div class="card-body">
                         <h4 class="card-title">Walk Fitness</h4>
                         <p class="card-text"><br>Join us to get the best of the walk workouts to burn more calories than a stroll around the park.<br><br></p>
+                        <a class="btn btn-secondary btn-sm" href="{{ url_for('easy_enroll', enroll='yes', workout='walk') }}" role="button">Enroll</a>
                         <a class="btn btn-secondary btn-sm" href="{{ url_for('walk') }}" role="button">More info</a>
-                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=3hlUMzWh8jY" role="button">Tutorial</a>
+                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=3hlUMzWh8jY" role="button" target="_blank">Tutorial</a>
                     </div>
                 </div>
             </div>
@@ -82,8 +79,9 @@
                     <div class="card-body">
                         <h4 class="card-title">Belly Burner</h4>
                         <p class="card-text"><br>&nbsp;Join Sasha for a 30-minute no-equipment workout that will work on that stubborn belly fat.<br><br></p>
+                        <a class="btn btn-secondary btn-sm" href="{{ url_for('easy_enroll', enroll='yes', workout='belly') }}" role="button">Enroll</a>
                         <a class="btn btn-secondary btn-sm" href="{{ url_for('belly') }}" role="button">More info</a>
-                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=8MAtXXXUvqo" role="button">Tutorial</a>
+                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=8MAtXXXUvqo" role="button" target="_blank">Tutorial</a>
                     </div>
                 </div>
             </div>
@@ -92,8 +90,9 @@
                     <div class="card-body">
                         <h4 class="card-title">Dance Fitness</h4>
                         <p class="card-text"><br>&nbsp;Shake it off and groove to some fun tracks with Tom and his squad in this dance fitness session!<br><br></p>
+                        <a class="btn btn-secondary btn-sm" href="{{ url_for('easy_enroll', enroll='yes', workout='dance') }}" role="button">Enroll</a>
                         <a class="btn btn-secondary btn-sm" href="{{ url_for('dance') }}" role="button">More info</a>
-                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=Qf0L-xtMUjg" role="button">Tutorial</a>
+                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=Qf0L-xtMUjg" role="button" target="_blank">Tutorial</a>
                     </div>
                 </div>
             </div>
@@ -102,8 +101,9 @@
                     <div class="card-body">
                         <h4 class="card-title">HRX Fitness</h4>
                         <p class="card-text"><br>&nbsp;It's time to push yourself to the limit! Join us for some intense workout sessions.<br><br></p>
+                        <a class="btn btn-secondary btn-sm" href="{{ url_for('easy_enroll', enroll='yes', workout='hrx') }}" role="button">Enroll</a>
                         <a class="btn btn-secondary btn-sm" href="{{ url_for('hrx') }}" role="button">More info</a>
-                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=Ze7zzMgCdko" role="button">Tutorial</a>
+                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=Ze7zzMgCdko" role="button"target="_blank">Tutorial</a>
                     </div>
                 </div>
             </div>
@@ -112,8 +112,9 @@
                     <div class="card-body">
                         <h4 class="card-title">Core Conditioning</h4>
                         <p class="card-text"><br>Develop core muscle strenngth that improves posture and contributes to a trimmer appearance.<br><br></p>
+                        <a class="btn btn-secondary btn-sm" href="{{ url_for('easy_enroll', enroll='yes', workout='core') }}" role="button">Enroll</a>
                         <a class="btn btn-secondary btn-sm" href="{{ url_for('core') }}" role="button">More info</a>
-                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=XH7mBWRG9q0" role="button">Tutorial</a>
+                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=XH7mBWRG9q0" role="button" target="_blank">Tutorial</a>
                     </div>
                 </div>
             </div>
@@ -122,8 +123,9 @@
                     <div class="card-body">
                         <h4 class="card-title">Gym</h4>
                         <p class="card-text"><br>&nbsp;A collection of Dumbbells workouts by skilled trainers specific to particular muscle group.<br><br></p>
+                        <a class="btn btn-secondary btn-sm" href="{{ url_for('easy_enroll', enroll='yes', workout='gym') }}" role="button">Enroll</a>
                         <a class="btn btn-secondary btn-sm" href="{{ url_for('gym') }}" role="button">More info</a>
-                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=8IjCdiweJQo" role="button">Tutorial</a>
+                        <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/watch?v=8IjCdiweJQo" role="button" target="_blank">Tutorial</a>
                     </div>
                 </div>
             </div>
