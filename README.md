@@ -199,11 +199,28 @@ Link to the implementation video of the BurnOut application:
 
   # Third-Party Dependencies
 
-  | Tables        | Are           | Cool  |
+   # Third-Party Dependencies
+  
+  Frontend:
+
+  | Package Name        | Version           | License  |
 | ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+| material-ui      | 4.12.4 | MIT License |
+| axios      | 1.5.1      |   MIT License |
+
+  Backend:
+
+  | Package Name        | Version           | License  |
+| ------------- |:-------------:| -----:|
+| Flask      | 2.2.5 | MIT License |
+| python_dotenv      | 0.21.1      |   MIT License |
+| flask_jwt_extended      | 4.5.3      |   MIT License |
+| bcrypt      | 4.0.1      |   MIT License |
+| flask_pymongo      | 2.3.0    |   MIT License |
+| mongomock      | 4.1.2      |   MIT License |
+| flasgger      | 0.9.7.1      |   MIT License |
+| coverage      | 7.2.7      |   MIT License |
+
   
   # Enhancements
 
