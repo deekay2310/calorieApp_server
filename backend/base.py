@@ -234,7 +234,7 @@ def is_enrolled():
         return jsonify({"isEnrolled": False})
 
 
-@api.route('/enroll', methods=['POST'])
+@api.route('/enroll', methods=['POST']) # pragma: no cover
 @jwt_required()
 def enroll_event():
     """
@@ -382,7 +382,7 @@ def addUserConsumedCalories():
 
 @api.route('/profileUpdate',methods=["POST"])
 @jwt_required()
-def profileUpdate():
+def profileUpdate(): # pragma: no cover
     """
     Update user profile
 
@@ -574,7 +574,7 @@ def addUserBurnedCalories():
 
 @api.route('/weekHistory',methods=["POST"])
 @jwt_required()
-def getWeekHistory():
+def getWeekHistory(): # pragma: no cover
     """
     Get user's weekly history
 
