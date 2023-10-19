@@ -26,8 +26,9 @@ jobs:
       working-directory: ./backend
       run: |
         python -m coverage run -m unittest test_api.py
+        coverage html
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        path: ./backend/.coverage
+        path: ./backend/htmlcov
