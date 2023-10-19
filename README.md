@@ -228,16 +228,16 @@ Before you begin, make sure you have the following installed:
 
   Backend:
 
-  | Package Name        | Version           | License  |
+   | Package Name        | Version           | License  |
 | ------------- |:-------------:| -----:|
-| Flask      | 2.2.5 | MIT License |
-| python_dotenv      | 0.21.1      |   MIT License |
+| Flask      | 2.2.5 | BSD 3-Clause |
+| python_dotenv      | 0.21.1      |   BSD License (BSD-3-Clause) |
 | flask_jwt_extended      | 4.5.3      |   MIT License |
-| bcrypt      | 4.0.1      |   MIT License |
-| flask_pymongo      | 2.3.0    |   MIT License |
-| mongomock      | 4.1.2      |   MIT License |
+| bcrypt      | 4.0.1      |   Apache License 2.0 |
+| flask_pymongo      | 2.3.0    |   BSD License (BSD) |
+| mongomock      | 4.1.2      |   BSD |
 | flasgger      | 0.9.7.1      |   MIT License |
-| coverage      | 7.2.7      |   MIT License |
+| coverage      | 7.2.7      |   Apache Software License (Apache-2.0) |
 
   
   # Enhancements
