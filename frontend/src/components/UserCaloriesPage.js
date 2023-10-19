@@ -7,6 +7,7 @@ import {
   Container,
   ListItem,
   List,
+  CardMedia
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -89,7 +90,7 @@ function UserCaloriesPage(props) {
     })
       .then((response) => {
         const res = response.data;
-        setDietHistory(res.sort((a,b) => b.dayIndex - a.dayIndex));
+        setDietHistory(res.sort((a, b) => b.dayIndex - a.dayIndex));
         let weekHistoryData = res.map((dayObj) => {
           return {
             date: dayObj.date,
@@ -106,7 +107,7 @@ function UserCaloriesPage(props) {
           console.log(error.response.headers);
         }
       });
-    
+
     // Make API call to backend to get events user registered for from DB.
     axios({
       method: "GET",
@@ -269,6 +270,17 @@ function UserCaloriesPage(props) {
               subheader={"Today's pick to help you get you fit"}
               avatar={<FitnessCenterIcon />}
             />
+
+            <CardContent align="center">
+              <CardMedia
+                style={{ transform: "scale(1.4)" }}  
+                width={375}
+                height={160}
+                component="img"
+                image="/assets/img/october19.gif"
+              />
+            </CardContent>
+
           </Card>
           <Card sx={{ gridArea: "intake" }} elevation={5}>
             <CardHeader
@@ -497,7 +509,7 @@ function UserCaloriesPage(props) {
           </Card>
         </Box>
       </Container>
-      <Footer/>
+      <Footer />
     </>
   );
 }
