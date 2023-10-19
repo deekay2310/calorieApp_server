@@ -120,6 +120,17 @@ Link to the implementation video of the BurnOut application:
 <img width='600' src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Event.png>
 
 
+# Technical Overview
+
+This application is a React-based web application that runs in the user's web browser. It provides the following key features:
+
+- **User Authentication**: Upon logging in, the application creates and stores tokens locally on the user's machine to maintain user sessions securely.
+
+- **Access Control**: Authenticated users have access to multiple pages and features within the application, ensuring a personalized and controlled user experience.
+
+- **Backend Server**: The application relies on a Flask server to serve various user requests. The server interacts with a MongoDB database to fetch and store data as needed, ensuring smooth functionality and data persistence.
+
+With these components working together, the application delivers a secure and feature-rich experience to its users.
 
  # Getting started
  
