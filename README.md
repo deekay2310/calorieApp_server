@@ -112,7 +112,7 @@ Link to the implementation video of the BurnOut application:
 
 
  ## Enter Calories in and burnt
-<img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/calories.png>
+<img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/homepage-1.png>
 
 
 
