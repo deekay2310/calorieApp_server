@@ -1,5 +1,6 @@
 # BurnOut
 
+
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
 [![DOI](https://zenodo.org/badge/698975832.svg)](https://zenodo.org/doi/10.5281/zenodo.10022867)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
@@ -29,7 +30,7 @@
 <img src="https://img.shields.io/github/issues-pr/deekay2310/calorieApp_server?style=flat-square" alt="cheapBuy pull-requests"/>
 </a>
 <a href="https://github.com/deekay2310/calorieApp_server/graphs/contributors" alt="Contributors">
-<img src="https://img.shields.io/github/contributors/deekay2310/calorieApp_server" /></a>
+<img src="https://img.shields.io/github/contributors/adi-kiran/burnout-healthgoalsapp" /></a>
 
 <a href="https://github.com/deekay2310/calorieApp_server/milestones" alt="milestones">
 <img src="https://img.shields.io/github/milestones/all/deekay2310/calorieApp_server" /></a> 
@@ -145,6 +146,23 @@ Link to the implementation video of the BurnOut application:
 
  # Steps for execution
  
+Follow these steps to set up and run the application on your local machine.
+
+### Prerequisites
+Before you begin, make sure you have the following installed:
+
+- [Python](https://www.python.org/downloads/)
+- [Node.js](https://nodejs.org/en/download)
+- [MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows)
+- Git (for cloning the repository)
+
+
+
+
+
+
+
+
  Step 1:
  Install Python from the following link:
 
