@@ -11,7 +11,7 @@ load_dotenv()
 df = pd.read_csv("cleaned_data.csv")
 index_list = df.index.tolist()
 
-client = pymongo.MongoClient(os.environ.get('MONGO_URI'))
+client = pymongo.MongoClient(os.environ.get("MONGO_URI"))
 db = client["test"]
 p_details = db["profile"]  # profile details
 records = p_details.find()  # retrieves all documents

@@ -15,6 +15,7 @@ from flask import (
     request,
     jsonify,
 )
+
 # from flask_mail import Mail
 # from flask_pymongo import PyMongo
 from tabulate import tabulate
@@ -956,6 +957,6 @@ def hrx():
 
 
 if __name__ == "__main__":
-    print(os.environ.get('MONGO_URI'), '<--- MONGO_URI')
-    print(os.environ.get('FLASK_RUN_HOST'), '<--- host')
-    app.run(host=os.environ.get('FLASK_RUN_HOST'), port=5001)
+    print(os.environ.get("MONGO_URI"), "<--- MONGO_URI")
+    print(os.environ.get("FLASK_RUN_HOST"), "<--- host")
+    app.run(host=os.environ.get("FLASK_RUN_HOST"), port=5001)
