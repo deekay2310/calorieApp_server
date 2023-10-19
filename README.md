@@ -117,24 +117,6 @@ Link to the implementation video of the BurnOut application:
 
 
 
-
-
-
-
-
-
- ## Check History
-
-<img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/weekly%20tracker.png>
-
-
-
-
- ## Add weight alert
- 
-<img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/Screen%20Shot%202021-12-04%20at%206.30.48%20PM.png>
-
-
  ## Enrolling into several programs
  
 <img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/event-enroll.png>
