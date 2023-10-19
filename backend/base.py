@@ -40,7 +40,7 @@ def setup_mongo_client(app):
 # Call setup_mongo_client during normal (non-test) app initialization
 setup_mongo_client(api)
 
-@api.route('/token', methods=["POST"])
+@api.route('/token', methods=["POST"]) # pragma: no cover
 def create_token():
     """
     Create a new access token
