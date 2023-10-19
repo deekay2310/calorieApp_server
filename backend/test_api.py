@@ -146,6 +146,38 @@ class APITestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 405) 
 
+    @patch('base.get_jwt_identity')
+    @patch('base.mongo')
+    def test_goalsUpdate_unauthorized(self, mock_mongo, mock_get_jwt_identity):
+        app_client = api.test_client()
+        # Mock get_jwt_identity() to return None, indicating an unauthorized user
+        mock_get_jwt_identity.return_value = None
+
+        response = app_client .get('/goalsUpdate')
+
+        self.assertEqual(response.status_code, 405) 
+
+    @patch('base.get_jwt_identity')
+    @patch('base.mongo')
+    def test_profileUpdate_unauthorized(self, mock_mongo, mock_get_jwt_identity):
+        app_client = api.test_client()
+        # Mock get_jwt_identity() to return None, indicating an unauthorized user
+        mock_get_jwt_identity.return_value = None
+
+        response = app_client .get('/profileUpdate')
+
+        self.assertEqual(response.status_code, 405) 
+
+    @patch('base.get_jwt_identity')
+    @patch('base.mongo')
+    def test_caloriesConsumed_unauthorized(self, mock_mongo, mock_get_jwt_identity):
+        app_client = api.test_client()
+        # Mock get_jwt_identity() to return None, indicating an unauthorized user
+        mock_get_jwt_identity.return_value = None
+
+        response = app_client .get('/caloriesConsumed')
+
+        self.assertEqual(response.status_code, 405) 
 
 if __name__ == "__main__":
     unittest.main()
