@@ -237,7 +237,7 @@ def ajaxhistory():
                     'ContentType': 'application/json'}
 
 
-@app.route("/friends", methods=['GET'])
+@app.route("/friends", methods=['GET', 'POST'])
 def friends():
     # ############################
     # friends() function displays the list of friends corrsponding to given email
@@ -247,6 +247,8 @@ def friends():
     # Input: Email
     # Output: My friends, Pending Approvals, Sent Requests and Add new friends
     # ##########################
+
+    # Render a template with the search results
     email = session.get('email')
 
     myFriends = list(mongo.friends.find(
@@ -256,8 +258,11 @@ def friends():
     for f in myFriends:
         myFriendsList.append(f['receiver'])
 
-    print(myFriends)
-    allUsers = list(mongo.user.find({}, {'name', 'email'}))
+    # allUsers = list(mongo.user.find({}, {'name', 'email'}))
+
+    sendingemail = request.form.get('email')
+    sendingRequest = ""
+
 
     pendingRequests = list(mongo.friends.find(
         {'sender': email, 'accept': False}, {'sender', 'receiver', 'accept'}))
@@ -271,10 +276,12 @@ def friends():
     for p in pendingApprovals:
         pendingApproves.append(p['sender'])
 
-    print(pendingApproves)
+    if sendingemail and sendingemail not in pendingReceivers and sendingemail not in pendingApproves and sendingemail not in myFriendsList:
+        sendingRequest = mongo.user.find_one({'email': sendingemail},{'name','email'})
 
-    # print(pendingRequests)
-    return render_template('friends.html', allUsers=allUsers, pendingRequests=pendingRequests, active=email,
+    if( type(sendingRequest) is  str and len(sendingRequest) ==0 ):
+        sendingRequest = None
+    return render_template('friends.html', title = 'Friends', sendingRequest = sendingRequest, pendingRequests=pendingRequests, active=email,
                            pendingReceivers=pendingReceivers, pendingApproves=pendingApproves, myFriends=myFriends, myFriendsList=myFriendsList)
 
 
