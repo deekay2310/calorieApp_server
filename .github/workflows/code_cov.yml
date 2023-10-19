@@ -18,15 +18,14 @@ jobs:
       with:
         python-version: 3.7.17
     - name: Install dependencies
-        working-directory: ./backend
-        run: |
-          pip install -r requirements.txt
-          echo requirements installed
-        
-      - name: Run tests
-        working-directory: ./backend
-        run: |
-          python -m unittest test_api.py
+      working-directory: ./backend
+      run: |
+        pip install -r requirements.txt
+        echo requirements installed  
+    - name: Run tests
+      working-directory: ./backend
+      run: |
+        python -m unittest test_api.py
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
