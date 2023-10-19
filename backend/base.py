@@ -226,7 +226,7 @@ def is_enrolled():
     data = request.json
     eventTitle = data['eventTitle']
     current_user = get_jwt_identity()
-    enrollment = mongo.db.user.find_one({"email": current_user, "eventTitle": eventTitle})
+    enrollment = mongo.user.find_one({"email": current_user, "eventTitle": eventTitle})
 
     if enrollment:
         return jsonify({"isEnrolled": True})
@@ -275,7 +275,7 @@ def enroll_event():
     current_user = get_jwt_identity()
     try:
         # Insert data into MongoDB
-        mongo.db.user.insert_one({
+        mongo.user.insert_one({
             "email": current_user,
             "eventTitle": data['eventTitle']
         })
@@ -321,7 +321,7 @@ def my_profile():
         description: An error occurred while retrieving the user profile.
     """
     current_user = get_jwt_identity()
-    profile = mongo.db.user.find_one({"email": current_user})
+    profile = mongo.user.find_one({"email": current_user})
     return jsonify(json_util.dumps(profile))
 
 @api.route('/caloriesConsumed',methods=["POST"])
@@ -372,7 +372,7 @@ def addUserConsumedCalories():
     current_user = get_jwt_identity()
     try:
         # Insert data into MongoDB
-        mongo.db.user.update_one({'email': current_user, "consumedDate": data['intakeDate']}, {"$push": {"foodConsumed": {"item":data["intakeFoodItem"],"calories":data["intakeCalories"]}}}, upsert=True)
+        mongo.user.update_one({'email': current_user, "consumedDate": data['intakeDate']}, {"$push": {"foodConsumed": {"item":data["intakeFoodItem"],"calories":data["intakeCalories"]}}}, upsert=True)
         response = {"status": "Data saved successfully"}
         statusCode = 200
     except Exception as e:
@@ -446,7 +446,7 @@ def profileUpdate():
         "email": current_user,
     }
     try:
-        mongo.db.user.update_one(query, {"$set": new_document}, upsert=True)
+        mongo.user.update_one(query, {"$set": new_document}, upsert=True)
         response = jsonify({"msg": "update successful"})
     except Exception as e:
         response = jsonify({"msg": "update failed"})
@@ -511,7 +511,7 @@ def goalsUpdate():
         "email": current_user,
     }
     try:
-        mongo.db.user.update_one(query, {"$set": new_document}, upsert=True)
+        mongo.user.update_one(query, {"$set": new_document}, upsert=True)
         response = jsonify({"msg": "update successful"})
     except Exception as e:
         response = jsonify({"msg": "update failed"})
@@ -564,7 +564,7 @@ def addUserBurnedCalories():
     current_user = get_jwt_identity()
     try:
         # Insert data into MongoDB
-        mongo.db.user.update_one({'email': current_user, "consumedDate": data['burnoutDate']}, {"$inc": {"burntCalories": int(data["burntoutCalories"])}}, upsert=True)
+        mongo.user.update_one({'email': current_user, "consumedDate": data['burnoutDate']}, {"$inc": {"burntCalories": int(data["burntoutCalories"])}}, upsert=True)
         response = {"status": "Data saved successfully"}
         statusCode = 200
     except Exception as e:
@@ -709,7 +709,7 @@ def getWeekHistory():
             #   burntCalories: 1200,       # calories burnt out on that day
             # }
             res = {}
-            data = mongo.db.user.find_one({'email': current_user, "consumedDate": dateToFind})
+            data = mongo.user.find_one({'email': current_user, "consumedDate": dateToFind})
             res["dayIndex"] = index
             res["date"] = dateToFind
             if data:
@@ -773,7 +773,7 @@ def getFoodCalorieMapping():
         description: An error occurred while retrieving the food calorie mapping.
     """
     try:
-        data = mongo.db.food.find()
+        data = mongo.food.find()
         # Response should be in this format {foodItem: calories, foodItem: calories....} 
         # For Example { Potato: 50, Acai: 20, Cheeseburger: 80 }
         response = {item["food"]:item["calories"] for item in data}
@@ -831,7 +831,7 @@ def getUserRegisteredEvents():
     try:
         # current_user = get_jwt_identity()
         current_user = get_jwt_identity()
-        data = mongo.db.user.find({"email": current_user, "eventTitle":{"$exists": True}})
+        data = mongo.user.find({"email": current_user, "eventTitle":{"$exists": True}})
         response = []
         date="10/23/2023"
         for item in data:
