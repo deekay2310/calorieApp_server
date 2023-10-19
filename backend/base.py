@@ -737,7 +737,7 @@ def getWeekHistory(): # pragma: no cover
 
 @api.route('/foodCalorieMapping',methods=["GET"])
 @jwt_required()
-def getFoodCalorieMapping(): # pragma: no cover
+def getFoodCalorieMapping(): 
     """
     Get food calorie mapping
 
@@ -785,7 +785,7 @@ def getFoodCalorieMapping(): # pragma: no cover
 
 @api.route('/usersEvents',methods=["GET"]) 
 @jwt_required()
-def getUserRegisteredEvents(): # pragma: no cover
+def getUserRegisteredEvents(): 
     """
     Get user's registered events
 
