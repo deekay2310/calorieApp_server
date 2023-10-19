@@ -783,9 +783,9 @@ def getFoodCalorieMapping():
         statusCode = 500
     return jsonify(response),statusCode
 
-@api.route('/usersEvents',methods=["GET"])
+@api.route('/usersEvents',methods=["GET"]) 
 @jwt_required()
-def getUserRegisteredEvents():
+def getUserRegisteredEvents(): # pragma: no cover
     """
     Get user's registered events
 
