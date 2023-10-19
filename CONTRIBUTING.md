@@ -150,7 +150,7 @@ Everyone participating in this project needs to abide by the aPAS - A Personal A
   All Python code is linted with Pylint. Ensure that before you commit any changes, your code passes all the default pylint checks. Pylint can be installed with
   `pip install pylint`.
 
-#### Recommended Tools
+## Recommended Tools
 For a robust and efficient development practice, consider incorporating the following essential tools into your workflow:
 
 - VS Code: Visual Studio Code is a versatile and lightweight code editor with a vast array of extensions. It provides an excellent platform for writing, debugging, and collaborating on code, making it a top choice for developers across various programming languages.
