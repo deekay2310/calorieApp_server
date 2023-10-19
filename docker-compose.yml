@@ -9,14 +9,11 @@ services:
       - FLASK_RUN_HOST=0.0.0.0
       - MONGO_URI=mongodb://mongo:27017/test
       - MONGO_DATABASE=test
-      
-    # container_name: django-container
     depends_on:
       - mongo  # Ensure that MongoDB container is started before your Python app
 
   mongo:
     image: mongo:latest
-    # container_name: mongodb-container
     ports:
       - "27017:27017"  # Map host port to container port for MongoDB
     volumes:
