@@ -1,8 +1,14 @@
-on: push
-name: Lint Python
+# READ: https://dev.to/ken_mwaura1/enhancing-python-code-quality-a-comprehensive-guide-to-linting-with-ruff-3d6g
+name: Python Linter (Ruff)
+on: [push, pull_request]
 jobs:
-  lint:
+  ruff:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: cclauss/Find-Python-syntax-errors-action@master
+      - uses: actions/checkout@v3
+      - uses: chartboost/ruff-action@v1
+        with:
+          args: "--fix"
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'style fixes by ruff'
