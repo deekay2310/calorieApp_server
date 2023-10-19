@@ -73,9 +73,9 @@ function Profile(props) {
 
   const initialFirstName = "";
   const initialLastName = "";
-  const initialAge = 30;
-  const initialWeight = 160;
-  const initialHeight = 6.0;
+  const initialAge = "";
+  const initialWeight = "";
+  const initialHeight = "";
 
   const [firstName, setFirstName] = useState(initialFirstName);
   const [lastName, setLastName] = useState(initialLastName);
