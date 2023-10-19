@@ -216,8 +216,6 @@ Before you begin, make sure you have the following installed:
   https://github.com/adi-kiran/burnout-healthgoalsapp
 
   # Third-Party Dependencies
-
-   # Third-Party Dependencies
   
   Frontend:
 
