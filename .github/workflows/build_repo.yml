@@ -30,11 +30,6 @@ jobs:
           npm install --legacy-peer-deps
           echo npm requirements installed
         
-      - name: Run backend tests
-        working-directory: ./backend
-        run: |
-          flask run
-
       - name: Run frontend tests
         working-directory: ./frontend
         run: |
