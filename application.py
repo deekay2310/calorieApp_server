@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 from dotenv import load_dotenv
 from flask import (
-    Flask,
+    # Flask,
     json,
     render_template,
     session,
@@ -15,8 +15,8 @@ from flask import (
     request,
     jsonify,
 )
-from flask_mail import Mail
-from flask_pymongo import PyMongo
+# from flask_mail import Mail
+# from flask_pymongo import PyMongo
 from tabulate import tabulate
 from forms import (
     HistoryForm,
@@ -27,25 +27,14 @@ from forms import (
     EnrollForm,
     ActivityForm,
 )
+from apps import App
 
+# Load from .env file
 load_dotenv()
 
-# app = App().app
-# mongo = App().mongo
-app = Flask(__name__)
-app.secret_key = "secret"
-print(os.environ.get('MONGO_URI'), '<--- MONGO_URI (application.py)')
-app.config["MONGO_URI"] = os.environ.get('MONGO_URI')
-app.config["MONGO_CONNECT"] = False
-mongo = PyMongo(app)
 
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_PORT"] = 465
-app.config["MAIL_USE_SSL"] = True
-app.config["MAIL_USERNAME"] = "bogusdummy123@gmail.com"
-app.config["MAIL_PASSWORD"] = "helloworld123!"
-mail = Mail(app)
-
+app = App().app
+mongo = App().mongo
 
 
 @app.route("/")
