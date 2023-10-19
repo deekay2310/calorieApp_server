@@ -14,7 +14,7 @@ https://drive.google.com/drive/folders/1M5vdCwH11C-MqK8X-Dkf5bPR0SaWA5Yc?usp=sha
 ![github workflow](https://github.com/deekay2310/calorieApp_server/actions/workflows/unit_test.yml/badge.svg)
 ![github workflow](https://github.com/deekay2310/calorieApp_server/actions/workflows/style_checker.yml/badge.svg)
 ![github workflow](https://github.com/deekay2310/calorieApp_server/actions/workflows/syntax_checker.yml/badge.svg)
-[![codecov](https://codecov.io/gh/deekay2310/calorieApp_server/branch/main/graph/badge.svg?token=IQW5PLLE22)](https://codecov.io/gh/deekay2310/calorieApp_server)
+[![codecov](https://codecov.io/gh/adi-kiran/burnout-healthgoalsapp/graph/badge.svg?token=8DO6VMEZ7J)](https://codecov.io/gh/adi-kiran/burnout-healthgoalsapp)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/adi-kiran/burnout-healthgoalsapp)
 <!--Badges-->
 <a href="https://github.com/deekay2310/calorieApp_server/fork" target="blank">
