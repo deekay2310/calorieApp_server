@@ -1,13 +1,17 @@
 #  calculating a diet plan and generating a weight loss/gain projection chart
+import os
+from dotenv import load_dotenv
 import pandas as pd
 import pymongo
 import collections
 import matplotlib.pyplot as plt
 
+load_dotenv()
+
 df = pd.read_csv("cleaned_data.csv")
 index_list = df.index.tolist()
 
-client = pymongo.MongoClient("mongodb://localhost:27017")
+client = pymongo.MongoClient(os.environ.get('MONGO_URI'))
 db = client["test"]
 p_details = db["profile"]  # profile details
 records = p_details.find()  # retrieves all documents

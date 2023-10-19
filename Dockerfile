@@ -8,23 +8,28 @@ WORKDIR /app
 COPY requirements.txt /app
 
 # Install dependencies
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Expose the port app will run on
-EXPOSE 8080
+EXPOSE 5001
 
 # Copy needed contents to run the Flask app
-COPY application.py apps.py forms.py templates static /app
+COPY . .
 
-# Set environment variables for MongoDB
+# Install wget and dockerize
+RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
 
-# Populate database with food data
-COPY food_data/calories.csv /app/food_data/
-COPY insert_food_data.py /app
-RUN python insert_food_data.py
+# dockerize is a utility to wait for MongoDB service to be available before inserting data
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-# Run your Flask application
-CMD ["python", "application.py"]
+# Copy startup script
+COPY ./start.sh /start.sh
+RUN chmod +x /start.sh
+
+CMD ["/start.sh"]
 
 
 
