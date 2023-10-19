@@ -31,7 +31,6 @@ import {
   PieChart,
   Pie,
   Tooltip,
-  ResponsiveContainer,
   Cell,
   LineChart,
   Line,
@@ -44,9 +43,9 @@ import axios from "axios";
 import Footer from "./Footer";
 
 function UserCaloriesPage(props) {
-  const [todayCaloriesConsumed, setTodayCaloriesConsumed] = useState(500);
-  const [todayCaloriesBurned, setTodayCaloriesBurned] = useState(200);
-  const [todayGoal, setTodayGoal] = useState(300);
+  const [todayCaloriesConsumed, setTodayCaloriesConsumed] = useState(0);
+  const [todayCaloriesBurned, setTodayCaloriesBurned] = useState(0);
+  const [todayGoal, setTodayGoal] = useState(0);
   const [events, setEvents] = useState([]);
   const COLORS = ["#8b0e0e", "#97a3a2"];
   const [foodItems, setFoodItems] = useState({});
@@ -99,6 +98,9 @@ function UserCaloriesPage(props) {
           };
         });
         setWeekHistory(weekHistoryData);
+        setTodayCaloriesConsumed(res[6]["caloriesConsumed"]);
+        setTodayCaloriesBurned(res[6]["burntCalories"]);
+        setTodayGoal(1000);
       })
       .catch((error) => {
         if (error.response) {
@@ -128,7 +130,7 @@ function UserCaloriesPage(props) {
           console.log(error.response.headers);
         }
       });
-  }, [reloadTodayData]);
+  }, [reloadTodayData, props.state.token]);
   const [intakeItem, setIntakeItem] = useState("");
   const [intakeCalories, setIntakeCalories] = useState("");
   const handleIntakeItemChange = (event) => {
@@ -197,6 +199,8 @@ function UserCaloriesPage(props) {
         }
       });
   };
+  console.log(todayCaloriesBurned)
+  console.log(todayCaloriesConsumed)
 
   return (
     <>
@@ -228,7 +232,7 @@ function UserCaloriesPage(props) {
                     { name: "Calories Burned", value: todayCaloriesBurned },
                     {
                       name: "Calories to goal",
-                      value: todayGoal - todayCaloriesBurned,
+                      value: 0>(todayGoal - todayCaloriesBurned)?0:(todayGoal - todayCaloriesBurned),
                     },
                   ]}
                   dataKey="value"

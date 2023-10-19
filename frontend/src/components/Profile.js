@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Header from "./Header";
 import Footer from "./Footer";
 import {
   Button,
@@ -12,7 +11,6 @@ import {
   TextField,
   Avatar,
   IconButton,
-  CardActions,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Box from "@mui/material/Box";
@@ -83,14 +81,6 @@ function Profile(props) {
   const [weight, setWeight] = useState(initialWeight);
   const [height, setHeight] = useState(initialHeight);
 
-  const [profileData, setProfileData] = useState(null);
-
-  const handleProfileSave = () => {
-    // You can implement the logic here to save the values
-    console.log("Saving values:",firstName, lastName, age, weight, height);
-  };
-
-
   useEffect(() => {
     // Make API call to backend to get food items and their calories from DB.
     axios({
@@ -123,7 +113,7 @@ function Profile(props) {
         }
       });
 
-    }, []);
+    }, [props.state.token]);
 
 
     const handleProfileSubmit = (e) => {
@@ -144,6 +134,7 @@ function Profile(props) {
       })
         .then((response) => {
           const res = response.data;
+          console.log(res)
         })
         .catch((error) => {
           if (error.response) {
