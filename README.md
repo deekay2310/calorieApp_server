@@ -108,7 +108,7 @@ Link to the implementation video of the BurnOut application:
 
  ## Set User Profile
  
-<img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/Screen%20Shot%202021-12-04%20at%206.35.05%20PM.png>
+<img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Profile.png>
 
 
  ## Enter Calories in and burnt
