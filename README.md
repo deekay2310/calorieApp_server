@@ -179,6 +179,14 @@ Link to the implementation video of the BurnOut application:
   
   Link to the repository:
   https://github.com/adi-kiran/burnout-healthgoalsapp
+
+  # Third-Party Dependencies
+
+  | Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
   
   # Enhancements
 
