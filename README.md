@@ -51,7 +51,7 @@ https://drive.google.com/drive/folders/1M5vdCwH11C-MqK8X-Dkf5bPR0SaWA5Yc?usp=sha
 
 # BurnOut
 
-![WhatsApp Image 2021-09-28 at 2 48 00 PM](https://user-images.githubusercontent.com/25662536/135546154-cfae1d2e-439a-4edc-b0bb-57f693ef5a83.jpeg)
+![WhatsApp Image 2021-09-28 at 2 48 00 PM](https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Logo.png)
 
 BurnOut is an easy to use application that keeps track of a user's daily calories gained and burnt. It can help the user to set goals such as weight loss/gain. Users can edit their profile by entering their height and weight. Goals can also be updated by editing Target Weight, Daily Calories Burn Goal and Target Goal. Users can enroll into numerous programs involving fitness such as yoga classes and workout sessions. This document provides a major perspective for the users to understand and take up the project as an Open source software and add on multiple features before releasing to the market. Also, the document aids the developers in understanding the code and acts as a reference point for continuing the project. 
 
