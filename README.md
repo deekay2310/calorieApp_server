@@ -77,7 +77,7 @@ So, are you ready to take the leap towards a healthier, happier you? Dive into *
   - [Login](#login)
   - [Set User Profile](#set-user-profile)
   - [Homepage - Calorie-In/Calorie-Out, Weekly Status and Diet Tracker](#homepage---calorie-incalorie-out-weekly-status-and-diet-tracker)
-  - [Event and Enrolling into several programs](#event-and-enrolling-into-several-programs)
+  - [Events](#event-and-enrolling-into-several-programs)
   - [Enrolling into several programs](#enrolling-into-several-programs)
 - [Steps for Execution:](#steps-for-execution)
 - [Source Code](#source-code)
