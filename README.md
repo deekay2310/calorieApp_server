@@ -193,7 +193,7 @@ Link to the implementation video of the BurnOut application:
 <center>
   <table>
     <tr>
-        <td align="center"><a href="https://github.com/deekay2310"><img src="https://avatars.githubusercontent.com/u/29257773?v=4" width="100px;" alt=""/><br /><sub><b>Nimal Sharon Joji</b></sub></a><br /></td>
+        <td align="center"><a href="https://github.com/sharonjoji99"><img src="https://avatars.githubusercontent.com/u/40449660?s=400&u=a4e339041c03808303cc5ca1c274d32a96558c3a&v=4" width="100px;" alt=""/><br /><sub><b>Nimal Sharon Joji</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/PrakruthiSomashekar"><img src="https://avatars.githubusercontent.com/u/62984587?v=4" width="100px;" alt=""/><br /><sub><b>Aditya Kiran</b></sub></a></td>
     <td align="center"><a href="https://github.com/radhikaraman20"><img src="https://avatars.githubusercontent.com/u/89432698?s=400&v=4" width="100px;" alt=""/><br /><sub><b>Amrita Visalam</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/sharonjoji99"><img src="https://avatars.githubusercontent.com/u/40449660?s=400&u=a4e339041c03808303cc5ca1c274d32a96558c3a&v=4" width="100px;" alt=""/><br /><sub><b>Diksha Maurya</b></sub></a><br /></td>
