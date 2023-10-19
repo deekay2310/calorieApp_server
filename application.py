@@ -27,7 +27,6 @@ from forms import (
     EnrollForm,
     ActivityForm,
 )
-from apps import App
 
 load_dotenv()
 
