@@ -112,14 +112,18 @@ Link to the implementation video of the BurnOut application:
 
 
  ## Homepage - Calorie-In/Calorie-Out, Weekly Status and Diet Tracker
-<img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/homepage-1.png>
+<img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Homepage.png>
 
 
 
 
- ## Enrolling into several programs
+ ## Event and Enrolling into several programs
  
-<img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/event-enroll.png>
+<img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Event.png>
+
+## Enrolling into several programs
+ 
+<img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Enrolled-Event.png>
 
 
  # Steps for execution
