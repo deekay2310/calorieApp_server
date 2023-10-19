@@ -109,32 +109,17 @@ Link to the implementation video of the BurnOut application:
  
 # Application Screenshots
  
- ## Register
+ ## Homepage
+<img width='600' src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Homepage.png>
+
+ ## Profile
  
-<img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/sign-up.png>
+<img width='600' src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Profile.png>
 
- ## Login
-
-<img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Sign-In.png>
-
- ## Set User Profile
+ ## Events
  
-<img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Profile.png>
+<img width='600' src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Event.png>
 
-
- ## Homepage - Calorie-In/Calorie-Out, Weekly Status and Diet Tracker
-<img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Homepage.png>
-
-
-
-
- ## Event and Enrolling into several programs
- 
-<img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Event.png>
-
-## Enrolling into several programs
- 
-<img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Enrolled-Event.png>
 
 
  # Getting started
@@ -159,13 +144,13 @@ Before you begin, make sure you have the following installed:
    
     pip install -r requirements.txt
     
- Step 4:
+ Step 3:
    Navigate to the backend folder and run the following command to start the server:
     
     cd backend
     flask run
 
- Step 5:
+ Step 4:
    Navigate to the frontend folder and run the below to start the React app:
     
     cd frontend
