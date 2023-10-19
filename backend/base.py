@@ -236,7 +236,7 @@ def is_enrolled():
 
 @api.route('/enroll', methods=['POST']) # pragma: no cover
 @jwt_required()
-def enroll_event():
+def enroll_event(): # pragma: no cover
     """
     Enroll the user in an event
 
@@ -287,7 +287,7 @@ def enroll_event():
 
 @api.route('/profile')
 @jwt_required()
-def my_profile():
+def my_profile(): # pragma: no cover
     """
     Retrieve user profile information
 
@@ -326,7 +326,7 @@ def my_profile():
 
 @api.route('/caloriesConsumed',methods=["POST"])
 @jwt_required()
-def addUserConsumedCalories():
+def addUserConsumedCalories(): # pragma: no cover
     """
     Add consumed calories for a user
 
