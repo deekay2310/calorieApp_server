@@ -9,7 +9,6 @@ import Home from "./Home";
 import burnoutReducer, { updateState } from "../burnoutReducer";
 import PrivateRoute from "./PrivateRoute";
 import useToken from "./authentication/useToken";
-import { useHistory } from "react-router-dom";
 
 const initialState = {
   loggedIn: false,
