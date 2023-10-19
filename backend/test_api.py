@@ -90,6 +90,62 @@ class APITestCase(unittest.TestCase):
 
         self.assertEqual(response.status_code, 401)
 
+    @patch('base.get_jwt_identity')
+    @patch('base.mongo')
+    def test_my_profile_unauthorized(self, mock_mongo, mock_get_jwt_identity):
+        app_client = api.test_client()
+        # Mock get_jwt_identity() to return None, indicating an unauthorized user
+        mock_get_jwt_identity.return_value = None
+
+        response = app_client .get('/profile')
+
+        self.assertEqual(response.status_code, 401)
+
+    @patch('base.get_jwt_identity')
+    @patch('base.mongo')
+    def test_usersEvents_unauthorized(self, mock_mongo, mock_get_jwt_identity):
+        app_client = api.test_client()
+        # Mock get_jwt_identity() to return None, indicating an unauthorized user
+        mock_get_jwt_identity.return_value = None
+
+        response = app_client .get('/usersEvents')
+
+        self.assertEqual(response.status_code, 401)
+
+    @patch('base.get_jwt_identity')
+    @patch('base.mongo')
+    def test_foodCalorieMapping_unauthorized(self, mock_mongo, mock_get_jwt_identity):
+        app_client = api.test_client()
+        # Mock get_jwt_identity() to return None, indicating an unauthorized user
+        mock_get_jwt_identity.return_value = None
+
+        response = app_client .get('/foodCalorieMapping')
+
+        self.assertEqual(response.status_code, 401)
+
+
+    @patch('base.get_jwt_identity')
+    @patch('base.mongo')
+    def test_weekHistory_unauthorized(self, mock_mongo, mock_get_jwt_identity):
+        app_client = api.test_client()
+        # Mock get_jwt_identity() to return None, indicating an unauthorized user
+        mock_get_jwt_identity.return_value = None
+
+        response = app_client .get('/weekHistory')
+
+        self.assertEqual(response.status_code, 405)  
+
+    @patch('base.get_jwt_identity')
+    @patch('base.mongo')
+    def test_caloriesBurned_unauthorized(self, mock_mongo, mock_get_jwt_identity):
+        app_client = api.test_client()
+        # Mock get_jwt_identity() to return None, indicating an unauthorized user
+        mock_get_jwt_identity.return_value = None
+
+        response = app_client .get('/caloriesBurned')
+
+        self.assertEqual(response.status_code, 405) 
+
 
 if __name__ == "__main__":
     unittest.main()
