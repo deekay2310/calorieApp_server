@@ -14,6 +14,8 @@ The following are a set of guidelines for contributing to BurnOut. We are open t
 
 [Style Guides](#style-guides)
 
+[Recommended Tools](#recommended-tools)
+
 [Need additional help?](#need-additional-help)
 
 [References](#references)
@@ -148,6 +150,20 @@ Everyone participating in this project needs to abide by the aPAS - A Personal A
   All Python code is linted with Pylint. Ensure that before you commit any changes, your code passes all the default pylint checks. Pylint can be installed with
   `pip install pylint`.
 
+#### Recommended Tools
+For a robust and efficient development practice, consider incorporating the following essential tools into your workflow:
+
+- VS Code: Visual Studio Code is a versatile and lightweight code editor with a vast array of extensions. It provides an excellent platform for writing, debugging, and collaborating on code, making it a top choice for developers across various programming languages.
+
+- Mongo Compass: If you're working with MongoDB, Mongo Compass is an invaluable tool. It offers a user-friendly GUI for managing and visualizing your MongoDB databases, allowing for easy data exploration, querying, and schema design.
+
+- Postman: Postman is a powerful API testing and collaboration platform. It enables developers to design, test, and document APIs effortlessly. Whether you're developing APIs or consuming them, Postman streamlines the process and ensures API reliability.
+
+- NVM (Node Version Manager): Node.js applications often require specific Node.js versions for compatibility. NVM lets you manage multiple Node.js versions on your machine, making it easy to switch between them for different projects and ensure that your applications run smoothly.
+
+- Pyenv (Python Virtual Environment): Pyenv is a valuable tool for Python developers. It allows you to manage multiple Python versions and create isolated virtual environments for your Python projects. This ensures clean and consistent development environments and makes it easy to switch between Python versions as needed.
+
+By integrating these tools into your development process, you'll enhance your productivity, maintain better control over your project dependencies, and ensure a more organized and efficient coding experience.
 
 ### <h2>Need Additional Help?</h2>
 <p>Due to any reason, if you feel like you have reservations related to the process, feel free to reach us out at [apatil25@ncsu.edu] Github process can be a bit complex and we don't want to lose your valuable contributions because of that reason. We are extremely glad that you have visited us and will make our project much better.</p>
