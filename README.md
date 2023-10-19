@@ -1,8 +1,4 @@
-# Link to demo/walkthrough video:
-https://drive.google.com/drive/folders/1M5vdCwH11C-MqK8X-Dkf5bPR0SaWA5Yc?usp=sharing
-<br>
-<br>
-
+# BurnOut
 
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
 [![DOI](https://zenodo.org/badge/698975832.svg)](https://zenodo.org/doi/10.5281/zenodo.10022867)
@@ -48,16 +44,31 @@ https://drive.google.com/drive/folders/1M5vdCwH11C-MqK8X-Dkf5bPR0SaWA5Yc?usp=sha
 <img src="https://img.shields.io/github/repo-size/deekay2310/calorieApp_server" /></a>
 
 
+<img width='800' src="https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Logo.png" /></a>
 
-# BurnOut
-
-![WhatsApp Image 2021-09-28 at 2 48 00 PM](https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Logo.png)
-
-BurnOut is an easy to use application that keeps track of a user's daily calories gained and burnt. It can help the user to set goals such as weight loss/gain. Users can edit their profile by entering their height and weight. Goals can also be updated by editing Target Weight, Daily Calories Burn Goal and Target Goal. Users can enroll into numerous programs involving fitness such as yoga classes and workout sessions. This document provides a major perspective for the users to understand and take up the project as an Open source software and add on multiple features before releasing to the market. Also, the document aids the developers in understanding the code and acts as a reference point for continuing the project. 
+## **🔥 Burnout: Elevate Your Health & Fitness Game! 🔥**
+ 
+Are you determined to achieve your dream physique? Desiring to take charge of your health? Looking for a platform that offers everything from calorie counting to enrolling in exciting fitness events? Welcome to **Burnout** – the only health and fitness companion you'll ever need.
+ 
+- **🍎 Nutrition Made Simple:**
+Navigating the complex world of nutrition can be daunting. With Burnout, you can effortlessly track what you eat and gain insights into your calorie consumption. Whether you're having a quick salad or indulging in a cheat meal, every bite counts. And we're here to count it for you!
+ 
+- **🔥 Ignite Your Calorie Burn:**
+Exercise isn't just about looking good; it's about feeling good too. Track every step taken, every calorie burned, and every drop of sweat shed. Watch yourself progress as Burnout pushes you to achieve your health goals.
+ 
+- **🏊 Dive into Exciting Fitness Events:**
+Bored of your routine workout? Dive into an array of fitness events – from calming yoga sessions to adrenaline-pumping gym workouts. Whether you're into swimming, walking, or exploring new activities, there's something for everyone. Get social, challenge yourself, and discover activities you love.
+ 
+- **📊 Tailored To You:**
+Everyone's health journey is unique. Input your age, current weight, height, target weight, and goals, and let Burnout craft a personalized plan for you. Watch in real-time as you inch closer to your goals and celebrate each milestone with us.
+  
+So, are you ready to take the leap towards a healthier, happier you? Dive into **Burnout** now and elevate your fitness game!
+ 
+🔥 *Because it's not just about burning calories; it's about burning doubts, burning procrastination, and lighting up confidence!* 🔥
 
 # Table of Contents  
 
-- [Why use BurnOut?](#why-use-burnout)
+- [ Why Choose Burnout?](#why-choose-burnout)
 - [Implementation](#implementation)
 - [TechStack Used for the Development of Project:](#techstack-used-for-the-development-of-project)
 - [Core Functionalities of the Application:](#core-functionalities)
@@ -75,13 +86,19 @@ BurnOut is an easy to use application that keeps track of a user's daily calorie
 - [License](#license)
 
 
-# Why use BurnOut?
- - User can keep a track of their calorie intake.
- - User just needs to input the food they've had, calories get calculated automatically.
- - Displays a record of calories in and calories burnt out day wise in Weekly Stats section of homepage.
- - Helps user to figure out how much to eat/exercise according to their desired goal(weight loss/gain).
- - Enrollment into numerous yoga and workout sessions.
- - Accessible to everyone and easy to use.
+# **💡 Why Choose Burnout?**
+ 
+- **Comprehensive Tracking:** From what you eat to how much you burn, monitor everything in one place.
+  
+- **Diverse Fitness Events:** Never fall into the monotony of routine. Stay excited about fitness with new events to join regularly.
+  
+- **Personalized Insights:** Understand your body and habits better with data-driven feedback.
+  
+- **Community Support:** Engage with a like-minded community, exchange tips, and stay motivated.
+  
+- **Security:** Your data is precious, and we guard it like our own. Rest assured, your information stays private and secure.
+ 
+In today's fast-paced world, maintaining health is a challenge. But with the right tools and community, this challenge becomes an enjoyable journey. And Burnout is here to make sure of that.
 
 # Implementation
 
