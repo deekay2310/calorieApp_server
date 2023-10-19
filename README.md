@@ -111,7 +111,7 @@ Link to the implementation video of the BurnOut application:
 <img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Profile.png>
 
 
- ## Enter Calories in and burnt
+ ## Homepage - Calorie-In/Calorie-Out, Weekly Status and Diet Tracker
 <img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/homepage-1.png>
 
 
