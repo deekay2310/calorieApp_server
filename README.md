@@ -68,7 +68,7 @@ So, are you ready to take the leap towards a healthier, happier you? Dive into *
 
 # Table of Contents  
 
-- [Why Choose Burnout?](#why-choose-burnout)
+- [Why Choose Burnout?](#-why-choose-burnout)
 - [Implementation](#implementation)
 - [TechStack Used for the Development of Project:](#techstack-used-for-the-development-of-project)
 - [Core Functionalities of the Application:](#core-functionalities)
