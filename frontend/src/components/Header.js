@@ -28,7 +28,7 @@ function Header(props) {
   const handleCloseUserMenu = () => {
     setUserMenuToggle(null);
   };
-  const { saveToken, getToken, token, removeToken } = useToken();
+  const { removeToken } = useToken();
   const handleLogOut = () => {
     handleCloseUserMenu();
     axios({

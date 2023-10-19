@@ -26,7 +26,7 @@ function SignIn(props) {
     email: "",
     password: "",
   });
-  const { saveToken, getToken, token, removeToken } = useToken();
+  const { saveToken } = useToken();
 
   function logMeIn(event) {
     console.log(loginForm.email);

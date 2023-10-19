@@ -1,10 +1,9 @@
-import React, { useEffect, useReducer, useState, Redirect } from "react";
+import React, { useReducer } from "react";
 import { Switch, Route } from "react-router-dom";
 import SignUp from "./authentication/SignUp";
 import SignIn from "./authentication/SignIn";
 import ContactUs from "./ContactUs";
 import Events from "./Events";
-import Header from "./Header";
 import Profile from "./Profile";
 import Home from "./Home";
 import burnoutReducer, { updateState } from "../burnoutReducer";
@@ -23,8 +22,7 @@ const initialState = {
 };
 
 function Router() {
-  const { saveToken, getToken, token, removeToken } = useToken();
-  const history = useHistory();
+  const { getToken, token } = useToken();
   const [state, dispatch] = useReducer(burnoutReducer, initialState);
   if (!state.loggedIn) {
     let loggedInUserJWTtoken = getToken();

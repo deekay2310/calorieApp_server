@@ -14,7 +14,6 @@ import Container from "@mui/material/Container";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Header from "./Header";
 import axios from "axios";
 import Footer from "./Footer";
 
@@ -56,7 +55,6 @@ export default function Events(props) {
 
   // Function to open and close the modal
   const handleOpenModal = (eventTitle) => {
-    const userEmail = "user@example.com"; // Get user email here
 
     axios
       .post(
