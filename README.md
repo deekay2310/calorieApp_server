@@ -76,7 +76,7 @@ So, are you ready to take the leap towards a healthier, happier you? Dive into *
   - [Register](#register)
   - [Login](#login)
   - [Set User Profile](#set-user-profile)
-  - [Enter Calories in and burnt](#enter-calories-in-and-burnt)
+  - [Homepage - Calorie-In/Calorie-Out, Weekly Status and Diet Tracker](#enter-calories-in-and-burnt)
   - [Check History](#check-history)
   - [Enrolling into several programs](#enrolling-into-several-programs)
 - [Steps for Execution:](#steps-for-execution)
