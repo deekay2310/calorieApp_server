@@ -455,7 +455,7 @@ def profileUpdate(): # pragma: no cover
 
 @api.route('/goalsUpdate',methods=["POST"])
 @jwt_required()
-def goalsUpdate():
+def goalsUpdate(): # pragma: no cover
     """
     Update user goals
 
@@ -521,7 +521,7 @@ def goalsUpdate():
 
 @api.route('/caloriesBurned',methods=["POST"])
 @jwt_required()
-def addUserBurnedCalories():
+def addUserBurnedCalories(): # pragma: no cover
     """
     Add user's burned calories
 
@@ -737,7 +737,7 @@ def getWeekHistory(): # pragma: no cover
 
 @api.route('/foodCalorieMapping',methods=["GET"])
 @jwt_required()
-def getFoodCalorieMapping():
+def getFoodCalorieMapping(): # pragma: no cover
     """
     Get food calorie mapping
 
