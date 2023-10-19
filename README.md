@@ -4,10 +4,10 @@
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
 [![DOI](https://zenodo.org/badge/698975832.svg)](https://zenodo.org/doi/10.5281/zenodo.10022867)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
-[![Build Status](https://app.travis-ci.com/atharva1996/burnout-healthgoalsapp.svg?branch=main)](https://app.travis-ci.com/atharva1996/burnout-healthgoalsapp)
+![Build Status](https://github.com/adi-kiran/burnout-healthgoalsapp/actions/workflows/build_repo.yml/badge.svg)
 [![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
-![last commit](https://img.shields.io/github/last-commit/atharva1996/burnout-healthgoalsapp)
-![total lines](https://img.shields.io/tokei/lines/github/atharva1996/burnout-healthgoalsapp)
+![last commit](https://img.shields.io/github/last-commit/adi-kiran/burnout-healthgoalsapp)
+[![](https://tokei.rs/b1/github/adi-kiran/burnout-healthgoalsapp?branch=main)](https://github.com/adi-kiran/burnout-healthgoalsapp)
 ![github workflow](https://github.com/adi-kiran/burnout-healthgoalsapp/actions/workflows/unit_test.yml/badge.svg)
 ![github workflow](https://github.com/adi-kiran/burnout-healthgoalsapp/actions/workflows/style_checker.yml/badge.svg)
 ![github workflow](https://github.com/adi-kiran/burnout-healthgoalsapp/actions/workflows/syntax_checker.yml/badge.svg)
@@ -26,15 +26,8 @@
 <a href="https://github.com/adi-kiran/burnout-healthgoalsapp/issues" target="blank">
 <img src="https://img.shields.io/github/issues-closed/adi-kiran/burnout-healthgoalsapp" alt="burnout-healthgoalsapp issues closed"/>
 </a>
-<a href="https://github.com/adi-kiran/burnout-healthgoalsapp/pulls" target="blank">
-<img src="https://img.shields.io/github/issues-pr/adi-kiran/burnout-healthgoalsapp?style=flat-square" alt="cheapBuy pull-requests"/>
-</a>
 <a href="https://github.com/adi-kiran/burnout-healthgoalsapp/graphs/contributors" alt="Contributors">
 <img src="https://img.shields.io/github/contributors/adi-kiran/burnout-healthgoalsapp" /></a>
-
-<a href="https://github.com/adi-kiran/burnout-healthgoalsapp/milestones" alt="milestones">
-<img src="https://img.shields.io/github/milestones/all/adi-kiran/burnout-healthgoalsapp" /></a> 
-
 <a href="https://github.com/adi-kiran/burnout-healthgoalsapp/graphs/commit-activity" alt="commit activity">
 <img src="https://img.shields.io/github/commit-activity/w/adi-kiran/burnout-healthgoalsapp" /></a> 
 
