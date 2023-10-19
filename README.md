@@ -137,7 +137,7 @@ Link to the implementation video of the BurnOut application:
 <img src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Enrolled-Event.png>
 
 
- # Steps for execution
+ # Getting started
  
 Follow these steps to set up and run the application on your local machine.
 
@@ -147,66 +147,34 @@ Before you begin, make sure you have the following installed:
 - [Python](https://www.python.org/downloads/)
 - [Node.js](https://nodejs.org/en/download)
 - [MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows)
-- Git (for cloning the repository)
-
-
-
-
-
-
-
-
- Step 1:
- Install Python from the following link:
-
- https://www.python.org/downloads/
-
- Step 2:
- Install Node
-
- Install Node from the following link:
-
- https://nodejs.org/en/download
-
- Step 1:
- Install MongoDB using the following link:
  
- https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows
- 
- Step 2: 
+ Step 1: 
   Git Clone the Repository 
   
     git clone https://github.com/adi-kiran/burnout-healthgoalsapp.git
     
-  (OR) Download the .zip file on your local machine
   
-    https://github.com/adi-kiran/burnout-healthgoalsapp
-  
- Step 3:
+ Step 2:
    Install the required packages by running the following command in the terminal 
    
     pip install -r requirements.txt
     
  Step 4:
-    Navigate to backend folder:
+   Navigate to the backend folder and run the following command to start the server:
+    
     cd backend
-    Run the following command in the terminal to run backend inside backend folder:
-    Command: flask run
+    flask run
 
-    Navigate to frontend folder:
+ Step 5:
+   Navigate to the frontend folder and run the below to start the React app:
+    
     cd frontend
-    Run the following command in the terminal to run frontend inside frontend folder:
     npm start
     
  Step 5:
     Open the URL in your browser:  
       http://127.0.0.1:3000
       
-      
-  # Source Code
-  
-  Link to the repository:
-  https://github.com/adi-kiran/burnout-healthgoalsapp
 
   # Third-Party Dependencies
   
