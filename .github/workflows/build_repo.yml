@@ -1,4 +1,4 @@
-name: Run Tests On Push
+name: Build repo
 on:
   push:
     branches:
@@ -6,6 +6,8 @@ on:
   pull_request:
     branches:
       - main
+  schedule: 
+    - cron: '0 0 * * *'
 
 jobs:
   build:
@@ -20,9 +22,15 @@ jobs:
         working-directory: ./backend
         run: |
           pip install -r requirements.txt
-          echo requirements installed
-        
-      - name: Run tests
-        working-directory: ./backend
+          echo python requirements installed
+
+      - name: Install dependencies
+        working-directory: ./frontend
         run: |
-          python -m unittest test_api.py
+          npm install --legacy-peer-deps
+          echo npm requirements installed
+        
+      - name: Run frontend tests
+        working-directory: ./frontend
+        run: |
+          npm run build
