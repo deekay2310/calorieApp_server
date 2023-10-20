@@ -119,6 +119,7 @@ Link to the implementation video of the BurnOut application:
  
 <img width='600' src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Event.png>
 
+### :memo: **Note:** Further screenshots and Mini turorial can be found here:[Tutorials.md](https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/Tutorials.md)
 
 # Technical Overview
 
