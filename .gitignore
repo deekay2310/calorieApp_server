@@ -3,3 +3,13 @@ package-lock.json
 __pycache__
 .idea
 .DS_Store
+venv/
+__pycache__/
+**/.coverage
+.pytest_cache/
+.ruff_cache/
+.vscode/
+v/
+
+__init__.py
+
