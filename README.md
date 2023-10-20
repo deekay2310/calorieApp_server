@@ -37,8 +37,8 @@
 <a href="https://img.shields.io/github/repo-size/adi-kiran/burnout-healthgoalsapp" alt="repo size">
 <img src="https://img.shields.io/github/repo-size/adi-kiran/burnout-healthgoalsapp" /></a>
 
+<img src ="https://github.com/adi-kiran/burnout-healthgoalsapp/assets/27075012/39e731f7-2f06-4f8a-b9a3-5f86836e1ad9" width='800'>
 
-<img width='800' src="https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Logo.png" /></a>
 
 ## **🔥 Burnout: Elevate Your Health & Fitness Game! 🔥**
  
@@ -109,15 +109,16 @@ Link to the implementation video of the BurnOut application:
 # Application Screenshots
  
  ## Homepage
-<img width='600' src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Homepage.png>
+ 
+<img width='600' src="https://github.com/adi-kiran/burnout-healthgoalsapp/assets/27075012/17d18cd7-ec23-40f2-b2ab-9f924c5fb6bf">
 
  ## Profile
  
-<img width='600' src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Profile.png>
+<img width='600' src="https://github.com/adi-kiran/burnout-healthgoalsapp/assets/27075012/b782dda4-cdd9-4cc5-9896-40e85416b3eb">
 
  ## Events
- 
-<img width='600' src=https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/static/img/Event.png>
+
+<img width='600' src="https://github.com/adi-kiran/burnout-healthgoalsapp/assets/27075012/a6d56638-9138-4448-a17a-cf28be3441ae">
 
 
 # Technical Overview
