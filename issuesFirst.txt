@@ -1,0 +1,7 @@
+1. Python library version mismatch 
+2. Need to run mongo before the pip3 application.py 
+3. heavily dependent on the os too, need to dockerize it
+4. issues running mongo on docker, 'test' database need to be created before stuff runs.
+5. insert is deprecated use insert_one in pymongo
+6. issues with bycrypt.checkpw function.
+7. testing signing commits
