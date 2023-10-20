@@ -1,50 +1,50 @@
 # Link to demo/walkthrough video:
-https://drive.google.com/drive/folders/1M5vdCwH11C-MqK8X-Dkf5bPR0SaWA5Yc?usp=sharing
+(https://youtu.be/juWO0pcZXzk)
 <br>
 <br>
 
 
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
-[![DOI](https://www.zenodo.org/badge/419132821.svg)](https://www.zenodo.org/badge/latestdoi/419132821)
+[![DOI](https://zenodo.org/badge/692510804.svg)](https://zenodo.org/doi/10.5281/zenodo.10022627)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 [![Build Status](https://app.travis-ci.com/atharva1996/calorieApp_server.svg?branch=main)](https://app.travis-ci.com/atharva1996/calorieApp_server)
 [![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
-![last commit](https://img.shields.io/github/last-commit/atharva1996/calorieApp_server)
-![total lines](https://img.shields.io/tokei/lines/github/atharva1996/calorieApp_server)
-![github workflow](https://github.com/deekay2310/calorieApp_server/actions/workflows/unit_test.yml/badge.svg)
-![github workflow](https://github.com/deekay2310/calorieApp_server/actions/workflows/style_checker.yml/badge.svg)
-![github workflow](https://github.com/deekay2310/calorieApp_server/actions/workflows/syntax_checker.yml/badge.svg)
-[![codecov](https://codecov.io/gh/deekay2310/calorieApp_server/branch/main/graph/badge.svg?token=IQW5PLLE22)](https://codecov.io/gh/deekay2310/calorieApp_server)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/chaithanyaMarripati/calorieApp_server/main)
+![total lines](https://img.shields.io/tokei/lines/github/chaithanyaMarripati/calorieApp_server)
+![github workflow](https://github.com/chaithanyaMarripati/calorieApp_server/actions/workflows/unit_test.yml/badge.svg)
+![github workflow](https://github.com/chaithanyaMarripati/calorieApp_server/actions/workflows/style_checker.yml/badge.svg)
+![github workflow](https://github.com/chaithanyaMarripati/calorieApp_server/actions/workflows/syntax_checker.yml/badge.svg)
+[![codecov](https://codecov.io/gh/chaithanyaMarripati/calorieApp_server/branch/main/graph/badge.svg?token=IQW5PLLE22)](https://codecov.io/gh/deekay2310/calorieApp_server)
 <!--Badges-->
-<a href="https://github.com/deekay2310/calorieApp_server/fork" target="blank">
-<img src="https://img.shields.io/github/forks/deekay2310/calorieApp_server?style=flat-square" alt="calorieApp_server forks"/>
+<a href="https://github.com/chaithanyaMarripati/calorieApp_server/fork" target="blank">
+<img src="https://img.shields.io/github/forks/chaithanyaMarripati/calorieApp_server?style=flat-square" alt="calorieApp_server forks"/>
 </a>
-<a href="https://github.com/deekay2310/calorieApp_server/stargazers" target="blank">
-<img src="https://img.shields.io/github/stars/deekay2310/calorieApp_server?style=flat-square" alt="calorieApp_server stars"/>
+<a href="https://github.com/chaithanyaMarripati/calorieApp_server/stargazers" target="blank">
+<img src="https://img.shields.io/github/stars/chaithanyaMarripati/calorieApp_server?style=flat-square" alt="calorieApp_server stars"/>
 </a>
-<a href="https://github.com/deekay2310/calorieApp_server/issues" target="blank">
-<img src="https://img.shields.io/github/issues/deekay2310/calorieApp_server?style=flat-square" alt="calorieApp_server issues"/>
+<a href="https://github.com/chaithanyaMarripati/calorieApp_server/issues" target="blank">
+<img src="https://img.shields.io/github/issues/chaithanyaMarripati/calorieApp_server?style=flat-square" alt="calorieApp_server issues"/>
 </a>
-<a href="https://github.com/deekay2310/calorieApp_server/issues" target="blank">
-<img src="https://img.shields.io/github/issues-closed/deekay2310/calorieApp_server" alt="calorieApp_server issues closed"/>
+<a href="https://github.com/chaithanyaMarripati/calorieApp_server/issues" target="blank">
+<img src="https://img.shields.io/github/issues-closed/chaithanyaMarripati/calorieApp_server" alt="calorieApp_server issues closed"/>
 </a>
-<a href="https://github.com/deekay2310/calorieApp_server/pulls" target="blank">
-<img src="https://img.shields.io/github/issues-pr/deekay2310/calorieApp_server?style=flat-square" alt="cheapBuy pull-requests"/>
+<a href="https://github.com/chaithanyaMarripati/calorieApp_server/pulls" target="blank">
+<img src="https://img.shields.io/github/issues-pr/chaithanyaMarripati/calorieApp_server?style=flat-square" alt="cheapBuy pull-requests"/>
 </a>
-<a href="https://github.com/deekay2310/calorieApp_server/graphs/contributors" alt="Contributors">
-<img src="https://img.shields.io/github/contributors/deekay2310/calorieApp_server" /></a>
+<a href="https://github.com/chaithanyaMarripati/calorieApp_server/graphs/contributors" alt="Contributors">
+<img src="https://img.shields.io/github/contributors/chaithanyaMarripati/calorieApp_server" /></a>
 
-<a href="https://github.com/deekay2310/calorieApp_server/milestones" alt="milestones">
-<img src="https://img.shields.io/github/milestones/all/deekay2310/calorieApp_server" /></a> 
+<a href="https://github.com/chaithanyaMarripati/calorieApp_server/milestones" alt="milestones">
+<img src="https://img.shields.io/github/milestones/all/chaithanyaMarripati/calorieApp_server" /></a> 
 
-<a href="https://github.com/deekay2310/calorieApp_server/graphs/commit-activity" alt="commit activity">
-<img src="https://img.shields.io/github/commit-activity/w/deekay2310/calorieApp_server" /></a> 
+<a href="https://github.com/chaithanyaMarripati/calorieApp_server/graphs/commit-activity" alt="commit activity">
+<img src="https://img.shields.io/github/commit-activity/w/chaithanyaMarripati/calorieApp_server" /></a> 
 
-<a href="https://github.com/deekay2310/calorieApp_server/discussions" alt="discussion">
-<img src="https://img.shields.io/github/discussions/deekay2310/calorieApp_server" /></a> 
+<a href="https://github.com/chaithanyaMarripati/calorieApp_server/discussions" alt="discussion">
+<img src="https://img.shields.io/github/discussions/chaithanyaMarripati/calorieApp_server" /></a> 
 
-<a href="https://img.shields.io/github/repo-size/deekay2310/calorieApp_server" alt="repo size">
-<img src="https://img.shields.io/github/repo-size/deekay2310/calorieApp_server" /></a>
+<a href="https://img.shields.io/github/repo-size/chaithanyaMarripati/calorieApp_server" alt="repo size">
+<img src="https://img.shields.io/github/repo-size/chaithanyaMarripati/calorieApp_server" /></a>
 
 
 
@@ -100,24 +100,29 @@ Link to the implementation video of the BurnOut application:
 # Core Functionalities of the Application
  
  ## Register
- 
-<img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/Screen%20Shot%202021-12-04%20at%206.41.18%20PM.png>
+ ![Register](https://github.com/chaithanyaMarripati/calorieApp_server/assets/143281993/ce03b1f6-6f59-43c4-9475-77641d3e074a)
 
  ## Login
+ ![Login](https://github.com/chaithanyaMarripati/calorieApp_server/assets/143281993/87ce463c-faae-433b-a90d-e5e8868e2968)
 
-<img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/Screen%20Shot%202021-12-04%20at%206.30.27%20PM.png>
+ ## Dashboard
+ ![Dashboard](https://github.com/chaithanyaMarripati/calorieApp_server/assets/143281993/a579fac0-51ce-4e69-b0c4-3366ba200469)
+
+
+
 
  ## Set User Profile
- 
-<img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/Screen%20Shot%202021-12-04%20at%206.35.05%20PM.png>
+ ![Set user profile](https://github.com/chaithanyaMarripati/calorieApp_server/assets/143281993/dbbcfd5e-af47-4cb2-8ee1-cc073d326e5b)
+
+
 
 
  ## Enter Calories in and burnt
-<img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/calories.png>
+![Enter calories in and burnt](https://github.com/chaithanyaMarripati/calorieApp_server/assets/143281993/1f2151ab-e246-4028-a430-e8c868b404ab)
 
  ## Chatbot
+![Chatbot](https://github.com/chaithanyaMarripati/calorieApp_server/assets/143281993/aea8179f-b7a1-4977-b409-5635f30d0736)
 
-<img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/Screen%20Shot%202021-12-04%20at%206.31.54%20PM.png>
 
 
 
@@ -128,31 +133,37 @@ Link to the implementation video of the BurnOut application:
 
 
  ## Check History
-
-<img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/history.png>
-
-
-
-
- ## Add weight alert
+![Check History](https://github.com/chaithanyaMarripati/calorieApp_server/assets/143281993/68705fc3-a2e9-4ac0-a737-4c5ac0a33dc2)
  
-<img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/Screen%20Shot%202021-12-04%20at%206.30.48%20PM.png>
 
  ## Adding Friends
+![Adding friends](https://github.com/chaithanyaMarripati/calorieApp_server/assets/143281993/cdeb4bec-9c28-4f6d-b375-f96d273f117d)
 
-<img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/friends.png>
 
  ## Enrolling into several programs
- 
-<img src=https://github.com/deekay2310/calorieApp_server/blob/main/static/img/Screen%20Shot%202021-12-04%20at%206.32.08%20PM.png>
+ ![Enrolling](https://github.com/chaithanyaMarripati/calorieApp_server/assets/143281993/c628f536-c0c0-435b-a1b8-dc8343f50bed)
+
+ ## User enrollment list
+ ![User Enrollment list](https://github.com/chaithanyaMarripati/calorieApp_server/assets/143281993/28e276e7-a205-4387-b74a-4a3278ce84dc)
+
+
+ ## Suggestion page
+ ![Suggestion page](https://github.com/chaithanyaMarripati/calorieApp_server/assets/143281993/8d16eab9-2911-4a1d-a99f-50fb3d5a3a1e)
+
+ ## More info page
+ ![More info page on Yoga](https://github.com/chaithanyaMarripati/calorieApp_server/assets/143281993/882645fd-babf-4962-9af6-ed11e14ae74f)
+
+
+
 
 
  # Steps for execution
  
  Step 1:
- Install MongoDB using the following link:
+ Run a local instance of mongoDb via docker or host a free tier one on cloud, add the connection string in flaskenv file.
  
- https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows
+ docker pull mongo && 
+ docker run -d mongo
  
  Step 2: 
   Git Clone the Repository 
@@ -164,43 +175,51 @@ Link to the implementation video of the BurnOut application:
     https://github.com/deekay2310/calorieApp_server.git
   
  Step 3:
-   Install the required packages by running the following command in the terminal 
+   Build the docker image locally.
    
-    pip install -r requirements.txt
+    docker build -t <image-name> .
     
  Step 4:
     Run the following command in the terminal
     
-    python application.py
+    docker run <image-name> -dp <host-port>:3000 
     
  Step 5:
     Open the URL in your browser:  
-      http://127.0.0.1:5000/
+      http://127.0.0.1:host-port/
       
       
   # Source Code
   
   Link to the repository:
-  https://github.com/deekay2310/calorieApp_server
+  https://github.com/chaithanyaMarripati/calorieApp_server
   
   # Enhancements
 
-   1. Make the website view port adaptable - the website should look good on phone, tablet and computer.
-   2. Chatbot to guide through the application.
-   3. Share workout plans with friends via email.
-   4. Bug Fixes
+   1. Dockerise the server.
+   2. Host the MongoDb instance in cloud.
+   3. Workout suggestion feature
+   4. Added search functionality to add friends
+   5. Bug Fixes
 
-   
+   # Future Scope
+   1. Integrating ML model to give out personalised workout suggestions.
+   2. Store user enrollment data in a new collection(new table) in MongoDb
+   3. Implement forgot password feature
+   4. Implement email authentication
+   5. Deploy the project to make it accessible to everyone
+   6. Change colours for the previous and next buttons on dashboard
+   7. Readjust width of each page accordingly
+  
    # Team Members
    
 <center>
   <table>
     <tr>
-        <td align="center"><a href="https://github.com/deekay2310"><img src="https://avatars.githubusercontent.com/u/29257773?v=4" width="100px;" alt=""/><br /><sub><b>Dev Kumar</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/PrakruthiSomashekar"><img src="https://avatars.githubusercontent.com/u/62984587?v=4" width="100px;" alt=""/><br /><sub><b>Prakruthi Somashekar</b></sub></a></td>
-    <td align="center"><a href="https://github.com/radhikaraman20"><img src="https://avatars.githubusercontent.com/u/89432698?s=400&v=4" width="100px;" alt=""/><br /><sub><b>Radhika Raman</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/RohanSinha96"><img src="https://avatars.githubusercontent.com/u/15325746?v=4" width="100px;" alt=""/><br /><sub><b>Rohan Sinha</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/SunidhiHegde"><img src="https://avatars.githubusercontent.com/u/62884191?v=4" width="100px;" alt=""/><br /><sub><b>Sunidhi Hegde</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/chaithanyaMarripati">Krishna Chaitanya</a></td>
+      <td align="center"><a href="https://github.com/S-B-Mukesh">S.B.Mukesh</a></td>
+      <td align="center"><a href="https://github.com/subhang51011">Sai Subhang</a></td>
+      <td align="center"><a href="https://github.com/saivikasreddy717">Sai Vikas</a></td>
     </tr>
   </table>
 </center>

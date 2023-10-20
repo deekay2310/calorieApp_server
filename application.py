@@ -11,12 +11,13 @@ from flask_mail import Mail
 from flask_pymongo import PyMongo
 from tabulate import tabulate
 from forms import HistoryForm, RegistrationForm, LoginForm, CalorieForm, UserProfileForm, EnrollForm
+from apps import Mongo
+
 
 app = Flask(__name__)
 app.secret_key = 'secret'
-app.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/test'
-app.config['MONGO_CONNECT'] = False
-mongo = PyMongo(app)
+# mongo contains test database details
+mongo = Mongo().mongoClient
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -53,16 +54,23 @@ def login():
     if not session.get('email'):
         form = LoginForm()
         if form.validate_on_submit():
-            temp = mongo.db.user.find_one({'email': form.email.data}, {
-                'email', 'pwd'})
+            email = session.get('email')
+            temp = mongo.user.find_one({'email': form.email.data}, {
+                'email', 'pwd','name'})
+            print("temp value is here", temp)
             if temp is not None and temp['email'] == form.email.data and (
                 bcrypt.checkpw(
                     form.password.data.encode("utf-8"),
-                    temp['pwd']) or temp['temp'] == form.password.data):
+                    temp['pwd']) ):
                 flash('You have been logged in!', 'success')
                 session['email'] = temp['email']
+                session['name'] = temp['name']
                 #session['login_type'] = form.type.data
-                return redirect(url_for('dashboard'))
+                data = mongo.profile.find_one({'email': temp['email']}, {'weight', 'height', 'target_weight'})
+                if data:
+                    return redirect(url_for('dashboard'))
+                else:
+                    return redirect(url_for('user_profile')) #render_template('user_profile.html', title = "Details")
             else:
                 flash(
                     'Login Unsuccessful. Please check username and password',
@@ -85,6 +93,20 @@ def logout():
     session.clear()
     return "success"
 
+@app.route("/display_profile", methods=['GET', 'POST'])
+def display_profile():
+    """
+    user_profile() function displays the UserProfileForm (user_profile.html) template
+    route "/user_profile" will redirect to user_profile() function.
+    user_profile() called and if the form is submitted then various values are fetched and updated into the database entries
+    Input: Email, height, weight, goal, Target weight
+    Output: Value update in database and redirected to home login page
+    """
+    if session.get('email'):
+        email = session.get('email')
+        data = mongo.profile.find_one({'email': email}, {'weight', 'height', 'target_weight'})
+        return render_template('display_profile.html', title = 'Profile', data=data, status=True)
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -102,7 +124,7 @@ def register():
                 username = request.form.get('username')
                 email = request.form.get('email')
                 password = request.form.get('password')
-                mongo.db.user.insert({'name': username, 'email': email, 'pwd': bcrypt.hashpw(
+                mongo.user.insert_one({'name': username, 'email': email, 'pwd': bcrypt.hashpw(
                     password.encode("utf-8"), bcrypt.gensalt())})
             flash(f'Account created for {form.username.data}!', 'success')
             return redirect(url_for('home'))
@@ -122,31 +144,37 @@ def calories():
     """
     now = datetime.now()
     now = now.strftime('%Y-%m-%d')
-
+    form = CalorieForm()
     get_session = session.get('email')
     if get_session is not None:
-        form = CalorieForm()
+        
         if form.validate_on_submit():
+            print(form,"this is the form")
+            print(request,"this is the request ")
             if request.method == 'POST':
                 email = session.get('email')
+                date = request.form.get('date')
                 food = request.form.get('food')
+                # print(food)
                 cals = food.split(" ")
-                cals = int(cals[1][1:len(cals[1]) - 1])
+                # print(cals)
+                # flash(cals)
+                # print(cals[-1][1:-1:],type(cals[1]))
+                cals = int(cals[-1][1:-1:])
                 burn = request.form.get('burnout')
 
-                temp = mongo.db.calories.find_one({'email': email}, {
-                    'email', 'calories', 'burnout'})
-                if temp is not None:
-                    mongo.db.calories.update({'email': email}, {'$set': {
-                                             'calories': temp['calories'] + cals, 'burnout': temp['burnout'] + int(burn)}})
-                else:
-                    mongo.db.calories.insert(
-                        {'date': now, 'email': email, 'calories': cals, 'burnout': int(burn)})
+                # temp = mongo.calories.find_one({'email': email}, {
+                #     'email', 'calories', 'burnout'})
+                # if temp is not None:
+                #     mongo.calories.update({'email': email}, {'$set': {
+                #                              'calories': temp['calories'] + cals, 'burnout': temp['burnout'] + int(burn)}})
+                # else:
+                mongo.calories.insert( {'date': date, 'email': email, 'calories': cals, 'burnout': int(burn)})
                 flash(f'Successfully updated the data', 'success')
                 return redirect(url_for('calories'))
     else:
         return redirect(url_for('home'))
-    return render_template('calories.html', form=form, time=now)
+    return render_template('calories.html', title = 'Calories', form=form, time=now)
 
 
 @app.route("/user_profile", methods=['GET', 'POST'])
@@ -161,29 +189,29 @@ def user_profile():
     if session.get('email'):
         form = UserProfileForm()
         if form.validate_on_submit():
+            email = session.get('email')
             if request.method == 'POST':
-                email = session.get('email')
                 weight = request.form.get('weight')
                 height = request.form.get('height')
                 goal = request.form.get('goal')
                 target_weight = request.form.get('target_weight')
-                temp = mongo.db.profile.find_one({'email': email}, {
+                temp = mongo.profile.find_one({'email': email}, {
                     'height', 'weight', 'goal', 'target_weight'})
                 if temp is not None:
-                    mongo.db.profile.update({'email': email},
-                                            {'$set': {'weight': temp['weight'],
-                                                      'height': temp['height'],
-                                                      'goal': temp['goal'],
-                                                      'target_weight': temp['target_weight']}})
+                    mongo.profile.update_one({'email': email},
+                                            {"$set": {'weight': weight,
+                                                      'height': height,
+                                                      'goal': goal,
+                                                      'target_weight': target_weight}})
                 else:
-                    mongo.db.profile.insert({'email': email,
+                    mongo.profile.insert_one({'email': email,
                                              'height': height,
                                              'weight': weight,
                                              'goal': goal,
                                              'target_weight': target_weight})
-
+            data = mongo.profile.find_one({'email': email}, {'weight', 'height', 'target_weight'})
             flash(f'User Profile Updated', 'success')
-            return render_template('display_profile.html', status=True, form=form)
+            return render_template('display_profile.html',data=data, status=True, form=form)
     else:
         return redirect(url_for('login'))
     return render_template('user_profile.html', status=True, form=form)
@@ -218,7 +246,7 @@ def ajaxhistory():
     if get_session is not None:
         if request.method == "POST":
             date = request.form.get('date')
-            res = mongo.db.calories.find_one({'email': email, 'date': date}, {
+            res = mongo.calories.find_one({'email': email, 'date': date}, {
                                              'date', 'email', 'calories', 'burnout'})
             if res:
                 return json.dumps({'date': res['date'], 'email': res['email'], 'burnout': res['burnout'], 'calories': res['calories']}), 200, {
@@ -228,7 +256,7 @@ def ajaxhistory():
                     'ContentType': 'application/json'}
 
 
-@app.route("/friends", methods=['GET'])
+@app.route("/friends", methods=['GET', 'POST'])
 def friends():
     # ############################
     # friends() function displays the list of friends corrsponding to given email
@@ -238,34 +266,41 @@ def friends():
     # Input: Email
     # Output: My friends, Pending Approvals, Sent Requests and Add new friends
     # ##########################
+
+    # Render a template with the search results
     email = session.get('email')
 
-    myFriends = list(mongo.db.friends.find(
+    myFriends = list(mongo.friends.find(
         {'sender': email, 'accept': True}, {'sender', 'receiver', 'accept'}))
     myFriendsList = list()
 
     for f in myFriends:
         myFriendsList.append(f['receiver'])
 
-    print(myFriends)
-    allUsers = list(mongo.db.user.find({}, {'name', 'email'}))
+    # allUsers = list(mongo.user.find({}, {'name', 'email'}))
 
-    pendingRequests = list(mongo.db.friends.find(
+    sendingemail = request.form.get('email')
+    sendingRequest = ""
+
+
+    pendingRequests = list(mongo.friends.find(
         {'sender': email, 'accept': False}, {'sender', 'receiver', 'accept'}))
     pendingReceivers = list()
     for p in pendingRequests:
         pendingReceivers.append(p['receiver'])
 
     pendingApproves = list()
-    pendingApprovals = list(mongo.db.friends.find(
+    pendingApprovals = list(mongo.friends.find(
         {'receiver': email, 'accept': False}, {'sender', 'receiver', 'accept'}))
     for p in pendingApprovals:
         pendingApproves.append(p['sender'])
 
-    print(pendingApproves)
+    if sendingemail and sendingemail not in pendingReceivers and sendingemail not in pendingApproves and sendingemail not in myFriendsList:
+        sendingRequest = mongo.user.find_one({'email': sendingemail},{'name','email'})
 
-    # print(pendingRequests)
-    return render_template('friends.html', allUsers=allUsers, pendingRequests=pendingRequests, active=email,
+    if( type(sendingRequest) is  str and len(sendingRequest) ==0 ):
+        sendingRequest = None
+    return render_template('friends.html', title = 'Friends', sendingRequest = sendingRequest, pendingRequests=pendingRequests, active=email,
                            pendingReceivers=pendingReceivers, pendingApproves=pendingApproves, myFriends=myFriends, myFriendsList=myFriendsList)
 
 
@@ -278,7 +313,7 @@ def send_email():
     # Output: Calorie History Received on specified email
     # ##########################
     email = session.get('email')
-    data = list(mongo.db.calories.find({'email': email}, {'date','email','calories','burnout'}))
+    data = list(mongo.calories.find({'email': email}, {'date','email','calories','burnout'}))
     table = [['Date','Email ID','Calories','Burnout']]
     for a in data:
         tmp = [a['date'],a['email'],a['calories'],a['burnout']] 
@@ -289,34 +324,33 @@ def send_email():
     server = smtplib.SMTP_SSL("smtp.gmail.com",465)
     #Storing sender's email address and password
     sender_email = "calorie.app.server@gmail.com"
-    sender_password = "Temp@1234"
+    sender_password = "upmicpgobxxuqapp"
     
     #Logging in with sender details
     server.login(sender_email,sender_password)
     message = 'Subject: Calorie History\n\n Your Friend wants to share their calorie history with you!\n {}'.format(tabulate(table))
     for e in friend_email:
-        print(e)
         server.sendmail(sender_email,e,message)
         
     server.quit()
     
-    myFriends = list(mongo.db.friends.find(
+    myFriends = list(mongo.friends.find(
         {'sender': email, 'accept': True}, {'sender', 'receiver', 'accept'}))
     myFriendsList = list()
     
     for f in myFriends:
         myFriendsList.append(f['receiver'])
 
-    allUsers = list(mongo.db.user.find({}, {'name', 'email'}))
+    allUsers = list(mongo.user.find({}, {'name', 'email'}))
     
-    pendingRequests = list(mongo.db.friends.find(
+    pendingRequests = list(mongo.friends.find(
         {'sender': email, 'accept': False}, {'sender', 'receiver', 'accept'}))
     pendingReceivers = list()
     for p in pendingRequests:
         pendingReceivers.append(p['receiver'])
 
     pendingApproves = list()
-    pendingApprovals = list(mongo.db.friends.find(
+    pendingApprovals = list(mongo.friends.find(
         {'receiver': email, 'accept': False}, {'sender', 'receiver', 'accept'}))
     for p in pendingApprovals:
         pendingApproves.append(p['sender'])
@@ -338,7 +372,7 @@ def ajaxsendrequest():
     email = get_session = session.get('email')
     if get_session is not None:
         receiver = request.form.get('receiver')
-        res = mongo.db.friends.insert_one(
+        res = mongo.friends.insert_one(
             {'sender': email, 'receiver': receiver, 'accept': False})
         if res:
             return json.dumps({'status': True}), 200, {
@@ -359,7 +393,7 @@ def ajaxcancelrequest():
     email = get_session = session.get('email')
     if get_session is not None:
         receiver = request.form.get('receiver')
-        res = mongo.db.friends.delete_one(
+        res = mongo.friends.delete_one(
             {'sender': email, 'receiver': receiver})
         if res:
             return json.dumps({'status': True}), 200, {
@@ -381,9 +415,9 @@ def ajaxapproverequest():
     if get_session is not None:
         receiver = request.form.get('receiver')
         print(email, receiver)
-        res = mongo.db.friends.update_one({'sender': receiver, 'receiver': email}, {
+        res = mongo.friends.update_one({'sender': receiver, 'receiver': email}, {
                                           "$set": {'sender': receiver, 'receiver': email, 'accept': True}})
-        mongo.db.friends.insert_one(
+        mongo.friends.insert_one(
             {'sender': email, 'receiver': receiver, 'accept': True})
         if res:
             return json.dumps({'status': True}), 200, {
@@ -401,7 +435,9 @@ def dashboard():
     # Output: redirected to dashboard.html
     # ##########################
     return render_template('dashboard.html', title='Dashboard')
-
+def fetch():
+    email = session.get('email')
+    return list(mongo.user.find({'Email': email},{'Status'}))
 
 @app.route("/yoga", methods=['GET', 'POST'])
 def yoga():
@@ -418,11 +454,18 @@ def yoga():
         if form.validate_on_submit():
             if request.method == 'POST':
                 enroll = "yoga"
-                mongo.db.user.insert({'Email': email, 'Status': enroll})
-            flash(
-                f' You have succesfully enrolled in our {enroll} plan!',
-                'success')
-            return render_template('new_dashboard.html', form=form)
+                status = mongo.user.find_one({'Email': email, 'Status': enroll},{'Email','Status'})
+                print(status)
+                if status:
+                    flash(
+                        f'You have already enrolled in our {enroll} plan!','warning')
+                else:
+                    mongo.user.insert({'Email': email, 'Status': enroll})
+                    flash(
+                        f' You have succesfully enrolled in our {enroll} plan!',
+                        'success')
+            data = fetch()
+            return render_template('new_dashboard.html', data = data, form=form)
             # return redirect(url_for('dashboard'))
     else:
         return redirect(url_for('dashboard'))
@@ -444,11 +487,17 @@ def swim():
         if form.validate_on_submit():
             if request.method == 'POST':
                 enroll = "swimming"
-                mongo.db.user.insert({'Email': email, 'Status': enroll})
-            flash(
-                f' You have succesfully enrolled in our {enroll} plan!',
-                'success')
-            return render_template('new_dashboard.html', form=form)
+                status = mongo.user.find_one({'Email': email, 'Status': enroll},{'Email','Status'})
+                if status:
+                    flash(
+                        f'You have already enrolled in our {enroll} plan!','warning')
+                else:
+                    mongo.user.insert({'Email': email, 'Status': enroll})
+                    flash(
+                        f' You have succesfully enrolled in our {enroll} plan!',
+                        'success')
+            data = fetch()
+            return render_template('new_dashboard.html', data = data, form=form)
             # return redirect(url_for('dashboard'))
     else:
         return redirect(url_for('dashboard'))
@@ -470,11 +519,17 @@ def abbs():
         if form.validate_on_submit():
             if request.method == 'POST':
                 enroll = "abbs"
-                mongo.db.user.insert({'Email': email, 'Status': enroll})
-            flash(
-                f' You have succesfully enrolled in our {enroll} plan!',
-                'success')
-            return render_template('new_dashboard.html', form=form)
+                status = mongo.user.find_one({'Email': email, 'Status': enroll},{'Email','Status'})
+                if status:
+                    flash(
+                        f'You have already enrolled in our {enroll} plan!','warning')
+                else:
+                    mongo.user.insert({'Email': email, 'Status': enroll})
+                    flash(
+                        f' You have succesfully enrolled in our {enroll} plan!',
+                        'success')
+            data = fetch()
+            return render_template('new_dashboard.html', data = data, form=form)
     else:
         return redirect(url_for('dashboard'))
     return render_template('abbs.html', title='Abbs Smash!', form=form)
@@ -495,11 +550,17 @@ def belly():
         if form.validate_on_submit():
             if request.method == 'POST':
                 enroll = "belly"
-                mongo.db.user.insert({'Email': email, 'Status': enroll})
-            flash(
-                f' You have succesfully enrolled in our {enroll} plan!',
-                'success')
-            return render_template('new_dashboard.html', form=form)
+                status = mongo.user.find_one({'Email': email, 'Status': enroll},{'Email','Status'})
+                if status:
+                    flash(
+                        f'You have already enrolled in our {enroll} plan!','warning')
+                else:
+                    mongo.user.insert({'Email': email, 'Status': enroll})
+                    flash(
+                        f' You have succesfully enrolled in our {enroll} plan!',
+                        'success')
+            data = fetch()
+            return render_template('new_dashboard.html', data = data, form=form)
             # return redirect(url_for('dashboard'))
     else:
         return redirect(url_for('dashboard'))
@@ -521,11 +582,17 @@ def core():
         if form.validate_on_submit():
             if request.method == 'POST':
                 enroll = "core"
-                mongo.db.user.insert({'Email': email, 'Status': enroll})
-            flash(
-                f' You have succesfully enrolled in our {enroll} plan!',
-                'success')
-            return render_template('new_dashboard.html', form=form)
+                status = mongo.user.find_one({'Email': email, 'Status': enroll},{'Email','Status'})
+                if status:
+                    flash(
+                        f'You have already enrolled in our {enroll} plan!','warning')
+                else:
+                    mongo.user.insert({'Email': email, 'Status': enroll})
+                    flash(
+                        f' You have succesfully enrolled in our {enroll} plan!',
+                        'success')
+            data = fetch()
+            return render_template('new_dashboard.html', data = data, form=form)
     else:
         return redirect(url_for('dashboard'))
     return render_template('core.html', title='Core Conditioning', form=form)
@@ -546,11 +613,17 @@ def gym():
         if form.validate_on_submit():
             if request.method == 'POST':
                 enroll = "gym"
-                mongo.db.user.insert({'Email': email, 'Status': enroll})
-            flash(
-                f' You have succesfully enrolled in our {enroll} plan!',
-                'success')
-            return render_template('new_dashboard.html', form=form)
+                status = mongo.user.find_one({'Email': email, 'Status': enroll},{'Email','Status'})
+                if status:
+                    flash(
+                        f'You have already enrolled in our {enroll} plan!','warning')
+                else:
+                    mongo.user.insert({'Email': email, 'Status': enroll})
+                    flash(
+                        f' You have succesfully enrolled in our {enroll} plan!',
+                        'success')
+            data = fetch()
+            return render_template('new_dashboard.html', data = data, form=form)
             # return redirect(url_for('dashboard'))
     else:
         return redirect(url_for('dashboard'))
@@ -571,11 +644,17 @@ def walk():
         if form.validate_on_submit():
             if request.method == 'POST':
                 enroll = "walk"
-                mongo.db.user.insert({'Email': email, 'Status': enroll})
-            flash(
-                f' You have succesfully enrolled in our {enroll} plan!',
-                'success')
-            return render_template('new_dashboard.html', form=form)
+                status = mongo.user.find_one({'Email': email, 'Status': enroll},{'Email','Status'})
+                if status:
+                    flash(
+                        f'You have already enrolled in our {enroll} plan!','warning')
+                else:
+                    mongo.user.insert({'Email': email, 'Status': enroll})
+                    flash(
+                        f' You have succesfully enrolled in our {enroll} plan!',
+                        'success')
+            data = fetch()
+            return render_template('new_dashboard.html', data = data, form=form)
             # return redirect(url_for('dashboard'))
     else:
         return redirect(url_for('dashboard'))
@@ -596,11 +675,17 @@ def dance():
         if form.validate_on_submit():
             if request.method == 'POST':
                 enroll = "dance"
-                mongo.db.user.insert({'Email': email, 'Status': enroll})
-            flash(
-                f' You have succesfully enrolled in our {enroll} plan!',
-                'success')
-            return render_template('new_dashboard.html', form=form)
+                status = mongo.user.find_one({'Email': email, 'Status': enroll},{'Email','Status'})
+                if status:
+                    flash(
+                        f'You have already enrolled in our {enroll} plan!','warning')
+                else:
+                    mongo.user.insert({'Email': email, 'Status': enroll})
+                    flash(
+                        f' You have succesfully enrolled in our {enroll} plan!',
+                        'success')
+            data = fetch()
+            return render_template('new_dashboard.html', data = data, form=form)
             # return redirect(url_for('dashboard'))
     else:
         return redirect(url_for('dashboard'))
@@ -621,11 +706,17 @@ def hrx():
         if form.validate_on_submit():
             if request.method == 'POST':
                 enroll = "hrx"
-                mongo.db.user.insert({'Email': email, 'Status': enroll})
-            flash(
-                f' You have succesfully enrolled in our {enroll} plan!',
-                'success')
-            return render_template('new_dashboard.html', form=form)
+                status = mongo.user.find_one({'Email': email, 'Status': enroll},{'Email','Status'})
+                if status:
+                    flash(
+                        f'You have already enrolled in our {enroll} plan!','warning')
+                else:
+                    mongo.user.insert({'Email': email, 'Status': enroll})
+                    flash(
+                        f' You have succesfully enrolled in our {enroll} plan!',
+                        'success')
+            data = fetch()
+            return render_template('new_dashboard.html', data = data, form=form)
             # return redirect(url_for('dashboard'))
     else:
         return redirect(url_for('dashboard'))
@@ -653,6 +744,86 @@ def hrx():
 #                 return json.dumps({'email': "", 'Status': ""}), 200, {
 #                     'ContentType': 'application/json'}
 
+# Define a route for BMI calculation and workout suggestions
+@app.route('/workout_suggestions', methods=['GET','POST'])
+def workout_suggestions():
+    email = session.get('email')
+
+    # Assuming you have already created a MongoClient and connected to the database
+    # client = MongoClient("mongodb://localhost:27017")
+    # db = client["your_database_name"]
+
+    # Define the collection you want to query
+
+    # Query data based on a specific condition
+    result = mongo.profile.find_one({'email': email},{'height', 'weight', 'target_weight'})
+
+    height_m = int(result['height']) / 100.0
+    weight_kg = int(result['weight'])
+    if height_m <= 0:
+        raise ValueError("Height must be a positive value.")
+    
+    if weight_kg <= 0:
+        raise ValueError("Weight must be a positive value.")
+    
+    bmi =  weight_kg / (height_m ** 2)
+    email = session.get('email')
+    suggestions = []
+
+    # Determine the BMI category
+    suggestions.append("Your BMI is "+str(int(bmi))+".")
+    if bmi < 18.5:
+        # Suggest workouts for Underweight category
+        suggestions.append("So, this indiactes you are in the Underweight category.")
+        suggestions.append("To gain weight: Focus on strength training and calorie surplus.")
+        # Include specific workout plans for Underweight
+        
+        # Strength Training
+        suggestions.append("Week 1-8 (3-4 days a week): Strength Training")
+        suggestions.append("Exercise 1: Bench Press - 3 sets of 8-10 reps")
+        suggestions.append("Exercise 2: Deadlift - 3 sets of 6-8 reps")
+        suggestions.append("Exercise 3: Squats - 3 sets of 8-10 reps")
+        suggestions.append("Exercise 4: Pull-Ups - 3 sets of 6-8 reps (if available)")
+        # Suggested diet: Maintain a calorie surplus (e.g., increase calorie intake by 300-500 calories/day).
+
+    elif 18.5 <= bmi < 25.0:
+        # Suggest workouts for Normal weight category
+        suggestions.append("So, this indiactes you are in the Normal weight category.")
+        suggestions.append("To maintain weight: Maintain a balanced workout routine and calorie intake.")
+        # Include specific workout plans for Normal weight
+        
+        # Balanced Workout
+        suggestions.append("Week 1-8 (3-4 days a week): Balanced Workout")
+        suggestions.append("Exercise 1: Squats - 3 sets of 12 reps")
+        suggestions.append("Exercise 2: Push-Ups - 3 sets of 10 reps")
+        suggestions.append("Exercise 3: Planks - 3 sets of 30 seconds")
+        suggestions.append("Exercise 4: Dumbbell Rows - 3 sets of 10 reps (if available)")
+        # Suggested diet: Maintain a balanced diet with enough calories to maintain weight.
+
+    elif 25.0 <= bmi :
+        # Suggest workouts for Overweight category
+        suggestions.append("So, this indiactes you are in the Overweight category.")
+        suggestions.append("To lose weight: Focus on cardio and maintain a calorie deficit.")
+        # Include specific workout plans for Overweight
+        
+        # High-Intensity Interval Training (HIIT)
+        suggestions.append("Week 1-2 (3 days a week): High-Intensity Interval Training (HIIT)")
+        suggestions.append("Exercise 1: Jumping Jacks - 45 seconds, Rest 15 seconds")
+        suggestions.append("Exercise 2: Burpees - 45 seconds, Rest 15 seconds")
+        suggestions.append("Exercise 3: Mountain Climbers - 45 seconds, Rest 15 seconds")
+        suggestions.append("Repeat 3 exercises for 4 sets")
+        # Suggested diet: Maintain a calorie deficit (e.g., reduce calorie intake by 500 calories/day).
+
+        # Cardio Workout
+        suggestions.append("Week 3-4 (3 days a week): Cardio Workout")
+        suggestions.append("Exercise 1: Running - 30 minutes")
+        suggestions.append("Exercise 2: Cycling - 30 minutes")
+        suggestions.append("Exercise 3: Jump Rope - 30 minutes")
+        # Suggested diet: Continue maintaining a calorie deficit.
+
+    suggestions.append("You must maintain the workout to achive your taget")
+
+    return render_template('suggestion.html', title='Suggestion',status=True, data = suggestions)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0",port=3000)
