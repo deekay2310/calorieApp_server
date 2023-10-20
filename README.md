@@ -1,5 +1,26 @@
-# BurnOut
+<br />
 
+<div  align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="https://github.com/adi-kiran/burnout-healthgoalsapp/assets/40449660/60dbeb11-6b52-4856-99ff-978d901f7b66" alt="Logo" width="80" height="80">
+  </a>
+  <h3 align="center">BURNOUT</h3>
+  <p align="center">
+    Your daily health companion 🏃‍♀️
+    <br />
+    <a href="https://adi-kiran.github.io/burnout-healthgoalsapp-docs/"><strong>Explore the API docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/adi-kiran/burnout-healthgoalsapp/blob/main/Tutorials.md">View Demo</a>
+    ·
+    <a href="https://github.com/adi-kiran/burnout-healthgoalsapp/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=">Report Bug</a>
+    ·
+    <a href="https://github.com/adi-kiran/burnout-healthgoalsapp/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=">Request Feature</a>
+  </p>
+</div>
+<br>
+<br>
+<br>
 
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
 [![DOI](https://zenodo.org/badge/698975832.svg)](https://zenodo.org/doi/10.5281/zenodo.10022867)
@@ -96,12 +117,13 @@ In today's fast-paced world, maintaining health is a challenge. But with the rig
 
 # Implementation
 
-Link to the implementation video of the BurnOut application:
+Link to the implementation video of the BurnOut application: 
 
 
 
 # Project TechStack
 
+* [![React][React.js]][React-url]
  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="html" width="20" height="20"> React </br>
  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg" alt="mongo" width="20" height="20"/> MongoDB </br>
  <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="python" width="20" height="20"/> Python </br>
@@ -196,12 +218,15 @@ Before you begin, make sure you have the following installed:
 | coverage      | 7.2.7      |   Apache Software License (Apache-2.0) |
 
   
-  # Enhancements
+## Roadmap
 
-   1. Make the website view port adaptable - the website should look good on phone, tablet and computer.
-   2. Chatbot to guide through the application.
-   3. Share workout plans with friends via email.
-   4. Bug Fixes
+- [x] Add Changelog
+- [x] Add back to top links
+- [ ] Add Additional Templates w/ Examples
+- [ ] Add "components" document to easily copy & paste sections of the readme
+- [ ] Multi-language Support
+    - [ ] Chinese
+    - [ ] Spanish
 
    
    # Team Members
